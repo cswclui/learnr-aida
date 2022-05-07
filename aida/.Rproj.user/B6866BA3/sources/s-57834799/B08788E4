@@ -1,0 +1,27 @@
+{
+    "id": "B08788E4",
+    "path": "~/dsbox/inst/tutorials/01-edibnb/01-edibnb.Rmd",
+    "project_path": null,
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1651942420979.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "25,0",
+        "scrollLine": "8",
+        "last_setup_crc32": "578347991893991c"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1651414394,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1651942431606,
+    "read_only": false,
+    "read_only_alternatives": []
+}

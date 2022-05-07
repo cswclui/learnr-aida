@@ -1,0 +1,180 @@
+---
+title: "logistic-test.Rmd"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(learnr)
+library(openintro)
+library(Stat2Data)
+library(tidyverse)
+library(broom)
+library(emo)
+
+# knitr options ----------------------------------------------------------------
+
+knitr::opts_chunk$set(fig.align = "center", 
+                      fig.height = 3, 
+                      fig.width = 5,
+                      echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE)
+
+# data prep --------------------------------------------------------------------
+
+data(MedGPA)
+```
+
+
+```{r echo=TRUE}
+heart_transplant
+```
+
+```{r echo=TRUE}
+heart_transplant <- heart_transplant %>%
+  mutate(is_alive = ifelse(survived == "alive", 1, 0))
+
+(mod_heart <- glm(is_alive ~ age, data = heart_transplant, family = binomial))
+```
+
+To obtain the coeffients of the model, use the `coef` function.
+
+```{r echo=TRUE}
+(c<-coef(mod_heart))
+```
+
+The model is
+
+$$ \log{ \left( \frac{p}{1-p} \right) } = \beta_0 + \beta_1 \cdot x$$
+The probability that the patient survives is
+
+$$ 
+p = \frac{\exp{( \beta_0 + \beta_1 \cdot x )}}{1 + \exp( \beta_0 + \beta_1 \cdot x ) }
+$$
+For instance, for age of 20
+
+```{r echo=TRUE}
+sum <- 1.56437883 - 0.05846639*20
+exp(sum)/(1+exp(sum))
+
+```
+
+What is the probability that For instance, for age of 53?
+
+```{r echo=TRUE}
+sum <- 1.56437883 - 0.05846639*53
+exp(sum)/(1+exp(sum))
+
+```
+
+
+*augment*: Given an R statistical model or other non-tidy object, add columns to the original dataset such as the predictions.
+
+```{r echo=TRUE}
+?augment
+```
+
+
+```{r echo=TRUE}
+(heart_transplant_plus <- mod_heart %>%
+  augment(type.predict = "response") %>%
+  mutate(y_hat = .fitted))
+```
+
+The graph showing the probability of being alive as a function of age.
+
+```{r echo=TRUE}
+ggplot(heart_transplant_plus, aes(x = age, y = y_hat)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_y_continuous("Probability of being alive", limits = c(0, 1))
+```
+
+
+
+```{r, echo=TRUE}
+exp(coef(mod_heart))
+``` 
+
+Out of sample prediction:
+
+```{r echo=TRUE}
+heart_transplant <- heart_transplant %>%
+  mutate(is_alive = ifelse(survived == "alive", 1, 0))
+
+
+mod <- glm(is_alive ~ age + transplant, 
+                    data = heart_transplant, family = binomial)
+mod
+```
+
+
+
+```{r echo=TRUE}
+cheney <- data.frame(age = 71, transplant = "treatment")
+
+augment(mod_heart, newdata = cheney, type.predict = "response")
+```
+
+```{r echo=TRUE}
+mod_plus <- augment(mod, type.predict = "response") %>%
+  mutate(alive_hat = round(.fitted))
+  
+mod_plus %>%
+  select(is_alive, age, transplant, .fitted, alive_hat)
+```
+
+Confusion Matrix
+
+
+```{r echo=TRUE}
+mod_plus %>%
+  select(is_alive, alive_hat) 
+```
+
+
+
+```{r echo=TRUE}
+mod_plus %>%
+  select(is_alive, alive_hat) %>%
+  table()
+```
+
+
+```{r echo=TRUE}
+```
+
+
+
+
+
+
+
+```{r echo=TRUE}
+```
+
+
+```{r echo=TRUE}
+```
+
+
+
+```{r echo=TRUE}
+```
+
+
+```{r echo=TRUE}
+```
+
+
+```{r echo=TRUE}
+```
+
+
+
+```{r echo=TRUE}
+```
+
+
