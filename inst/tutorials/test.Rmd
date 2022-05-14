@@ -1,0 +1,93 @@
+---
+title: "learnrhash - Question Types"
+output: learnr::tutorial
+runtime: shiny_prerendered
+tutorial:
+  id: "demo-types"
+  version: 1.0
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library("knitr")
+
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(exercise.checker = gradethis::grade_learnr)
+```
+
+
+```{r context="server", echo = FALSE}
+options(tutorial.event_recorder = learnr:::debug_event_recorder)
+
+learnrhash::encoder_logic()
+```
+
+
+## Details
+
+```{r details}
+question_text(
+  "Student Name:",
+  answer(NULL, correct = TRUE),
+  incorrect = "Ok",
+  try_again_button = "Modify your answer",
+  allow_retry = FALSE
+)
+```
+
+
+## Fixed-response questions
+
+```{r planets, no_ack = TRUE}
+question(
+  "Which planet do we live on?",
+  answer("Mars",   correct = FALSE),
+  answer("Earth",  correct = TRUE),
+  answer("Saturn", correct = FALSE),
+  allow_retry = TRUE
+  )
+```
+
+## Multiple-response questions
+
+```{r not_a_planets, no_ack=TRUE}
+question(
+  "Which of the following are planets?",
+  answer("Mars",   correct = TRUE),
+  answer("Earth",  correct = TRUE),
+  answer("Saturn", correct = TRUE),
+  answer("Pluto",  correct = FALSE),
+  allow_retry = TRUE
+)
+```
+
+## Code
+
+### Code 1
+```{r code, exercise=TRUE}
+x<<-3 
+x
+```
+
+### Code 2
+```{r code22, exercise=TRUE}
+print(x)
+```
+
+
+## Code - gradethis
+
+```{r code2, exercise=TRUE}
+1+1
+```
+
+```{r code2-check}
+gradethis::grade_result(
+  gradethis::pass_if(~ TRUE, "Submitted!"),
+  glue_correct = "{.message}"
+)
+```
+
+
+
+

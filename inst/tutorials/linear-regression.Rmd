@@ -1,0 +1,218 @@
+---
+title: "Introduction to linear regression"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE,message=FALSE}
+library(learnr)
+library(learnrhash)
+library(tidyverse)
+library(gradethis)
+library(openintro)
+library(infer)
+tutorial_options(
+  # use gradethis for checking
+  exercise.checker = gradethis::grade_learnr
+  )
+knitr::opts_chunk$set(echo = FALSE)
+
+
+```
+## Getting Started
+
+The Human Freedom Index is a report that attempts to summarize the idea of "freedom"
+through a bunch of different variables for many countries around the globe.
+It serves as a rough objective measure for the relationships between the different
+types of freedom - whether it's political, religious, economical or personal freedom -
+and other social and economic circumstances. The Human Freedom Index is an annually
+co-published report by the Cato Institute, the Fraser Institute, and the Liberales
+Institut at the Friedrich Naumann Foundation for Freedom.
+
+In this lab, you'll be analyzing data from Human Freedom Index reports from 2008-2016.
+Your aim will be to summarize a few of the relationships within the data both 
+graphically and numerically in order to find which variables can help tell a story
+about freedom.
+
+### Load packages
+
+In this lab, you will explore and visualize the data using the **tidyverse** suite of 
+packages. The data can be found in the companion package for OpenIntro resources, **openintro**.
+
+Let's load the packages. 
+
+```{r load-packages, exercise = T}
+library(tidyverse)
+library(openintro)
+```
+
+
+### The data
+
+The data we're working with is in the openintro package and it's called `hfi`, 
+short for Human Freedom Index.
+
+```{r}
+data(hfi)
+```
+
+
+Plot the relationship between `pf_expression_control` (political pressures and controls on media content) and the personal freedom score, `pf_score` with `pf_expression_control` as the explanatory/predictor variable. Does the relationship look linear? 
+
+```{r nvolifwefsdohnqx, exercise = TRUE}
+ggplot(hfi, aes(x = ___, y = ___))+geom_point()
+```
+
+
+```{r nvolifwefsdohnqx-solution}
+ggplot(hfi, aes(x = pf_expression_control, y = pf_score))+geom_point()
+
+```
+
+```{r nvolifwefsdohnqx-check}
+# check code
+gradethis::grade_code()
+```
+
+If the relationship looks linear, we can quantify the strength of the
+relationship with the correlation coefficient.
+
+```{r cor, exercise = T}
+hfi %>%
+  summarise(cor(pf_expression_control, pf_score, use = "complete.obs"))
+```
+
+Here, we set the `use` argument to "complete.obs" since there are some observations of NA and we don't want those to count towards the calculation of the correlation.
+
+## The linear model
+
+You can use the `lm` function in R to fit the linear model (a.k.a. 
+regression line).
+
+- The first argument in the function `lm` is a formula that takes the form 
+`y ~ x`. 
+  - In this example,  we want to make a linear model of `pf_score` as a function of `pf_expression_control`. 
+- The second argument specifies that R should look in the `hfi` data frame to find the two variables. 
+
+**Note:** `lm` can handle missing values, so we can use the full data set here.
+
+
+
+```{r m1, exercise = T}
+m1 <- lm(pf_score ~ pf_expression_control, data = hfi)
+```
+
+The output of `lm` is an object that contains all of the information we need 
+about the linear model that was just fit. We can access this information using 
+the summary function.
+
+```{r summary-m1-setup}
+m1 <- lm(pf_score ~ pf_expression_control, data = hfi)
+```
+
+```{r summary-m1, exercise = TRUE}
+summary(m1)
+```
+
+Let's consider this output piece by piece. 
+
+- The formula used to describe the model is shown at the top. 
+- After the formula you find the five-number 
+summary of the residuals. 
+- The "Coefficients" table shown next is key; its first 
+column displays the linear model's y-intercept and the coefficient of `pf_expression_control`.
+
+With this table, we can write down the least squares regression line for the 
+linear model:
+
+\[
+  \hat{y} = 4.61707 + 0.49143 \times pf\_expression\_control
+\]
+
+One last piece of information we will discuss from the summary output is the 
+Multiple R-squared, or more simply, $R^2$. The $R^2$ value represents the 
+proportion of variability in the response variable that is explained by the 
+explanatory variable. For this model, 63.42% of the variability in personal freedom score is explained by political pressures and controls on media content.
+
+Fit a new model that uses `pf_expression_control` to predict the total human freedom score, `hf_score`. 
+
+```{r adryxdkevttxzzno, exercise = TRUE}
+new_mod <- lm(___ ~ ___, data = ___)
+summary(___)
+```
+
+```{r adryxdkevttxzzno-solution}
+new_mod <- lm(hf_score ~pf_expression_control, data = hfi)
+summary(new_mod)
+```
+
+```{r adryxdkevttxzzno-check}
+# check code
+gradethis::grade_code()
+```
+
+Using the estimates from the R output, write the equation of the regression line. 
+
+```{r regline}
+question("Using the estimates from the R output, what is the equation of the regression line?",
+    answer("hf_score_hat = 5.15 + 0.35 * pf_expression_control", correct = T),
+    answer("hf_score = 5.15 + 0.35 * pf_expression_control"),
+    answer("hf_score_hat = 0.35 + 5.15 * pf_expression_control"),
+    answer("pf_expression_control_hat = 5.15 + 0.35 * hf_score"),
+    answer("pf_expression_control_hat = 0.35 + 5.15 * hf_score"),
+    answer("pf_expression_control = 0.35 + 5.15 * hf_score"),
+    allow_retry = TRUE,
+    random_answer_order = F
+  )
+```
+
+
+## Prediction and prediction errors
+
+Let's create a scatterplot with the least squares line for `m1` laid on top.
+
+```{r reg-with-line, exercise = T}
+ggplot(data = hfi, aes(x = pf_expression_control, y = pf_score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Here, we are literally adding a layer on top of our plot. `geom_smooth` creates
+the line by fitting a linear model. It can also show us the standard error `se`
+associated with our line, but we'll suppress that for now (and talk about what it means later).
+
+This line can be used to predict $y$ at any value of $x$. When predictions are 
+made for values of $x$ that are beyond the range of the observed data, it is 
+referred to as *extrapolation* and is not usually recommended. However, 
+predictions made within the range of the data are more reliable. They're also 
+used to compute the residuals.
+
+Remember the regression line is:
+\[
+  \hat{y} = 4.61707 + 0.49143 \times pf\_expression\_control
+\]
+
+```{r predval}
+question("What is the predicted value of a country's personal freedom score for one with a 6.7 rating for `pf_expression_control`? ",
+    answer("4.62"),
+    answer("7.91", correct = T),
+    answer("31.43"),
+    allow_retry = TRUE,
+    random_answer_order = F
+  )
+```
+
+```{r resid}
+question("If the true personal freedom score for this observation is 8.9, what is the residual for this prediction?  ",
+    answer("0.99", correct = T),
+    answer("-0.99"),
+    answer("0"),
+    allow_retry = TRUE,
+    random_answer_order = F
+  )
+```
+
+
