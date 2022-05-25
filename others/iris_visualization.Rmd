@@ -1,0 +1,250 @@
+---
+title: "iris visualization"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Plots
+
+```{r}
+
+library(ggplot2)
+data(iris)
+head(iris)
+
+```
+
+```{r}
+summary(iris)
+```
+
+What is the relationship between sepal length and petal length?
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length))+geom_point()
+```
+
+
+How is the length of the sepals and petals changes between species?
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, col=Species))+geom_point()
+```
+
+
+We can plot different shapes for different species.
+
+```{r}
+
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, col=Species, shape=Species))+geom_point()
+```
+
+The different types of geometric objects (geoms) can be used to plot differnet types of plots.
+
+- Scatter Plot: To plot individual points, use geom_point
+- Bar Charts: For drawing bars, use geom_bar
+- Histograms: For drawing binned values, geom_histogram
+- Line Charts: To plot lines, use geom_line
+- Polygons: To draw arbitrary shapes, use geom_polygon
+- Creating Maps: Use geom_map for drawing polygons in the shape of a map by using the map_data() function
+- Creating Patterns: Use the geom_smooth function for showing simple trends or approximations
+
+
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, col=Species))+geom_point() +geom_smooth(method = "lm", se=FALSE)
+```
+
+## GGPairs
+
+Example:
+
+```{r}
+# install.packages("GGally")
+library(GGally)
+
+ggpairs(iris)     
+```
+
+- The upper panel will show the correlation between the continuous variables
+- The lower the scatter plots of the continuous variables
+- The diagonal the density plots of the continuous variable
+The sides the histograms and box plots for the combinations between the categorical and the continuous variables.
+
+
+
+The columns argument can be used to select the columns of the data frame to be plotted. Example:
+
+```{r}
+# install.packages("GGally")
+ggpairs(iris, columns=1:4)     
+```
+
+
+You can set an aesthetic mapping with aes. This will allow you to create and fill the density plots, scatter plots and other plots with different colors based on the groups. Example:
+
+
+```{r}
+# install.packages("GGally")
+ggpairs(iris,                 # Data frame
+        columns = 1:4,        # Columns
+        aes(color = Species,  # Color by group (cat. variable)
+            alpha = 0.5))     # Transparency
+```
+
+## 3D Plot
+
+```{r}
+colnames(iris)
+```
+
+
+
+```{r}
+library(plotly)
+plot_ly(iris, x = ~Sepal.Length, y = ~Petal.Length, z = ~Petal.Width, marker = list(size = 3)) %>%
+  add_markers(color = ~Species)
+```
+
+
+```{r}
+x = iris$Petal.Length
+y = iris$Petal.Width
+my_function <- function(x,y) {
+    final_value = x
+}
+```
+
+
+
+```{r}
+#z <- outer(input_1, input_2, my_function)
+
+x = 1:10
+y = 1:10
+
+my_function <- function(x,y) {
+    final_value = x+y
+}
+
+z <- outer(x, y, my_function)
+print(z)
+plot_ly(x = x, y = y, z = z, opacity=0.6,colorscale ='Blues')  %>% 
+        layout(xaxis = list(tickfont = list(size = 5)),   yaxis = list(tickfont = list(size = 5)))%>% 
+        add_surface() %>%
+        layout(scene = list(aspectmode="manual",aspectratio = list( x = 1, y = 1, z = 0.8))) %>% 
+        add_trace(iris, x = ~iris$Sepal.Length, y = ~iris$Petal.Length, z = ~iris$Petal.Length,  mode = "markers", type = "scatter3d", 
+              marker = list(size = 5, color = "red", symbol = 104))
+
+```
+
+```{r}
+dim(volcano)
+```
+
+
+```{r}
+set.seed(123)
+
+x = sample(1:ncol(volcano), size = 50)
+y = sample(1:nrow(volcano), size = 50)
+
+z = c()
+
+for(i in 1:50) {z <- c(z, volcano[y[i], x[i]])}
+
+df <- data.frame(x, y, z)
+
+plot_ly(z = volcano, type = "surface") %>% 
+  add_trace(data = df, x = x, y = y, z = z, mode = "markers", type = "scatter3d", 
+            marker = list(size = 5, color = "red", symbol = 104))
+```
+
+
+
+```{r}
+# input: 
+# model: classification model
+# data: training set
+# class: response variable
+# Ref: https://rpubs.com/ZheWangDataAnalytics/DecisionBoundary
+
+boundary <- function(model, data, class = NULL, predict_type = "class",
+  resolution = 100, showgrid = TRUE, ...) {
+
+  if(!is.null(class)) cl <- data[,class] else cl <- 1
+  data <- data[,1:2]
+  k <- length(unique(cl))
+
+  plot(data, col = as.integer(cl)+1L, pch = as.integer(cl)+1L, ...)
+
+  # make grid
+  r <- sapply(data, range, na.rm = TRUE)
+  xs <- seq(r[1,1], r[2,1], length.out = resolution)
+  ys <- seq(r[1,2], r[2,2], length.out = resolution)
+  g <- cbind(rep(xs, each=resolution), rep(ys, time = resolution))
+  colnames(g) <- colnames(r)
+  g <- as.data.frame(g)
+
+  ### guess how to get class labels from predict
+  ### (unfortunately not very consistent between models)
+  p <- predict(model, g, type = predict_type)
+  if(is.list(p)) p <- p$class
+  p <- as.factor(p)
+
+  if(showgrid) points(g, col = as.integer(p)+1L, pch = ".")
+
+  z <- matrix(as.integer(p), nrow = resolution, byrow = TRUE)
+  contour(xs, ys, z, add = TRUE, drawlabels = FALSE,
+    lwd = 2, levels = (1:(k-1))+.5)
+
+  invisible(z)
+}
+
+```
+
+
+```{r}
+set.seed(1)
+data(iris)
+
+# only use two predictors
+x <- iris[1:150, c("Sepal.Length", "Sepal.Width", "Species")]
+
+plot(x[,1:2], col = x[,3],xlim=c(2,9),ylim=c(2,5))
+legend("topright", legend=levels(iris$Species), pch=16, col=unique(iris$Species))
+#legend("topright", inset=c(-0.2, 0), legend=levels(iris$Species), pch=c(1,3), title="Data")
+```
+
+```{r}
+(model1 <- glm(Species ~., data = x[1:100,], family=binomial(link='logit')))
+
+
+#(class(model1) <- c("lr", class(model1)))
+
+```
+
+
+```{r}
+
+
+# specify the cutoff point for prediction
+
+predict.lr <- function(object, newdata, ...)
+  predict.glm(object, newdata, type = "response") > .5
+
+boundary(model1, x[1:100,], class = "Species", main = "Logistic Regression")
+```
+
+
+
+## References
+
+- https://www.analyticsvidhya.com/blog/2022/03/a-comprehensive-guide-on-ggplot2-in-r/
+- https://r-charts.com/correlation/ggpairs/
+- https://plotly.com/r/
+- https://plotly-r.com/
+- https://rpubs.com/ZheWangDataAnalytics/DecisionBoundary

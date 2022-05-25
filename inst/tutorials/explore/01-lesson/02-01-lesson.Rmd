@@ -1,0 +1,234 @@
+---
+title: "Exploratory data analysis (I): Exploring Categorical Variable"
+output: 
+  learnr::tutorial:
+    progressive: false
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+library(gridExtra)
+library(png)
+library(gtable)
+library(stringr)
+library(grid)
+library(learnr)
+library(kableExtra)
+library(tidyverse)
+library(emo)
+library(gt)
+library(gradethis)
+gradethis_setup()
+
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      fig.height = 3,
+                      fig.width = 5,
+                      fig.align = "center")
+
+comics <- read_csv("data/comics.csv") %>% 
+  filter(!is.na(align), 
+         !is.na(id), 
+         !is.na(gender)) %>%
+  droplevels()
+
+
+
+new_recorder <- function(tutorial_id, tutorial_version, user_id, event, data) {
+    cat("-------event received----\n")
+    cat(tutorial_id, " (", tutorial_version, "): ", user_id, ", ", event, "\n", data$label, ", ", data$answers, ", ", data$correct, ",\n", sep = "")
+    print (data)
+    cat("-------end event ---\n\n-")
+    # process data here
+}
+#options(tutorial.event_recorder = new_recorder)
+```
+
+## Exploring categorical data
+
+In this tutorial we'll learn about summarizing and visualizing data.  Sometimes, we refer to the techniques covered in this tutorial as **exploratory data analysis** or EDA.
+
+EDA is all about learning the structure of a dataset through a series of numerical and graphical techniques. When you do EDA, you'll look for both general trends and interesting outliers in your data. You'll also generate questions that will help inform subsequent analysis.
+
+
+
+
+### Introduction 
+
+Our first dataset comes from comic books. Two publishers, Marvel and DC, have created a host of superheroes that have made their way into popular culture. You're probably familiar with Batman and Spiderman, but what about Mor the Mighty?
+
+The comics dataset has information on all comic characters that have been introduced by DC and Marvel. Let's take take a look at the dataset and explore it. 
+```{r comics, exercise=TRUE}
+glimpse(comics)
+```
+
+At the top the output tell us the dimensions of this dataset: over 15,000 cases and 11 variables. With one exception (appearances) we see that that all variables are characters, or of the `chr` data type. These are variables that we could potentially consider categorical, as they all have a finite number of levels. 
+
+###
+
+Let's view the first few rows of the dataset
+```{r comics-head, exercise=TRUE}
+head(comics)
+```
+
+The first case in the dataset is Peter Parker, alias: Spiderman, where his alias and character name are included in the first variable `name`. The second column, `id`, shows that Peter Parker's personal identity is kept secret, and the third column tell us that his `align`ment is good; that he's a superhero, not a super villain.
+
+### The Distinct Function
+
+We can learn the different values of a particular character variable by using the `distinct()` function. It's clear that the alignment variable can be "good" or "neutral", but what other values are possible? Here, we pipe the `comics` data into the `distinct()` function, and then insert the `align` column into the `distinct()` function. 
+
+```{r levels, exercise=TRUE}
+comics %>% 
+  distinct(align)
+```
+
+Inspecting the resulting table, we learn that there are in fact four possible alignments, "Good", "Bad", "Neutral", and "Reformed criminals". Good thing we checked that! If we do the same for identity, we learn that there are four possible identities.
+
+```{r levels2, exercise=TRUE}
+comics %>% 
+  distinct(id)
+```
+
+### Contingency Table
+A common way to represent the number of cases that fall into each combination of levels of two categorical variables, such as these, is with what's called a "contingency table." Creating a contingency table requires three steps: 
+
+1. use the `count()` function to count the number of observations
+2. specify the variables you are interested in **inside** the `count()` function
+
+
+```{r levels3, exercise=TRUE}
+# to get the long table
+comics %>% 
+  count(align, gender)
+```
+
+3. pivot the table from its current "long" format to a "wide" format using the `pivot_wider()` function 
+
+- The values of `align` should  be in the rows and the values of `gender` to be in the columns. 
+- The `names_from` argument tells R where the names of the new columns are coming from (i.e. what variable)
+- The `values_from` argument tells R where the values in the table are coming from. Here, the values we want in our table are stored as a variable labeled `n` in our table. 
+
+
+```{r levels4, exercise=TRUE}
+# to get a wider table
+comics %>% 
+  count(align, gender) %>% 
+  pivot_wider(names_from = gender, values_from = n)
+```
+
+
+### Exercise
+
+Create a pivot table such that the values of `gender` should  be in the rows and the values of `align` to be in the columns. Sample output:
+
+```{r evaluate=TRUE, echo=FALSE}
+# to get a wider table
+comics %>% 
+  count(align, gender) %>% 
+  pivot_wider(names_from = align, values_from = n)
+```
+
+
+Your code:
+
+```{r levels-ex, exercise=TRUE}
+
+```
+
+```{r levels-ex-solution}
+comics %>% 
+  count(align, gender) %>% 
+  pivot_wider(names_from = align, values_from = n)
+
+```
+
+
+```{r levels-ex-check}
+grade_this({
+  print(.result)
+  print(.solution)
+  # custom checking code appears here
+  if (identical(.result, .solution)) {
+    pass("Great work!")
+  }
+  fail("Try again!")
+})
+
+grade_code()
+```
+
+
+
+The output tells us that the most common category, at a count of 4352, was "Bad" characters with "Secret" identities.
+
+### Bar charts
+
+While tables of counts can be useful, you can get the bigger picture by translating these counts into a graphic. The graphics that you'll be making in this tutorial utilize the **ggplot2** package, which you got a glimpse of in the previous tutorial. Every ggplot requires that you specify three elements: 
+
+1. the dataset
+2. how the variables you are interested in are plotted (aesthetically)
+3. layers that describe how the data are represented (e.g. points, lines, histograms)
+
+Generally, your `ggplot()` will look something like this, where the dataset is the first argument in the `ggplot()` function. Next, the variables we are interested in plotting are found inside the the `aes()` function, which stands for aesthetics. Finally, we specify the `geom` function to use when plotting the data. 
+
+```{r formula1, eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+ggplot(data = [DATASET], aes(x = [X VARIABLE], 
+                             y = [Y VARIABLE], 
+                             fill = [COLOR VARIABLE])) +
+  geom_***()     
+```
+
+Here, we're interested in the relationship between two categorical variables, which is represented well by a stacked bar chart. In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis, and adding a `geom_bar()` layer to the plot. 
+
+```{r formula2, exercise=TRUE}
+ggplot(comics, aes(x = align)) +
+  geom_bar() 
+```
+
+A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a second categorical variable into the `fill` argument of the `aes()` function. This looks something like this: 
+
+```{r formula3, exercise=TRUE}
+ggplot(comics, aes(x = gender, fill = align)) +
+  geom_bar() 
+```
+
+Add the argument `position = "dodge"` to the `geom_bar()` and observe the change to the bar chart.
+
+```{r formula4, exercise=TRUE, eval=FALSE}
+ggplot(comics, aes(x = gender, fill = align)) +
+  geom_bar(_______) 
+```
+
+
+
+
+```{r mc, echo=FALSE}
+question("Which of the following interpretations of the bar charts above is NOT valid?",
+  answer("Among characters with `Neutral` alignment, males are the most common.", message = "Nope, not quite!"),
+  answer("Across all genders, `Bad` is the most common alignment.", correct = TRUE),
+  answer("There are more male characters than female characters in this dataset.",  message = "Try again!"), 
+  allow_retry = TRUE
+)
+```
+
+### Faceting
+
+Another useful way to visualize the distribution of a single variable is to condition on a particular value of another variable. We might be interested, for example, in the distribution of id for all neutral characters. We could either filter the dataset and build a barchart using only cases where `align`ment was "Neutral", or we could use a technique called faceting. Faceting breaks the data into subsets based on the levels of a categorical variable and then constructs a plot for each level.
+
+
+
+To implement faceting in ggplot2, all we need to do is add another layer to our plot. To add a faceting layer we use the `facet_wrap()` function. Inside the `facet_wrap()` function we add a tilde (`~`) and then the name of the variable we want to facet by (e.g. `~align`). This can be read as create the above plot "broken down by align". The result is three simple bar charts side-by-side, the first one corresponding to the distribution of `gender` within all cases that have a "Bad" alignment, and so on, for "Good" and "Neutral" alignments.
+
+
+```{r md4, fig.height=3, fig.width=8}
+ggplot(comics, aes(x = align, fill=align)) +
+  geom_bar() +
+  facet_wrap(~gender)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+

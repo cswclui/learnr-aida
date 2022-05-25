@@ -9,7 +9,6 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE,message=FALSE}
 library(learnr)
-library(learnrhash)
 library(tidyverse)
 library(gradethis)
 library(openintro)
@@ -24,23 +23,28 @@ lax_flights <- nycflights %>%
 
 sfo_feb_flights <- nycflights %>%
   filter(dest == "SFO", month == 2)
+
 ```
 
 ## Getting started
 
-In this lab we explore a random
-sample of domestic flights departing from the three major 
+In this lab we will explore a random sample of domestic flights departing from the three major 
 New York City airports in 2013. We will generate simple graphical and numerical 
-summaries of data on these flights and explore delay times. Since this is a large 
-data set, along the way you'll also learn the indispensable skills of data 
-processing.
+summaries of data on these flights and explore delay times.
 
 ### Load packages
 
-In this lab, we will explore and visualize the data using the **tidyverse** suite of 
-packages. The data can be found in the companion package for OpenIntro labs, **openintro**.
+Packages include reusable functions, the documentation that describes how to use them, and sample data.
+In this lesson we will make use of two packages:
 
-Let's load the packages.
+- **tidyverse**: Tidyverse is a collection of R packages for data science that adhere to a common philosophy of data and R programming syntax, and are designed to work together naturally. You can learn more about tidyverse [here](https://tidyverse.org/). 
+
+- **openintro**: The openintro package contains datasets used in openintro resources. You can find out more about the package [here](http://openintrostat.github.io/openintro).
+
+Once we have installed the packages, we use the `library()` function to load 
+packages into R. 
+
+Let's load these two packages to be used in the remainder of this lesson.
 
 ```{r load-packages, exercise = T}
 library(tidyverse)
@@ -54,7 +58,8 @@ The [Bureau of Transportation Statistics](http://www.rita.dot.gov/bts/about/)
 (BTS) is a statistical agency that is a part of the Research and Innovative 
 Technology Administration (RITA). As its name implies, BTS collects and makes 
 transportation data available, such as the flights data we will be working with 
-in this lab.
+in this lab. The description of the dataset is available at https://www.openintro.org/data/index.php?data=nycflights.
+
 
 First, we'll view the `nycflights` data frame. Type the following in your console
 to load the data:
@@ -63,9 +68,7 @@ to load the data:
 data(nycflights)
 ```
 
-The data set `nycflights` that shows up in your workspace is a *data matrix*, 
-with each row representing an *observation* and each column representing a 
-*variable*. R calls this data format a **data frame**. For this data set, each *observation* is a single flight.
+The data are organized in what we call a *data frame*, where each row represents an *observation* or a *case* and each column represents a *variable*. For this data set, each *observation* is a single flight.
 
 To view the first few rows of the data.
 
@@ -81,8 +84,32 @@ This returns the names of the variables in this data frame. The **codebook**
 ?nycflights
 ```
 
-One of the variables refers to the carrier (i.e. airline) of the flight, which 
-is coded according to the following system.
+
+When you first start working with a dataset, it's good practice to take a note of its dimensions; how many rows or observations and how many columns or variables the data frame has. 
+
+```{r}
+dim(nycflights)
+```
+
+
+The output of `dim()` tells us that the data frame includes 32,735 observations (rows) and 16 variables (columns). 
+
+
+We can use `glimpse` function (in the `tidyverse` package) to take a quick peek at your data to 
+understand its contents better.
+
+```{r glimpse, exercise = T}
+glimpse(nycflights)
+```
+
+The `glimpse` function  lists the variables and their types, along with values of the first few observations. Here are some of the data types in R:
+
+- **fct**:a factor variable
+- **chr** stores character and string
+- **int**:a quantitative variable that takes only integer or whole number values.
+- **dbl**: double precision, a quantitative variable that is essentially continuous - taking decimal values.
+
+One of the variables refers to the carrier (i.e. airline) of the flight, which is coded according to the following system.
 
 - `carrier`: Two letter carrier abbreviation.
     + `9E`:           Endeavor Air Inc.
@@ -102,12 +129,90 @@ is coded according to the following system.
     + `WN`:      Southwest Airlines Co.
     + `YV`:          Mesa Airlines Inc.
 
+A very common operation on categorical variables is frequency distribution. One method is `table()` function. Let's explore the number of observations which are spam (coded as 1) and non-spam (coded as non-spam).
 
-We can use `glimpse` to take a quick peek at your data to 
-understand its contents better.
+Let's check the frequency distribution of the carrier in the dataset.
 
-```{r glimpse, exercise = T}
-glimpse(nycflights)
+```{r}
+table(nycflights$carrier)
+```
+
+
+### The email dataset
+
+We'll practice on another dataset, `email`, which contains a subset of incoming emails for the first three months of 2012 for a single email account. The description of the dataset is available at https://www.openintro.org/data/index.php?data=email.
+
+**Exercise:** Use the **dim()**  function for retrieving the dimension (number of rows and columns) of the `email` dataframe.
+
+```{r dim-demo, exercise=TRUE}
+
+```
+
+
+**Question 1:** 
+
+```{r no_of_observations}
+question_text(
+  "How many observations are there?",
+  answer("50", correct = TRUE),
+  incorrect = "Please try again.",
+  try_again_button = "Modify your answer",
+  allow_retry = TRUE
+)
+```
+
+
+**Question 2:** 
+
+```{r no_of_attributes}
+question_text(
+  "How many attributes are there?",
+  answer("21", correct = TRUE),
+  incorrect = "Please try again.",
+  try_again_button = "Modify your answer",
+  allow_retry = TRUE
+)
+```
+
+
+**Exercise:** Take a peek at the `email` dataset using the `glimpse()` function. 
+
+
+```{r glimpse-email, exercise=TRUE, exercise.reveal_solution =FALSE}
+
+```
+
+
+```{r glimpse-email-solution}
+glimpse(email)
+```
+
+```{r glimpse-email-check}
+grade_code()
+```
+
+
+Here are some of the varaibles in the data set.
+
+-  `spam` is a categorical variable indicating whether or not the email is `spam`.This was created by reading through each email individually and deciding if it looked like spam or not. 
+- `to_multiple` is TRUE if the email was addressed to more than one recipient and FALSE otherwise. 
+- `image` is the number of images attached in the email.
+
+
+Let's explore the number of observations which are spam (coded as 1) and non-spam (coded as non-spam) using the `table` function.
+
+```{r table-demo, exercise=TRUE}
+table(email$spam) 
+```
+
+```{r planets}
+question(
+  "Which of the following statements about the email dataset is true?",
+  answer("There are more spam than non-spam",   correct = FALSE),
+  answer("There are less spam than non-spam",  correct = TRUE),
+  answer("There is equal number of spam and non-spam", correct = FALSE),
+  allow_retry = TRUE
+)
 ```
 
 
@@ -144,23 +249,20 @@ data is split between the different bins. You can easily define the binwidth you
 want to use:
 
 ```{r hist-dep-delay-bins, exercise = T}
+# create histogram with bindwidth of 15
 ggplot(data = nycflights, aes(x = dep_delay)) +
   geom_histogram(binwidth = 15)
+
+# create histogram with bindwidth of 150
 ggplot(data = nycflights, aes(x = dep_delay)) +
   geom_histogram(binwidth = 150)
 ```
 
-Look carefully at these three histograms. How do they compare? 
 
-```{r bandwidth}
-question("Are features revealed in one that are obscured in another?",
-    answer("No, they look the same."),
-    answer("Yes, more detail is shown with a binwidth of 15.", correct = T),
-    answer("Yes, more detail is shown with a binwidth of 150."),
-    allow_retry = TRUE,
-    random_answer_order = F
-  )
-```
+
+
+
+
 
 ## Piping
 
@@ -170,7 +272,6 @@ To continue our analogy with mathematical functions, `x %>% f(y)` is equivalent 
 If you want to visualize only on delays of flights headed to Los Angeles, you need 
 to first `filter` the data for flights with that destination (`dest == "LAX"`)
 and then make a histogram of the departure delays of only those flights. 
-
 
 
 ```{r lax-flights-hist, exercise = T}

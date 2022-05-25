@@ -1,0 +1,255 @@
+---
+title: "iris"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The Iris Dataset
+We will use a toy dataset that comes with R. Fisher’s iris dataset gives the measurements in centimeters of the variables sepal length, sepal width petal length, and petal width for 150 flowers. The dataset contains 50 flowers from each of 3 species of iris. The species are Iris Setosa, Iris Versicolor, and Iris Virginica. For more details see ? iris.
+
+We load the iris data set. Datasets that come with R or R packages can be loaded with data().
+
+```{r}
+library(tidyverse)
+data(iris)
+iris
+```
+
+
+The data contains 150 rows (flowers) and 5 features. We can show the first few rows using the `head` function
+
+```{r}
+head(iris)
+```
+
+ Start with summary statistics for each column.
+ 
+```{r}
+summary(iris)
+```
+ 
+To find outliers or data problems, you need to look for very small values (often a suspicious large number of zeros) using min and for extremely large values using max. Comparing median and mean tells us if the distribution is symmetric.
+
+To get a glimpse of your data, use the `glimpse()` function in the `tidyverse` package.
+
+```{r}
+library(tidyverse)
+glimpse(iris)
+```
+Build a contingency table to count the number of instances for each factor level of iris species.
+
+```{r}
+?table
+table(iris$Species)
+```
+
+## Histogram
+
+A histogram visualizes the distribution of a single continuous feature. The bins in the histogram represent a discretization using a fixed bin width. 
+
+```{r}
+ggplot(iris, aes(x = Petal.Width)) + geom_histogram(binwidth = .2)
+```
+
+Two-dimensional distributions can be visualized using 2-d binning or hexagonal bins.
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+  geom_bin2d(bins = 10) +
+  geom_jitter(color = "red")
+```
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+  geom_hex(bins = 10) +
+  geom_jitter(color = "red")
+```
+
+
+## Scatterplot 
+We can plot a scatterplot to show  the relationship between sepal length and petal length.
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length))+geom_point()
+```
+
+
+How is the length of the sepals and petals changes between species?
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, col=Species))+geom_point()
+```
+
+
+We can plot different shapes for different species.
+
+```{r}
+
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, col=Species, shape=Species))+geom_point()
+```
+
+The different types of geometric objects (geoms) can be used to plot differnet types of plots.
+
+- Scatter Plot: To plot individual points, use geom_point
+- Bar Charts: For drawing bars, use geom_bar
+- Histograms: For drawing binned values, geom_histogram
+- Line Charts: To plot lines, use geom_line
+- Polygons: To draw arbitrary shapes, use geom_polygon
+- Creating Maps: Use geom_map for drawing polygons in the shape of a map by using the map_data() function
+- Creating Patterns: Use the geom_smooth function for showing simple trends or approximations
+
+
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, col=Species))+geom_point() +geom_smooth(method = "lm", se=FALSE)
+```
+
+
+## Scatterplot Matrix
+
+A visual method to inspect the data is to use a scatterplot matrix (we use here ggpairs() from package GGally). In this plot, we can visually identify noise data points and outliers (points that are far from the majority of other points).
+- The upper panel will show the correlation between the continuous variables
+- The lower the scatter plots of the continuous variables
+- The diagonal the density plots of the continuous variable
+The sides the histograms and box plots for the combinations between the categorical and the continuous variables.
+
+```{r}
+library(GGally)
+ggpairs(iris)     
+```
+
+You can set an aesthetic mapping with aes. This will allow you to create and fill the density plots, scatter plots and other plots with different colors based on the groups. Example:
+
+
+```{r}
+# install.packages("GGally")
+ggpairs(iris,                 # Data frame
+        columns = 1:4,        # Columns
+        aes(color = Species,  # Color by group (cat. variable)
+            alpha = 0.5))     # Transparency
+```
+
+Can you spot the one red dot that is far away from all others?
+
+## 3D plots
+
+We can use an interactive 3-d plot (from package plotly) to look at three of the four dimensions of the iris dataset. 
+```{r}
+# library(plotly) # I don't load the package because it's namespace clashes with select in dplyr.
+plotly::plot_ly(iris, x = ~Sepal.Length, y = ~Petal.Length, z = ~Sepal.Width,
+  size = ~Petal.Width, color = ~Species, type="scatter3d")
+```
+
+Note that it is hard to visualize more than 3 dimensions.
+
+
+## Correlation
+
+Correlation can be used for ratio/interval scaled features.
+
+The `cor()` function calculates a correlation matrix with pairwise correlations between features. Correlation matrices are symmetric, but different to distances, the whole matrix is stored.
+
+```{r}
+cc <- iris %>% select(-Species) %>% cor()
+cc
+```
+
+The correlation between Petal.Length and Petal.Width can be visualized using a scatter plot.
+
+-  geom_smooth adds a regression line by fitting a linear model (lm). Most points are close to this line indicating strong linear dependence (i.e., high correlation).
+```{r}
+ggplot(iris, aes(Petal.Length, Petal.Width)) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+We can calculate individual correlations by specifying two vectors.
+
+```{r}
+with(iris, cor(Petal.Length, Petal.Width))
+```
+
+**Note**: with lets you use columns using just their names and with(iris, cor(Petal.Length, Petal.Width)) is the same as cor(iris$Petal.Length, iris$Petal.Width).
+
+
+## Aggregate
+Data often contains groups and we want to compare these groups. We group the iris dataset by species and then calculate a summary statistic for each group.
+
+
+
+## Logistic Regression classifier
+
+Select the first 100 instances in the iris dataset (It only contains the setosa and versicolor species.
+```{r}
+mydata=iris[1:100,]
+unique(mydata$Species)
+ggplot(mydata, aes(x=Sepal.Length, y=Petal.Length, col=Species))+geom_point()
+```
+
+Showing the levels for the factor `Species`.
+
+```{r}
+#levels(mydata$Species)
+
+mydata$Species
+
+as.numeric(mydata$Species)
+```
+
+
+Create a logistic regression 
+
+```{r}
+
+model <- glm(Species ~ Sepal.Length+Petal.Length,         # Formula
+                    data= mydata,    # Data set
+                    family="binomial")      # family="binomial" for binary logistic
+
+summary(model)  
+```
+
+For logistic regression, classes are predicted alphabetically by default. 
+ - setosa: coded as 0
+ - versicolor: coded as 1
+
+```{r}
+mydata$p_hat <- predict(model, newdata = mydata, type = "response")
+mydata$predicted_species <- ifelse(p_hat>0.5, "versicolor","sestosa")
+mydata
+```
+Draw the decision boundary.
+
+```{r}
+x = seq(4,8,0.03) #sepal length
+y = seq(0,6,0.03)#petal length
+df <- data.frame(expand.grid(x,y))
+colnames(df) <- c("Sepal.Length","Petal.Length")
+df
+summary(df)
+
+df$p_hat <- predict(model, newdata = df, type = "response")
+df$predicted_species <- ifelse(df$p_hat>0.5, "versicolor","sestosa")
+df
+
+ggplot(df, aes(Sepal.Length, Petal.Length,  z=p_hat, fill=p_hat)) +
+  geom_raster() +
+  scale_fill_gradientn(colors=c("#F8766D","white", "#00BFC4")) +
+  stat_contour(breaks=c(0.5), color="white") 
+```
+
+
+
+
+
+## References
+
+- https://rafalab.github.io/dsbook/examples-of-algorithms.html
+- https://rafalab.github.io/dsbook/machine-learning-in-practice.html
+- https://mhahsler.github.io/Introduction_to_Data_Mining_R_Examples/book/data.html#proximities-similarities-and-distances
+- https://lgatto.github.io/IntroMachineLearningWithR/supervised-learning.html#introduction-1
+- https://bradleyboehmke.github.io/HOML/intro.html
+- https://rstudio.cloud/learn/primers/3.1

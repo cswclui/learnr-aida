@@ -1,0 +1,524 @@
+---
+title: "logistic regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+renv::dependencies()
+```
+
+
+## Ex
+
+```{r}
+#data from https://en.wikipedia.org/wiki/Logistic_regression
+# ref: https://rpubs.com/johnakwei/167443
+(hours=c(0.50,0.75,1.00,1.25,1.50,1.75,1.75,2.00,2.25,2.50,2.75,3.00,3.25,3.50,4.00,4.25,4.50,4.75,5.00,5.50))
+(pass = c(0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1))
+(mydata<-data.frame(hours, pass))
+
+
+```
+
+```{r}
+ggplot() + 
+   geom_point(data=mydata, aes(x=hours, y=pass, color="admit")) 
+
+```
+
+
+```{r}
+model <- glm(pass ~ hours,family=binomial(link='logit'),data=mydata)
+model$coefficients
+```
+
+
+Probability of passing exam =1/(1+exp(-(-4.0777+1.5046* Hours)))
+
+For example, for a student who studies 2 hours, entering the value Hours =2 in the equation gives the estimated probability of passing the exam of p=0.26:
+
+StudentHours <- 2
+ProbabilityOfPassingExam <- 1/(1+exp(-(-4.0777+1.5046*StudentHours)))
+ProbabilityOfPassingExam
+
+
+Similarly, for a student who studies 4 hours, the estimated probability of passing the exam is p=0.87:
+Probability of passing exam =1/(1+exp(-(-4.0777+1.5046*4))) = 0.87.
+
+StudentHours <- 4
+ProbabilityOfPassingExam <- 1/(1+exp(-(-4.0777+1.5046*StudentHours)))
+ProbabilityOfPassingExam
+
+
+
+```{r}
+x = seq(0,6,0.25)
+y = 1/(1+exp(-(-4.0777+1.5046* x)))
+d = data.frame(x,y)
+ggplot()+
+  geom_point(data=d, aes(x=x,y=y))+
+  geom_vline(aes(xintercept = 2.710156), linetype="dotted")
+```
+
+let $z=-4.0777+1.5046* x$.
+
+```{r}
+library(ggplot2)
+ggplot()+
+  scale_x_continuous(name="x", limits=c(-10,40)) +
+  scale_y_continuous(name="y", limits=c(-10,50)) +
+ # scale_linetype(name="s") +
+  geom_abline(slope=1.5046, intercept=-4.0777) +
+  geom_line() +
+  coord_fixed(ratio=0.5)
+```
+
+
+
+
+
+```{r}
+z = seq(-5,6,0.25)
+y = 1/(1+exp(-(z)))
+d = data.frame(z,y)
+ggplot()+
+  geom_point(data=d, aes(x=z,y=y))
+```
+
+$-4.0777+1.5046* x = 0 $
+
+```{r}
+x = 4.0777/1.5046
+x
+```
+When # of hours of study = 2.710156, prob(pass)=0.5
+
+
+
+
+
+
+
+```{r}
+Hours <- c(0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 1.75, 2.00, 2.25,
+           2.50, 2.75, 3.00, 3.25, 3.50,    4.00,   4.25,   4.50,   4.75,
+           5.00, 5.50)
+Pass    <- c(0, 0, 0, 0, 0, 0, 1,   0, 1, 0, 1, 0, 1, 0, 1, 1, 1,   1, 1, 1)
+HrsStudying <- data.frame(Hours, Pass)
+ggplot(HrsStudying, aes(Hours, Pass)) +
+  geom_point() +
+  #geom_smooth(method='glm', family="binomial", se=FALSE) +
+   geom_smooth(method = 'glm', se=FALSE, method.args= list(family="binomial"))+
+  labs (x="Hours Studying", y="Probability of Passing Exam",
+        title="Probability of Passing Exam vs Hours Studying")
+```
+
+
+
+```{r}
+mymodel <- glm(pass ~ hours, #+SibSp+Age,        # Formula
+                    data= mydata,    # Data set
+                    family="binomial")      # family="binomial" for binary logistic
+
+summary(mymodel)                      # Check model summary
+```
+
+The equation is
+
+$pass = $
+
+```{r}
+mymodel <- glm(pass ~  hours , data = mydata, family = "binomial")
+summary(mylogit)
+
+```
+
+
+
+
+## Example
+
+. A researcher is interested in how variables, such as GRE (Graduate Record Exam scores), GPA (grade point average) and prestige of the undergraduate institution, effect admission into graduate school. The response variable, admit/don’t admit, is a binary variable.
+
+
+```{r}
+mydata <- read.csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+
+## view the first few rows of the data
+str(mydata)
+head(mydata)
+```
+
+
+- This dataset has a binary response (outcome, dependent) variable called admit. 
+- There are three predictor variables: gre, gpa and rank.
+  - the variables gre and gpa as continuous. The variable rank takes on the values 1 through 4. 
+  - Institutions with a rank of 1 have the highest prestige, while those with a rank of 4 have the lowest. 
+
+
+```{r}
+## two-way contingency table of categorical outcome and predictors we want
+## to make sure there are not 0 cells
+xtabs(~admit + rank, data = mydata)
+```
+
+
+```{r}
+mydata$rank <- factor(mydata$rank)
+mylogit <- glm(admit ~  gpa , data = mydata, family = "binomial")
+summary(mylogit)
+```
+
+```{r}
+df<-data.frame(gpa=seq(-1, 5, by = 0.1))
+df
+
+prob_admit <- predict(mylogit,              # Model to use
+                       newdata=df,      # Data to use for predictions
+                       type="response")            # Return predicted probabilities
+(mydata2<-cbind(prob_admit,df))
+```
+
+
+```{r}
+ggplot() + 
+   geom_point(data=mydata, aes(x=gpa, y=admit, color="admit")) 
+  #+ geom_point(data=mydata2, aes(x=gpa, y=prob_admit, color="predicted"))
+  
+```
+
+
+## Titanic
+
+```{r}
+install.packages("titanic")
+library(titanic)
+head(titanic_train)
+titanic_train
+```
+```{r}
+str(titanic_train)
+```
+
+```{r}
+titanic_train$Name <- as.character(titanic_train$Name)    # Convert name to character
+
+titanic_train$Pclass <- ordered(titanic_train$Pclass,     # Convert to ordered factor
+                                levels=c("3","2","1")) 
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Name <- NULL  # Remove name column
+titanic_train$Ticket <- NULL  # Remove ticket column
+titanic_train$Cabin <- NULL  # Remove Cabin column
+str(titanic_train)
+```
+
+```{r}
+head(titanic_train)
+```
+
+
+
+```{r}
+summary(titanic_test)
+```
+
+```{r}
+?titanic
+```
+
+
+
+```{r}
+options(scipen=999)   # avoid using scientific notation
+titanic_model <- glm(Survived ~ ., #+SibSp+Age,        # Formula
+                    data= titanic_train,    # Data set
+                    family="binomial")      # family="binomial" for binary logistic
+
+summary(titanic_model)                      # Check model summary
+```
+
+```{r}
+train_preds <- predict(titanic_model,              # Model to use
+                       newdata=titanic_train,      # Data to use for predictions
+                       type="response")            # Return predicted probabilities
+
+table(train_preds, titanic_train$Age)
+```
+
+
+
+```{r}
+mydata<-titanic_train[1-10,]
+survived_prob <- predict(titanic_model,              # Model to use
+                       newdata=mydata,      # Data to use for predictions
+                       type="response")            # Return predicted probabilities
+#mydata$predicted <- train_preds
+mydata<-cbind(predicted_survived,mydata)
+mydata$Predicted_Survived = ifelse(mydata$predicted_survived >= 0.5, 1, 0)
+
+#colnames(mydata)
+mydata[,c("predicted_survived","Survived","Predicted_Survived","Age")]
+#table(train_preds, titanic_train$Sex)
+```
+
+```{r}
+library(ggplot2)
+ggplot(mydata, aes(x=Age, y=predicted_survived)) +
+  geom_point(size=2, shape=23)
+```
+
+
+
+## Draw a line
+
+```{r}
+library(ggplot2)
+data(iris)
+str(iris)
+x=1:5
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, col = Species)) +
+  geom_point(alpha = 1) +
+  stat_function(fun=function(x) {x-3}, color = "grey", size = 1) 
+```
+
+## Diabetest
+
+```{r}
+#ref: https://rpubs.com/Mayank7j_2020/PimaIndiansDiabetesData
+#install.packages("mlbench")
+library(mlbench) #data sets from the UCI repository.
+data("PimaIndiansDiabetes")
+# rename dataset to keep code below generic
+dataset <- PimaIndiansDiabetes
+str(dataset)
+```
+
+
+
+```{r}
+model <- glm(diabetes ~ ., ,        # Formula
+                    data= PimaIndiansDiabetes,    # Data set
+                    family="binomial")      # family="binomial" for binary logistic
+
+summary(model)  
+```
+```{r}
+data<-dataset[, -which(names(dataset) == "diabetes")]  #remove the diabetes column
+data
+```
+
+```{r}
+library("ggplot2")
+ggplot(dataset, aes(x=glucose, fill=diabetes)) +
+  geom_bar( position='dodge', stat = "bin",  binwidth = 30) 
+```
+
+```{r}
+library("ggplot2")
+ggplot(dataset, aes(x=pressure, fill=diabetes)) +
+  geom_bar( position='dodge', stat = "bin",  binwidth = 30) 
+```
+```{r}
+library("ggplot2")
+ggplot(dataset, aes(x=age, fill=diabetes)) +
+  geom_bar( position='dodge', stat = "bin",  binwidth = 10) 
+```
+
+
+
+```{r}
+#install.packages("corrplot")
+library(corrplot)
+cor_data <- cor(data)
+cor_data
+corrplot(cor_data,method = "number")
+```
+
+
+```{r}
+library("ggplot2")
+ggplot(dataset, aes(x=age, y=glucose, col=diabetes)) +
+  geom_point( ) +
+  stat_function(fun=function(x) {165.875 +  -0.6951521*x}, color = "black", size = 0.5) 
+
+```
+
+```{r}
+model <- glm(diabetes ~ glucose+age, ,        # Formula
+                    data= PimaIndiansDiabetes,    # Data set
+                    family="binomial")      # family="binomial" for binary logistic
+
+summary(model)  
+```
+
+-5.912449 + 0.035644*glucose+0.024778*age=0
+-5.912449 + 0.024778*age= -0.035644*glucose 
+165.875 +  -0.6951521*age= glucose 
+
+```{r}
+ 0.024778/-0.035644
+```
+## Iris
+
+Convert setosa and versicolor species to others.
+
+```{r}
+unique(iris$Species)
+library(tidyverse)
+data(iris)
+mydata <- iris
+mydata$Species <- as.character(mydata$Species)
+mydata$Species[mydata$Species == 'setosa'] <- 'others'
+mydata$Species[mydata$Species == 'versicolor'] <- 'others'
+unique(mydata$Species)
+```
+
+```{r}
+unique(mydata$Species)
+```
+
+
+```{r}
+library("ggplot2")
+
+ggplot(mydata, aes(y=Petal.Length, x=Sepal.Length, col=Species)) +
+  geom_point( ) +
+  scale_colour_manual(values = c("tomato","blue")) 
+
+```
+
+
+```{r}
+data(iris)
+iris
+mydata=iris[1:100,]
+unique(mydata$Species)
+
+model <- glm(Species ~ Sepal.Length+Petal.Length,         # Formula
+                    data= mydata,    # Data set
+                    family="binomial")      # family="binomial" for binary logistic
+
+summary(model)  
+
+```
+
+
+
+```{r}
+
+library(tidyverse)
+df <- data.frame(expand.grid(1:10,1:10))
+x<-1:5
+y<-1:5
+df <- data.frame(x=x,y=y)
+#df %>%
+#  mutate(z, Var1+Var2)
+df %>%
+  mutate(z=x+y)
+
+#ggplot(mydata, aes(x=Sepal.Length, y=Petal.Length,  z=Sepal.Width, col=Species))  + 
+##    geom_point()+
+#    geom_contour_filled() 
+
+
+
+```
+
+z=65.84 - 37.56*Sepal.Length + 49.05*Petal.Length
+
+
+```{r}
+#install.packages("metR")
+library(tidyverse)
+library(metR)
+ <- data.frame(expand.grid(1:10,1:10))
+df
+df<-df %>%
+  mutate(Var3=1/(1+exp(-1*(Var1*(-37.56)+Var2*(49.05)+65.84))))
+df
+
+```
+
+
+
+```{r}
+library(plotly)
+Sepal.Length = 1:10
+Petal.Length = 1:10
+
+#z=65.84 - 37.56*Sepal.Length + 49.05*Petal.Length
+
+my_function <- function(x,y) {
+    final_value = 1/(1+exp(-1*(Sepal.Length*(-37.56)+y*(49.05)+65.84)))
+}
+
+z <- outer(x, y, my_function)
+print(z)
+plot_ly(x = ~Sepal.Length, y = ~Petal.Length, z = ~z, opacity=0.6,colorscale ='Blues')  %>% 
+        add_surface() %>%
+    layout(
+    xaxis = list(range = c(100, 1), autorange = F, autorange="reversed"), 
+    yaxis = list(range = c(2, 5)))
+```
+
+```{r}
+library(plotly)
+
+s <- seq(1, 8)
+plot_ly(x = s, y = s) %>%
+  add_trace(y = rev(s)) %>%
+  layout(
+    xaxis = list(range = c(100, 1), autorange = F, autorange="reversed"), 
+    yaxis = list(range = c(2, 5)))
+```
+
+
+
+```{r}
+fig2 <-  plot_ly(data = iris ,x =  ~Sepal.Length, y = ~Sepal.Width, color = ~Species, type = 'scatter', mode = 'markers')%>%
+  layout(title = 'Manually Specified Labels', plot_bgcolor = "#e5ecf6", xaxis = list(title = 'Sepal Length (cm)'), 
+         yaxis = list(title = 'Sepal Width (cm)'), legend = list(title=list(text='<b> Species of Iris </b>')))
+fig2
+```
+
+
+```{r}
+ggplot()  + 
+  geom_contour_filled(data=df, aes(x=Var1, y=Var2,  z=Var3)) + 
+  scale_fill_brewer(palette = "Blues")
+```
+
+
+
+
+```{r}
+mydata=iris[1:100,]
+ggplot()  + 
+  geom_contour_filled(data=df, aes(x=Var1, y=Var2,  z=Var3)) + 
+  scale_fill_brewer(palette = "Blues")+
+  geom_point(data=mydata, aes(y=Petal.Length, x=Sepal.Length, col=Species)) +
+  scale_colour_manual(values = c("tomato","blue")) +
+  labs(title="Scatterplot",
+        x ="Sepal Length", y = "Petal Length")
+```
+
+
+
+## References
+
+- https://stats.oarc.ucla.edu/r/dae/logit-regression/
+- https://www.kaggle.com/code/hamelg/intro-to-r-part-28-logistic-regression/notebook
+
+
+
+```{r}
+library(modeldata)
+data(attrition)
+attrition
+```
+

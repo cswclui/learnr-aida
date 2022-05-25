@@ -1,0 +1,222 @@
+---
+title: "mnist"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dslabs)
+```
+
+# Machine learning in practice
+
+Now that we have learned several methods and explored them with illustrative examples, we are going to try them out on a real example: the MNIST digits. 
+
+We can load this data using the following __dslabs__ package:
+
+```{r}
+mnist <- read_mnist()
+```
+
+The dataset includes two components, a training set and test set:
+
+```{r}
+names(mnist)
+```
+
+Each of these components includes a matrix with features in the columns:
+
+```{r}
+dim(mnist$train$images)
+```
+
+and vector with the classes as integers:
+
+```{r}
+class(mnist$train$labels)
+table(mnist$train$labels)
+```
+
+This is the vector  for the first image in the training set.
+```{r}
+mnist$train$images[1,]
+```
+
+Print the vector in matrix form.
+
+```{r}
+m  <- matrix(mnist$train$images[1,],28,28, byrow=TRUE)
+prmatrix(m, rowlab=rep(" ",28), collab=rep("  ",28)) #Print the matrix without row and column indices
+```
+
+This is the 2nd image in the training set.
+
+
+```{r}
+m<-matrix(mnist$train$images[2,],28,28, byrow=TRUE)
+prmatrix(m, rowlab=rep(" ",28), collab=rep("  ",28)) #Print the matrix without row and column indices
+```
+
+This is the 3nd image in the training set.
+
+```{r}
+m<-matrix(mnist$train$images[3,],28,28, byrow=TRUE)
+prmatrix(m, rowlab=rep(" ",28), collab=rep("  ",28)) #Print the matrix without row and column indices
+```
+
+
+Let's visualize the first 5 digits in the sample.
+
+```{r}
+#install.packages(rafalib)
+library(rafalib)
+rafalib::mypar(2,4)
+for(i in 1:5){
+  image(matrix(mnist$train$images[i,], 28, 28)[, 28:1], 
+        main = paste0("Index:",i," Label:", mnist$train$labels[i]),
+        xaxt="n", yaxt="n")
+}
+```
+
+
+To reduce time time for training and testing, we will sample 10,000 random rows from the training set and 1,000 random rows from the test set:
+
+```{r}
+set.seed(1990)
+index <- sample(nrow(mnist$train$images), 10000)
+x_train <- mnist$train$images[index,]
+y_train <- factor(mnist$train$labels[index])
+
+index <- sample(nrow(mnist$test$images), 1000)
+x_test <- mnist$test$images[index,]
+y_test <- factor(mnist$test$labels[index])
+```
+
+Let's visualize the digits (the first 10 digits) in the sample.
+
+```{r}
+#install.packages(rafalib)
+library(rafalib)
+rafalib::mypar(2,4) #adjust layout of the plot
+for(i in 1:10){
+  image(matrix(x_train[i,], 28, 28)[, 28:1], 
+        main = paste("Label:", y_train[i]),
+        xaxt="n", yaxt="n")
+}
+```
+
+## k-nearest neighbor 
+
+Let's check the arguments of the `knn` function.
+
+```{r}
+library("class")
+args(knn)
+```
+We will then run the knn algorithm to predict the labels of the test set. Note that when we run the algorithm, we will have to compute a distance between each observation in the test set and each observation in the training set. There are a lot of computations.
+
+
+```{r}
+knnresult <- knn(x_train, x_test, y_train)
+knnresult #predicted class of the test set
+```
+
+We can now compare the observed kNN-predicted class and the expected known outcome.
+
+
+```{r}
+table(knnresult, y_test)
+```
+
+Now, we calculate the overall accuracy of our model.
+```{r}
+mean(knnresult == y_test)
+```
+We can set the number of nearest neighbours that will be considered to assign a class to a new unlabelled observation. By default,  the parameter k of the `knn` classifier is 1.  Let's try other k values and compare the accuracy of the model.
+
+
+```{r}
+knnresult <- knn(x_train, x_test, y_train, k=2)
+mean(knnresult == y_test)
+```
+
+Let's compare the accuracy when k=3.
+
+```{r}
+knnresult <- knn(x_train, x_test, y_train, k=3)
+mean(knnresult == y_test)
+```
+
+Let's compare the accuracy when k=4 and k=5
+
+```{r}
+knnresult <- knn(x_train, x_test, y_train, k=4)
+mean(knnresult == y_test)
+```
+
+```{r}
+knnresult <- knn(x_train, x_test, y_train, k=5)
+mean(knnresult == y_test)
+```
+
+The confusion matrix is
+```{r}
+table(knnresult, y_test)
+```
+
+Let's use the `confusionMatrix` function in the `caret` library.
+
+```{r}
+library(caret)
+args(confusionMatrix)
+cm <- confusionMatrix(knnresult, y_test)
+cm
+```
+
+The accuracy of the model is
+
+```{r}
+cm$overall["Accuracy"]
+```
+
+From the specificity and sensitivity, we also see that 8s are the hardest to detect and the most commonly incorrectly predicted digit is 7.
+
+```{r}
+cm$byClass[,1:2]
+```
+
+
+
+## Visual assessments
+
+An important part of data analysis is visualizing results to determine why we are failing. We can show the images of digits for which we made an incorrect prediction.
+
+
+Here are some errors for kNN
+
+```{r knn-images, echo=FALSE, out.width="100%", fig.width=6, fig.height=1.65}
+
+ind  <- which(knnresult != y_test)
+ind
+#ind <- ind[order(p_max[ind], decreasing = TRUE)]
+
+rafalib::mypar(1,4)
+for(i in ind[1:20]){
+  image(matrix(x_test[i,], 28, 28)[, 28:1], 
+        main = paste0("Predicted: ",knnresult[i],", Actual:",y_test[i]),
+        xaxt="n", yaxt="n")
+}
+```
+ 
+
+By examining errors like this we often find specific weaknesses to algorithms or parameter choices and can try to correct them.
+
+
+
+## References
+
+- https://rafalab.github.io/dsbook/introduction-to-machine-learning.html
+- https://bradleyboehmke.github.io/HOML/knn.html#knn-mnist
+- https://rafalab.github.io/dsbook/introduction-to-machine-learning.html#two-or-seven
+- https://rafalab.github.io/dsbook/machine-learning-in-practice.html
