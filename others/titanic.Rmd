@@ -1,0 +1,270 @@
+---
+title: "Titanic Dataset"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+tutorial:
+  id: "demo-types"
+  version: 1.0
+---
+
+```{r setup, include=FALSE}
+#install.packages("naniar")
+
+knitr::opts_chunk$set(echo = TRUE)
+library(learnr)
+library(gradethis)
+library(titanic)
+library(tidyverse)
+
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Pclass<-factor(titanic_train$Pclass)
+```
+
+
+## Exploratory Data Analysis
+
+### Loading the libararies and dataset
+Titanic is an R package containing data sets providing information on the fate of passengers on the fatal maiden voyage of the ocean liner "Titanic".
+
+Load the dataset and libraries.
+
+```{r echo=TRUE}
+library(titanic)
+library(tidyverse)
+```
+
+For pre-processing, we need to convert the variables `Survived` and `Pclass` to factor variables.
+
+```{r echo+TRUE}
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Pclass<-factor(titanic_train$Pclass)
+```
+
+
+### Exploring the dataset
+
+Glimpse the dataset.
+
+```{r glimpse, exercise=TRUE}
+glimpse(titanic_train)
+
+```
+###
+
+Here is the description of the variables:
+
+- **survival**: Survival (0 = No; 1 = Yes)
+- **Pclass**: Passenger Class (1 = 1st; 2 = 2nd; 3 = 3rd)
+- **name**: Name of passenger
+- **sex**: Gender of passenger
+- **age**: Age of passenger
+- **sibsp**: Number of Siblings/Spouses Aboard
+- **parch**: Number of Parents/Children Aboard
+- **ticket**: Ticket Number
+- **fare**: Passenger Fare (British pound)
+- **cabin**: Cabin
+- **embarked**: Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton)
+
+### 
+
+Examine the few rows of data in the training set using the `head` function.
+```{r head, exercise=TRUE}
+head(titanic_train)
+```
+
+Use the `summary()` function to view the summary statistics on the dataset.
+
+```{r summary, exercise=TRUE}
+summary(titanic_train)
+```
+
+
+
+
+### Contingency Table
+
+The `table` is a basic summary statistics function in R which counts the occurrence of each value in a vector. 
+
+```{r gender, exercise=TRUE}
+table(titanic_train$Sex) 
+```
+
+Question: In the training set, how many male passengers are there? Execute the following code to find out the answer.
+
+Answer: 577.
+
+###
+
+We can send the output of the `table` command to  `prop.table()` to compute the proportion.
+
+```{r prop_gender, exercise=TRUE}
+t<-table(titanic_train$Sex) 
+prop.table(t)
+```
+
+###
+
+Complete the following code to find out the proportion of passenger survived.
+
+```{r prop_survived, exercise=TRUE}
+t<-table(titanic_train$Survived) 
+prop.table(t)
+```
+
+What is the proportion of survivors? 
+
+Answer (round to 2 decimal places): **0.62**
+
+
+### Charts
+
+Create a bar chart to show the distribution of male/female passengers.
+
+```{r barchart-gender, exercise=TRUE}
+ggplot(titanic_train,aes(x=Sex))+
+  geom_bar() 
+```
+
+
+
+Compute the proportion of survivors grouped by Gender by completing the following code.
+
+```{r prop_sex_survived, exercise=TRUE}
+t<-table(titanic_train$Sex,titanic_train$Survived) 
+prop.table(t)
+```
+
+Question: Is Male or Female passenger more likely to survive? 
+
+Answer:
+
+###
+
+Create a bar chart  to visualize the results.
+
+```{r plot_survived_sex, exercise=TRUE}
+ggplot(titanic_train,aes(x=Sex,fill=factor(Survived)))+
+  geom_bar()
+```
+
+
+### Exercise 1
+Create a bar chart to show the distribution fo the different classes of passengers
+
+```{r barchart-Pclass, exercise=TRUE}
+ggplot(titanic_train,aes(x=Pclass))+
+  geom_bar() 
+```
+
+
+
+Complete the following code to plot a bar chart with x-axis being `Pclass` grouped by `Survived`.
+
+```{r survived_ex1, exercise=TRUE}
+ggplot(titanic_train,aes(x=Pclass,fill=factor(Survived)))+
+  geom_bar(position="dodge") 
+```
+
+**Question**: Does passenger class affects the probability of survival? 
+
+Answer: There are higher probability of survival in class 1. The probability of survival is lowest in class 3.
+
+
+### Missing values
+
+
+Let's plot the histogram for showing age distribution.
+
+```{r}
+ggplot(titanic_train, aes(x=Age)) +
+  geom_histogram()
+```
+
+
+To compute the average age of the passenger, execute
+
+```{r mean-age, exercise=TRUE}
+mean(titanic_train$Age)
+```
+
+Since there are missing values in the age attributes, you can not directly compute the average of the age attribute. We can use the option `na.rm = TRUE` to ignore the missing values (NA) when computing the mean.
+
+```{r mean-age2, exercise=TRUE}
+mean(titanic_train$Age, na.rm = TRUE)
+```
+
+
+Missing values are ubiquitous in data and need to be carefully explored and handled in the initial stages of analysis. To examine the number of rows of missing values for each attribute, you may execute
+
+```{r missing, exercise=TRUE}
+colSums(is.na(titanic_train))
+```
+
+We can use the `visdat` package to visualize the missing values. `vis_dat` visualises the whole dataframe at once, and provides information about the class of the data input into R, as well as whether the data is missing or not.
+
+
+```{r}
+library(visdat)
+vis_dat(titanic_train)
+```
+
+### 
+
+One way to to handle missing values is to replace them with the mean age of passengers.
+
+```{r}
+avg<-mean(titanic_train$Age, na.rm = TRUE)
+titanic_train$Age[is.na(titanic_train$Age)] = avg
+```
+
+Verify that there are no more missing values.
+
+```{r}
+colSums(is.na(titanic_train))
+vis_dat(titanic_train)
+```
+
+
+
+### Adult or Child
+
+The attribute `Age` is a continuous variable which makes drawing proportion tables almost useless as there may only be one or two passengers for each age! Let’s create a new variable `Child` to indicate whether the passenger is below the age of 18. 
+
+```{r setup-child, exercise=TRUE}
+titanic_train$AgeCategory <- "Adult"
+titanic_train$AgeCategory[titanic_train$Age < 18] <- "Child"
+```
+
+
+Check the numebr of of children and adults in the dataset.
+
+```{r child-prop, exercise=TRUE, exercise.setup="setup-child"}
+table(titanic_train$AgeCategory)
+```
+
+
+Create a bar chart to show the `survival` for  `Child` and `Adult`.
+```{r barchart-child, exercise=TRUE, exercise.setup="setup-child"}
+ggplot(titanic_train,aes(x=AgeCategory,fill=factor(Survived)))+
+  geom_bar(position="dodge") 
+
+```
+
+**Question:** Is Child or Adult more likely to survive? 
+
+
+
+
+
+
+## References
+
+- https://cran.r-project.org/web/packages/explore/vignettes/explore_titanic.html
+- https://rolkra.github.io/explore-count-data/
+- https://cran.r-project.org/web/packages/DataExplorer/vignettes/dataexplorer-intro.html
+- https://www.youtube.com/watch?v=Zx2TguRHrJE&list=PLLSmf_EmjdvTiXrtivMJA63SR7yhxgTic&index=5&t=792s
+- https://www.youtube.com/watch?v=GSk-EEu1zkA&list=PLLSmf_EmjdvTiXrtivMJA63SR7yhxgTic&index=3&t=573s
+- https://trevorstephens.com/kaggle-titanic-tutorial/getting-started-with-r/

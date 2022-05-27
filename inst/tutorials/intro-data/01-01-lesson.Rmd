@@ -4,6 +4,8 @@ output:
   learnr::tutorial:
     progressive: true #false #true
     allow_skip: true
+    theme: "united"
+    css: ./css/style.css
 runtime: shiny_prerendered
 ---
 
@@ -173,7 +175,7 @@ hsb2 %>%
 
 School type and program are also both categorical variables, with no inherent ordering to their levels.
 
-```{r glimpse-hsb2-schtyp-prog}
+```{r glimpse-hsb2-schtyp-prog2}
 hsb2 %>% 
   select(read,write,math,science,socst) %>% 
   glimpse()
@@ -583,12 +585,11 @@ a line, so you should always hit enter/return after it. While it is not mandator
 
 Now that you've learned how to make the plot, let's talk about what the plot says.
 
-```{r hsb2-science-math-lm, , exercise=TRUE}
+```{r hsb2-science-math-lm, exercise=TRUE}
 ggplot(data = hsb2, aes(x = science, y = math)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE)
 ```
-
 ### 
 
 We can see that there is a positive relationship between the science and math scores of students, meaning that students who score highly in science tend to also score highly in math. Probably not that surprising a result.
@@ -658,59 +659,57 @@ ggplot(email50, aes(x = num_char, y = exclaim_mess, color = ___)) +
 ```
 
 ```{r email50-plot-hint-3}
-ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
+ggplot(email50, aes(x = num_char, y = exclaim_mess, color = spam)) +
   {GEOM}
 ```
 
 ```{r email50-plot-solution}
-ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
+ggplot(email50, aes(x = num_char, y = exclaim_mess, color = spam)) +
   geom_point()
 ```
 
 *Based on the plot, does there appear to be a relationship between these variables?* 
 
-###
+##  Other plots ...
 
-Other plots ...
-
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email50, aes(x =  exclaim_mess, fill = factor(spam))) +
   geom_density(alpha=0.3)
 ```
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email50, aes(x =  password, fill = factor(spam))) +
   geom_density(alpha=0.3)
 ```
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email50, aes(x =  num_char, fill = factor(spam))) +
   geom_density(alpha=0.3)
 ```
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email50, aes(x =  dollar, fill = factor(spam))) +
   geom_density(alpha=0.3)
 ```
 
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email, aes(x =  num_char, y=spam, color = factor(spam))) +
   geom_point()
 ```
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email, aes(x =  dollar, y=spam, color = factor(spam))) +
   geom_point()
 ```
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 ggplot(email, aes(x =  exclaim_mess, y=spam, color = factor(spam))) +
   geom_point()
 ```
 
 
-```{r email50-plot, exercise=TRUE}
+```{r, echo=TRUE}
 str(email50)
 ?email50
 ```
