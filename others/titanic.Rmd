@@ -1,5 +1,5 @@
 ---
-title: "Titanic Dataset"
+title: "Titanic Dataset: Exploratory Data Analysis"
 output: 
   learnr::tutorial:
     progressive: true
@@ -10,9 +10,9 @@ tutorial:
   version: 1.0
 ---
 
-```{r setup, include=FALSE}
-#install.packages("naniar")
 
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(learnr)
 library(gradethis)
@@ -24,34 +24,24 @@ titanic_train$Pclass<-factor(titanic_train$Pclass)
 ```
 
 
-## Exploratory Data Analysis
-
-### Loading the libararies and dataset
+## Loading the libararies and dataset
+###
 Titanic is an R package containing data sets providing information on the fate of passengers on the fatal maiden voyage of the ocean liner "Titanic".
 
-Load the dataset and libraries.
+First, we will load the dataset and libraries.
 
 ```{r echo=TRUE}
 library(titanic)
 library(tidyverse)
+
+#glimpse the dataset
+glimpse(titanic_train)
 ```
-
-For pre-processing, we need to convert the variables `Survived` and `Pclass` to factor variables.
-
-```{r echo+TRUE}
+```{r echo=FALSE}
 titanic_train$Survived<-factor(titanic_train$Survived)
 titanic_train$Pclass<-factor(titanic_train$Pclass)
 ```
 
-
-### Exploring the dataset
-
-Glimpse the dataset.
-
-```{r glimpse, exercise=TRUE}
-glimpse(titanic_train)
-
-```
 ###
 
 Here is the description of the variables:
@@ -68,33 +58,102 @@ Here is the description of the variables:
 - **cabin**: Cabin
 - **embarked**: Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton)
 
+## Preprocessing 
+
+**Exercise**:
+Convert the variables `Survived` and `Pclass` of the `titanic_train` data frame to factor variables.
+
+```{r to-factor-setup}
+#convert the variables to int to simulate the original dataset
+titanic_train$Survived<-as.integer(titanic_train$Survived)
+titanic_train$Pclass<-as.integer(titanic_train$Pclass)
+```
+
+
+```{r to-factor, exercise=TRUE, eval=FALSE}
+titanic_train$Survived<-________
+titanic_train$Pclass<-_________
+
+#Check that the data type of the variables are factor variables.
+glimpse(select(titanic_train, Survived, Pclass))
+
+```
+
+```{r to-factor-solution}
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Pclass<-factor(titanic_train$Pclass)
+```
+
+
+```{r to-factor-check}
+grade_this({
+  if (exists("titanic_train", envir=.envir_result))
+    titanic_train_result <- get("titanic_train", envir = .envir_result)
+    
+  glimpse(titanic_train_result)
+  if (is.factor(titanic_train_result$Survived) && is.factor(titanic_train_result$Pclass)){
+    pass()
+  }
+  fail("Please convert the variables to factor variables.")
+}
+)
+```
+
+## Exploring the dataset
+
+
 ### 
 
 Examine the few rows of data in the training set using the `head` function.
-```{r head, exercise=TRUE}
+
+```{r head-solution}
 head(titanic_train)
 ```
 
-Use the `summary()` function to view the summary statistics on the dataset.
 
-```{r summary, exercise=TRUE}
+```{r head, exercise=TRUE}
+
+```
+
+
+
+Use the `summary()` function to view the summary statistics on the dataset.
+```{r summary-solution}
 summary(titanic_train)
 ```
 
 
 
+```{r summary, exercise=TRUE}
+
+```
+
+
+**Question:** Which variable has missing values (NA)?
 
 ### Contingency Table
 
-The `table` is a basic summary statistics function in R which counts the occurrence of each value in a vector. 
+The `table` function counts the occurrence of each value in a vector. What does the following command output?
+
 
 ```{r gender, exercise=TRUE}
 table(titanic_train$Sex) 
 ```
 
-Question: In the training set, how many male passengers are there? Execute the following code to find out the answer.
+###
 
-Answer: 577.
+**Exercise:**
+In the training set, how many male passengers are there?
+
+```{r male-count, echo=FALSE}
+question_text(
+  "Answer: ",
+  answer("577", correct = TRUE),
+  incorrect = "It's not correct.",
+  #try_again_button = "Modify your answer",
+  allow_retry = TRUE
+)
+```
 
 ###
 
@@ -107,16 +166,44 @@ prop.table(t)
 
 ###
 
-Complete the following code to find out the proportion of passenger survived.
+**Exercise:**
+Complete the code below to find out the proportion of passenger survived using the `prob.table` function.
 
-```{r prop_survived, exercise=TRUE}
+```{r prop_survived-solution}
 t<-table(titanic_train$Survived) 
 prop.table(t)
 ```
 
-What is the proportion of survivors? 
+```{r prop_survived, exercise=TRUE}
 
-Answer (round to 2 decimal places): **0.62**
+```
+
+```{r prop_survived-check}
+grade_this({
+  if (.solution == .result)
+    pass()
+  fail()
+}
+)
+```
+
+
+###
+<div id="prop-survivor-ex">
+**Exercise:**
+What is the proportion of survivors (rounded to 2 decimal places)? 
+</div>
+
+
+```{r details, echo=FALSE}
+question_text(
+  "Answer: ",
+  answer("0.62", correct = TRUE),
+  incorrect = "It's not correct.",
+  #try_again_button = "Modify your answer",
+  allow_retry = TRUE
+)
+```
 
 
 ### Charts
@@ -129,66 +216,134 @@ ggplot(titanic_train,aes(x=Sex))+
 ```
 
 
+Compute the proportion of survivors grouped by Gender by passing the vectors `titanic_train$Sex` and `titanic_train$Survived` below.
 
-Compute the proportion of survivors grouped by Gender by completing the following code.
-
-```{r prop_sex_survived, exercise=TRUE}
-t<-table(titanic_train$Sex,titanic_train$Survived) 
+```{r prop_sex_survived, exercise=TRUE, eval=FALSE}
+t<-table(_____, ______) 
 prop.table(t)
 ```
 
-Question: Is Male or Female passenger more likely to survive? 
+Is Male or Female passenger more likely to survive? 
 
-Answer:
+```{r survive_prob, echo=FALSE}
+question("Which of the following statements is TRUE related to chance of survival of female and male?",
+  answer("Male passengers have higher probability of survival than female", message = "Nope, not quite!"),
+  answer("Female passengers have higher probability of survival than male", correct = TRUE),
+  answer("Male and female passengers have equal probability of survival",  message = "Try again!"), 
+  allow_retry = TRUE
+)
+```
 
-###
 
-Create a bar chart  to visualize the results.
 
-```{r plot_survived_sex, exercise=TRUE}
+## Charts
+
+### Survival by Gender
+
+Here is a bar chart to show the number of survived/killed passengers by gender.
+
+
+```{r echo=FALSE}
 ggplot(titanic_train,aes(x=Sex,fill=factor(Survived)))+
   geom_bar()
 ```
 
 
-### Exercise 1
-Create a bar chart to show the distribution fo the different classes of passengers
+Complete the code below to replicate the bar chart above.
 
-```{r barchart-Pclass, exercise=TRUE}
+```{r plot_survived_sex-solution}
+ggplot(titanic_train,aes(x=Sex,fill=factor(Survived)))+
+  geom_bar()
+```
+
+
+```{r plot_survived_sex, exercise=TRUE}
+
+```
+
+
+###  Survival by passenger class
+
+Let's plot a bar chart to the number of passengers in each passenger class.
+
+```{r echo=FALSE}
+ggplot(titanic_train,aes(x=Pclass))+
+  geom_bar() 
+```
+
+
+Complete the code below to replicate the bar chart above.
+
+```{r barchart_PClass-solution}
+ggplot(titanic_train,aes(x=Pclass))+
+  geom_bar() 
+```
+
+```{r barchart_PClass, exercise=TRUE}
+
+```
+
+
+###
+
+Does passenger class affects the probability of survival? 
+
+Here is a bar chart to show the number of survived/killed passengers for each  passenger class.
+
+```{r echo=FALSE}
+ggplot(titanic_train,aes(x=Pclass))+
+  geom_bar() 
+```
+
+Complete the code below to replicate the bar chart above.
+
+```{r barchart_Pclass, exercise=TRUE}
+
+
+```
+
+```{r barchart_Pclass-solution}
 ggplot(titanic_train,aes(x=Pclass))+
   geom_bar() 
 ```
 
 
 
-Complete the following code to plot a bar chart with x-axis being `Pclass` grouped by `Survived`.
-
-```{r survived_ex1, exercise=TRUE}
-ggplot(titanic_train,aes(x=Pclass,fill=factor(Survived)))+
-  geom_bar(position="dodge") 
+```{r survive_prob_class, echo=FALSE}
+question("Which of the following passenger has the highest chance of survival?",
+  answer("Class 2", message = "Nope, not quite!"),
+  answer("Class 3",  message = "Try again!"), 
+  answer("Class 1", correct = TRUE),
+  allow_retry = TRUE
+)
 ```
 
-**Question**: Does passenger class affects the probability of survival? 
 
-Answer: There are higher probability of survival in class 1. The probability of survival is lowest in class 3.
+## Missing values
 
+### Exploring the age of passengers
 
-### Missing values
+Let's plot the histogram  show the age distribution of passengers.
 
-
-Let's plot the histogram for showing age distribution.
-
-```{r}
+```{r echo=TRUE}
 ggplot(titanic_train, aes(x=Age)) +
   geom_histogram()
 ```
 
 
-To compute the average age of the passenger, execute
+Compute the average age of the passenger by passing the vector containing the passenger's age from the `titanic_train` data frame to the `mean` function. 
+
+```{r mean-age-solution}
+mean(titanic_train$Age)
+```
 
 ```{r mean-age, exercise=TRUE}
 mean(titanic_train$Age)
 ```
+
+
+
+###
 
 Since there are missing values in the age attributes, you can not directly compute the average of the age attribute. We can use the option `na.rm = TRUE` to ignore the missing values (NA) when computing the mean.
 
@@ -196,8 +351,9 @@ Since there are missing values in the age attributes, you can not directly compu
 mean(titanic_train$Age, na.rm = TRUE)
 ```
 
+### Handling missing values
 
-Missing values are ubiquitous in data and need to be carefully explored and handled in the initial stages of analysis. To examine the number of rows of missing values for each attribute, you may execute
+Missing values are common in data and need to be carefully handled in the initial stages of analysis. To examine the number of rows of missing values for each attribute, you may execute
 
 ```{r missing, exercise=TRUE}
 colSums(is.na(titanic_train))
@@ -206,59 +362,105 @@ colSums(is.na(titanic_train))
 We can use the `visdat` package to visualize the missing values. `vis_dat` visualises the whole dataframe at once, and provides information about the class of the data input into R, as well as whether the data is missing or not.
 
 
-```{r}
+```{r visualize_NA, exercise=TRUE}
 library(visdat)
 vis_dat(titanic_train)
 ```
 
 ### 
 
-One way to to handle missing values is to replace them with the mean age of passengers.
+One way to to handle missing values is to replace them with the average age of passengers.
 
-```{r}
+```{r handle_NA-solution}
 avg<-mean(titanic_train$Age, na.rm = TRUE)
 titanic_train$Age[is.na(titanic_train$Age)] = avg
 ```
 
-Verify that there are no more missing values.
+```{r handle_NA, exercise=TRUE, eval=FALSE}
+#handle missing values
+avg<-mean(_________)
+titanic_train$Age[is.na(titanic_train$Age)] = avg
 
-```{r}
+#Verify that there are no more missing values.
 colSums(is.na(titanic_train))
 vis_dat(titanic_train)
 ```
 
 
 
-### Adult or Child
+## Discretize a variable
 
-The attribute `Age` is a continuous variable which makes drawing proportion tables almost useless as there may only be one or two passengers for each age! Let’s create a new variable `Child` to indicate whether the passenger is below the age of 18. 
+The attribute `Age` is a continuous variable which makes drawing proportion tables almost useless as there may only be one or two passengers for each age! Let’s create a factor variable `IsAdult` to indicate whether the passenger is a child (below the age of 18) or adult (aged 18 or above). 
 
-```{r setup-child, exercise=TRUE}
-titanic_train$AgeCategory <- "Adult"
-titanic_train$AgeCategory[titanic_train$Age < 18] <- "Child"
+```{r discretize_age-solution}
+#Create the isAdult variable
+titanic_train$isAdult[titanic_train$Age >= 18] <- "Adult"
+titanic_train$isAdult[titanic_train$Age < 18] <- "Child"
+
+#convert the isAdult attribute to factor
+titanic_train$isAdult <-factor(titanic_train$isAdult)
+```
+
+```{r discretize_age, exercise=TRUE, eval=FALSE}
+titanic_train$isAdult[____________] <- "Adult"
+titanic_train$isAdult[____________] <- "Child"
+
+#convert the isAdult attribute of titanic_train data frame to factor
+
+```
+
+###
+By using the `isAdult` attribute, compute the number of of children and adults in the dataset using the `table` function.
+
+```{r isAdult-prob, exercise=TRUE, exercise.setup="discretize_age-solution"}
+table(titanic_train$isAdult)
 ```
 
 
-Check the numebr of of children and adults in the dataset.
-
-```{r child-prop, exercise=TRUE, exercise.setup="setup-child"}
-table(titanic_train$AgeCategory)
+```{r isAdult-prob-solution}
+table(titanic_train$isAdult)
 ```
 
+###
 
-Create a bar chart to show the `survival` for  `Child` and `Adult`.
-```{r barchart-child, exercise=TRUE, exercise.setup="setup-child"}
-ggplot(titanic_train,aes(x=AgeCategory,fill=factor(Survived)))+
+Is Child or Adult more likely to survive? Let's create a bar chart to show the number of survived/killed passenger for children and adults.
+
+```{r echo=FALSE}
+#preparation
+titanic_train$isAdult[titanic_train$Age >= 18] <- "Adult"
+titanic_train$isAdult[titanic_train$Age < 18] <- "Child"
+titanic_train$isAdult <-factor(titanic_train$isAdult)
+
+#plot chart
+ggplot(titanic_train,aes(x=isAdult,fill=Survived))+
   geom_bar(position="dodge") 
 
 ```
 
-**Question:** Is Child or Adult more likely to survive? 
+Complete the code below to replicate the above chart.
+
+```{r barchart_isAdult-solution}
+ggplot(titanic_train,aes(x=isAdult,fill=Survived))+
+  geom_bar(position="dodge") 
+
+```
+
+
+```{r barchart_isAdult, exercise=TRUE, exercise.setup="discretize_age-solution"}
+
+
+```
 
 
 
-
-
+```{r adult_child_survival, echo=FALSE}
+question("Which of the following statements is TRUE related to survival of Adults and Children?",
+  answer("Adults had higher probability of survival than Children", message = "Nope, not quite!"),
+  answer("Children had higher probability of survival than Adults", correct = TRUE),
+  answer("Children and Adults were equally likely to survive",  message = "Try again!"), 
+  allow_retry = TRUE
+)
+```
 
 ## References
 
