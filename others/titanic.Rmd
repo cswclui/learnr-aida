@@ -11,7 +11,6 @@ tutorial:
 ---
 
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(learnr)
@@ -19,8 +18,20 @@ library(gradethis)
 library(titanic)
 library(tidyverse)
 
+check_result <-function(){
+    grade_this({
+    if (.solution == .result)
+      pass()
+    fail()
+  }
+  )
+}
+#convert variable to factors
 titanic_train$Survived<-factor(titanic_train$Survived)
 titanic_train$Pclass<-factor(titanic_train$Pclass)
+
+#remove unnecessary variables.
+rm(titanic_test, titanic_gender_class_model, titanic_gender_class_model)
 ```
 
 
@@ -28,18 +39,29 @@ titanic_train$Pclass<-factor(titanic_train$Pclass)
 ###
 Titanic is an R package containing data sets providing information on the fate of passengers on the fatal maiden voyage of the ocean liner "Titanic".
 
-First, we will load the dataset and libraries.
+First, we  load the dataset and libraries. In this tutorial, we will make use of the data frame `titanic_train`.
 
 ```{r echo=TRUE}
 library(titanic)
 library(tidyverse)
-
-#glimpse the dataset
-glimpse(titanic_train)
 ```
-```{r echo=FALSE}
-titanic_train$Survived<-factor(titanic_train$Survived)
-titanic_train$Pclass<-factor(titanic_train$Pclass)
+
+
+### 
+
+Here is the preview of the data set.
+
+```{r echo=TRUE}
+titanic_train
+```
+
+
+###
+
+Let's examine the structure of the data frame.
+
+```{r glimpse, exercise=TRUE}
+glimpse(titanic_train)
 ```
 
 ###
@@ -167,7 +189,7 @@ prop.table(t)
 ###
 
 **Exercise:**
-Complete the code below to find out the proportion of passenger survived using the `prob.table` function.
+Complete the code to find out the proportion of passenger survived using the `prob.table` function.
 
 ```{r prop_survived-solution}
 t<-table(titanic_train$Survived) 
@@ -179,12 +201,7 @@ prop.table(t)
 ```
 
 ```{r prop_survived-check}
-grade_this({
-  if (.solution == .result)
-    pass()
-  fail()
-}
-)
+check_result()
 ```
 
 
@@ -206,22 +223,60 @@ question_text(
 ```
 
 
-### Charts
 
-Create a bar chart to show the distribution of male/female passengers.
+## Charts
 
-```{r barchart-gender, exercise=TRUE}
+### Survival by Gender
+
+Create a bar chart to show the distribution of male and female passengers.
+
+```{r barchart-gender-solution}
 ggplot(titanic_train,aes(x=Sex))+
   geom_bar() 
 ```
 
 
-Compute the proportion of survivors grouped by Gender by passing the vectors `titanic_train$Sex` and `titanic_train$Survived` below.
+```{r barchart-gender, exercise=TRUE}
+
+
+```
+
+---
+
+###
+
+To understand if male or female is more likely to survive, compute the proportion of survivors grouped by Gender by passing the vectors `titanic_train$Sex` and `titanic_train$Survived` below.
 
 ```{r prop_sex_survived, exercise=TRUE, eval=FALSE}
 t<-table(_____, ______) 
 prop.table(t)
 ```
+
+---
+
+###
+
+
+Complete the code to replicate the bar chart below.
+
+```{r echo=FALSE}
+ggplot(titanic_train,aes(x=Sex,fill=Survived))+
+  geom_bar()
+```
+
+
+```{r plot_survived_sex-solution}
+ggplot(titanic_train,aes(x=Sex,fill=Survived))+
+  geom_bar()
+```
+
+
+```{r plot_survived_sex, exercise=TRUE}
+
+```
+
+
+---
 
 Is Male or Female passenger more likely to survive? 
 
@@ -236,46 +291,34 @@ question("Which of the following statements is TRUE related to chance of surviva
 
 
 
-## Charts
-
-### Survival by Gender
-
-Here is a bar chart to show the number of survived/killed passengers by gender.
-
-
-```{r echo=FALSE}
-ggplot(titanic_train,aes(x=Sex,fill=factor(Survived)))+
-  geom_bar()
-```
-
-
-Complete the code below to replicate the bar chart above.
-
-```{r plot_survived_sex-solution}
-ggplot(titanic_train,aes(x=Sex,fill=factor(Survived)))+
-  geom_bar()
-```
-
-
-```{r plot_survived_sex, exercise=TRUE}
-
-```
-
-
 ###  Survival by passenger class
 
-Let's plot a bar chart to the number of passengers in each passenger class.
+**Exercise:** Plot a bar chart to the number of passengers for each passenger class.
 
-```{r echo=FALSE}
+```{r Pclass-solution}
 ggplot(titanic_train,aes(x=Pclass))+
   geom_bar() 
 ```
 
+```{r Pclass, exercise=TRUE}
 
-Complete the code below to replicate the bar chart above.
+```
+
+---
+
+###
+
+To understand if the passenger class may affect the survival probability, complete the code below to replicate the following bar chart.
+
+```{r echo=FALSE}
+ggplot(titanic_train,aes(x=Pclass, fill=Survived))+
+  geom_bar() 
+```
+
+
 
 ```{r barchart_PClass-solution}
-ggplot(titanic_train,aes(x=Pclass))+
+ggplot(titanic_train,aes(x=Pclass, fill=Survived))+
   geom_bar() 
 ```
 
@@ -283,34 +326,11 @@ ggplot(titanic_train,aes(x=Pclass))+
 
 ```
 
-
-###
-
-Does passenger class affects the probability of survival? 
-
-Here is a bar chart to show the number of survived/killed passengers for each  passenger class.
-
-```{r echo=FALSE}
-ggplot(titanic_train,aes(x=Pclass))+
-  geom_bar() 
-```
-
-Complete the code below to replicate the bar chart above.
-
-```{r barchart_Pclass, exercise=TRUE}
-
-
-```
-
-```{r barchart_Pclass-solution}
-ggplot(titanic_train,aes(x=Pclass))+
-  geom_bar() 
-```
-
+---
 
 
 ```{r survive_prob_class, echo=FALSE}
-question("Which of the following passenger has the highest chance of survival?",
+question("Which of the following passenger class has the highest chance of survival?",
   answer("Class 2", message = "Nope, not quite!"),
   answer("Class 3",  message = "Try again!"), 
   answer("Class 1", correct = TRUE),
@@ -321,13 +341,13 @@ question("Which of the following passenger has the highest chance of survival?",
 
 ## Missing values
 
-### Exploring the age of passengers
+### Exploring the passengers' age
 
-Let's plot the histogram  show the age distribution of passengers.
+**Exercise:** Plot the histogram show the age distribution of passengers (with bindwidth of 10).
 
-```{r echo=TRUE}
+```{r histogram_age, exercise=TRUE}
 ggplot(titanic_train, aes(x=Age)) +
-  geom_histogram()
+   geom_histogram(binwidth = 10)
 ```
 
 
@@ -338,28 +358,37 @@ mean(titanic_train$Age)
 ```
 
 ```{r mean-age, exercise=TRUE}
-mean(titanic_train$Age)
+
+
 ```
 
 
 
 ###
 
-Since there are missing values in the age attributes, you can not directly compute the average of the age attribute. We can use the option `na.rm = TRUE` to ignore the missing values (NA) when computing the mean.
+As there are missing values in the age attributes, you cannot directly compute the average of the `age` attribute. 
+We can use the option `na.rm = TRUE` of the `mean` function to ignore the missing values (NA).
+
+```{r mean-age2-solution}
+mean(titanic_train$Age, na.rm = TRUE)
+```
+
 
 ```{r mean-age2, exercise=TRUE}
-mean(titanic_train$Age, na.rm = TRUE)
+mean(titanic_train$Age, ________)
 ```
 
 ### Handling missing values
 
 Missing values are common in data and need to be carefully handled in the initial stages of analysis. To examine the number of rows of missing values for each attribute, you may execute
 
-```{r missing, exercise=TRUE}
+```{r missing, echo=TRUE}
 colSums(is.na(titanic_train))
 ```
 
-We can use the `visdat` package to visualize the missing values. `vis_dat` visualises the whole dataframe at once, and provides information about the class of the data input into R, as well as whether the data is missing or not.
+###
+
+We can use the `visdat` package to visualize the missing values. `vis_dat` visualises the whole dataframe at once, and provides information about the class of the data input into R, as well as whether the data is missing or not. Provide the data frame `titanic_train` as the parameter for the `vis_data` function below.
 
 
 ```{r visualize_NA, exercise=TRUE}
@@ -369,26 +398,26 @@ vis_dat(titanic_train)
 
 ### 
 
-One way to to handle missing values is to replace them with the average age of passengers.
+One way to to handle missing values is to replace them with the average age of passengers. Complete the code below to replace the missing values in the `Age` attribute of the `titanic_train` dataset.
+
+
+```{r handle_NA, exercise=TRUE, eval=FALSE}
+#handle missing values
+avg<-mean(_______, _______)
+titanic_train$Age[is.na(titanic_train$Age)] = avg
+
+#Verify that there are no more missing values.
+vis_dat(___________)
+```
+
 
 ```{r handle_NA-solution}
 avg<-mean(titanic_train$Age, na.rm = TRUE)
 titanic_train$Age[is.na(titanic_train$Age)] = avg
 ```
 
-```{r handle_NA, exercise=TRUE, eval=FALSE}
-#handle missing values
-avg<-mean(_________)
-titanic_train$Age[is.na(titanic_train$Age)] = avg
 
-#Verify that there are no more missing values.
-colSums(is.na(titanic_train))
-vis_dat(titanic_train)
-```
-
-
-
-## Discretize a variable
+## Discretize variables
 
 The attribute `Age` is a continuous variable which makes drawing proportion tables almost useless as there may only be one or two passengers for each age! Let’s create a factor variable `IsAdult` to indicate whether the passenger is a child (below the age of 18) or adult (aged 18 or above). 
 
@@ -402,18 +431,21 @@ titanic_train$isAdult <-factor(titanic_train$isAdult)
 ```
 
 ```{r discretize_age, exercise=TRUE, eval=FALSE}
+#Create the isAdult variable
 titanic_train$isAdult[____________] <- "Adult"
 titanic_train$isAdult[____________] <- "Child"
 
 #convert the isAdult attribute of titanic_train data frame to factor
 
+
 ```
 
 ###
-By using the `isAdult` attribute, compute the number of of children and adults in the dataset using the `table` function.
+
+By using the `titanic_train$isAdult` attribute created in the previous step, compute the number of of children and adults in the dataset using the `table` function.
 
 ```{r isAdult-prob, exercise=TRUE, exercise.setup="discretize_age-solution"}
-table(titanic_train$isAdult)
+table(________)
 ```
 
 
@@ -424,6 +456,9 @@ table(titanic_train$isAdult)
 ###
 
 Is Child or Adult more likely to survive? Let's create a bar chart to show the number of survived/killed passenger for children and adults.
+
+
+Complete the code to replicate the following chart.
 
 ```{r echo=FALSE}
 #preparation
@@ -436,8 +471,6 @@ ggplot(titanic_train,aes(x=isAdult,fill=Survived))+
   geom_bar(position="dodge") 
 
 ```
-
-Complete the code below to replicate the above chart.
 
 ```{r barchart_isAdult-solution}
 ggplot(titanic_train,aes(x=isAdult,fill=Survived))+
@@ -470,3 +503,4 @@ question("Which of the following statements is TRUE related to survival of Adult
 - https://www.youtube.com/watch?v=Zx2TguRHrJE&list=PLLSmf_EmjdvTiXrtivMJA63SR7yhxgTic&index=5&t=792s
 - https://www.youtube.com/watch?v=GSk-EEu1zkA&list=PLLSmf_EmjdvTiXrtivMJA63SR7yhxgTic&index=3&t=573s
 - https://trevorstephens.com/kaggle-titanic-tutorial/getting-started-with-r/
+- https://r.smartana.org/
