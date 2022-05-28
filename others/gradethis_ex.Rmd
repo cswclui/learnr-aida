@@ -81,3 +81,62 @@ question_text(
 
 
 
+
+
+
+### others
+
+
+## Preprocessing 
+
+**Exercise**:
+Convert the variables `Survived`, `sex` and `Pclass` of the `titanic_train` data frame to factor variables.
+
+```{r to-factor-setup}
+#convert the variables to int to simulate the original dataset
+titanic_train$Survived<-as.integer(titanic_train$Survived)
+titanic_train$Pclass<-as.integer(titanic_train$Pclass)
+titanic_train$Sex<-as.character(titanic_train$Sex)
+```
+
+
+```{r to-factor, exercise=TRUE, eval=FALSE}
+titanic_train$Survived<-________
+titanic_train$Pclass<-_________
+titanic_train$Sex<-_________
+
+#Check that the data type of the variables are factor variables.
+glimpse(select(titanic_train, Survived, Sex, Pclass))
+
+```
+
+```{r to-factor-solution}
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Pclass<-factor(titanic_train$Pclass)
+titanic_train$Sex<-factor(titanic_train$Sex)
+```
+
+
+```{r to-factor-hint, eval=FALSE}
+titanic_train$Survived<-factor(______)
+titanic_train$Pclass<-factor(_____)
+titanic_train$Sex<-factor(______)
+```
+
+```{r to-factor-check}
+grade_this({
+  if (exists("titanic_train", envir=.envir_result))
+    titanic_train_result <- get("titanic_train", envir = .envir_result)
+    
+  glimpse(titanic_train_result)
+  if (!is.factor(titanic_train_result$Survived)) 
+    fail("Please convert the variable 'Survived' to a factor")
+  else if (!is.factor(titanic_train_result$Pclass)) 
+    fail("Please convert the variable 'Pclass' to a factor")
+  else if (!is.factor(titanic_train_result$Sex)) 
+    fail("Please convert the variable 'Sex' to a factor")
+  else
+    pass()
+ }
+)
+```
