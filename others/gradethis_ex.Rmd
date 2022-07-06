@@ -7,6 +7,19 @@ tutorial:
   version: 1.0
 ---
 
+```{r}
+library(ggplot2)
+install.packages("repr")
+library(repr)
+library(caret)
+install.packages("ROCR")
+install.packages("openintro")
+library(ROCR)
+library(pROC)
+```
+
+
+
 ```{r setup, include=FALSE}
 
 library(learnr)

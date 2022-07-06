@@ -1,0 +1,395 @@
+---
+title: "Titanic Dataset: Exploratory Data Analysis"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+tutorial:
+  id: "demo-types"
+  version: 1.0
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(learnr)
+library(gradethis)
+
+library(titanic)
+library(tidyverse)
+library(tidymodels)
+library(rpart)
+library(rpart.plot)
+check_result <-function(){
+    grade_this({
+    if (.solution == .result)
+      pass()
+    fail()
+  }
+  )
+}
+#convert variable to factors
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Pclass<-factor(titanic_train$Pclass)
+titanic_train$Sex<-factor(titanic_train$Sex)
+
+#handle missing values
+avg<-mean(titanic_train$Age, na.rm = TRUE)
+titanic_train$Age[is.na(titanic_train$Age)] = avg
+
+#remove unnecessary variables.
+#rm(titanic_test, titanic_gender_class_model, titanic_gender_class_model)
+```
+
+
+## The dataset
+
+Load libraries and perform pre-processing.
+
+```{r echo=TRUE}
+library(titanic)
+library(tidyverse)
+library(tidymodels)
+library(rpart)
+library(rpart.plot)
+
+#convert variable to factors
+titanic_train$Survived<-factor(titanic_train$Survived)
+titanic_train$Pclass<-factor(titanic_train$Pclass)
+titanic_train$Sex<-factor(titanic_train$Sex)
+
+#handle missing values
+avg<-mean(titanic_train$Age, na.rm = TRUE)
+titanic_train$Age[is.na(titanic_train$Age)] = avg
+
+```
+
+Let's review the structure of the data frame `titanic_train` using the `glimpse` function.
+
+```{r glimpse, exercise=TRUE}
+glimpse(titanic_train)
+```
+
+Here is the description of the variables:
+
+- **survival**: Whether the passenger was survived (0 = No; 1 = Yes)
+- **Pclass**: Passenger Class (1 = 1st; 2 = 2nd; 3 = 3rd)
+- **name**: Name of passenger
+- **sex**: Gender of passenger
+- **age**: Age of passenger
+- **sibsp**: Number of Siblings/Spouses Aboard
+- **parch**: Number of Parents/Children Aboard
+- **ticket**: Ticket Number
+- **fare**: Passenger Fare (British pound)
+- **cabin**: Cabin
+- **embarked**: Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton)
+
+
+Here is the preview of the data set.
+
+```{r echo=TRUE}
+titanic_train
+```
+
+## Splitting the dataset
+
+We first create a training set  that contains 80% of the data.  
+The strata argument to the categorical label variable (Survival) to ensure that the training and testing subsets contain the right proportions of each category of observation. 
+
+```{r split, exercise=TRUE}
+set.seed(15)
+titanic_split <- initial_split(titanic_train, prop = 0.8, strata = Survived)
+train_set <- training(titanic_split)
+test_set <- testing(titanic_split) 
+```
+
+Examine the number of records in the training and test set. Check the proportion of Survived passengers in training and test set.
+
+```{r examine_split, exercise=TRUE, exercise.setup="split"}
+nrow(train_set)
+nrow(test_set)
+
+table(train_set$Survived)/nrow(train_set)
+table(test_set$Survived)/nrow(test_set)
+```
+
+
+## Base Models
+
+### Model 1: Assume every one dies
+
+Assume that everyone dies ($Survived=0$). What is the accuracy for the test data?
+
+```{r}
+set.seed(15)
+titanic_split <- initial_split(titanic_train, prop = 0.8, strata = Survived)
+train_set <- training(titanic_split)
+test_set <- testing(titanic_split) 
+```
+
+
+```{r}
+test_set$Pred_Survived = 0 
+mean(test_set$Pred_Survived == test_set$Survived) 
+
+```
+
+*Answer: 61.45%*
+
+### Model 2 - All male died and females survived
+
+What is the accuracy for the test data?
+
+```{r}
+test_set<-test_set %>%
+    mutate(Pred_Survived = ifelse(Sex == "female", 1, 0))
+
+test_set %>%
+  select(Sex, Survived) %>%
+  head(10)
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+```
+
+Ans: 0.79
+
+## Logistic Regression
+
+Model 1:
+
+```{r}
+logistic_model1 <- glm(Survived ~ Sex, data = titanic_train, family = binomial ) 
+summary(logistic_model1)
+tidy(logistic_model1) #output model in a data frame
+```
+
+Predict the survival probability for test set (display first 10 rows's probability)
+
+```{r}
+logistic_prediction = predict(logistic_model1, newdata = test_set,type = "response")
+logistic_prediction[1:10] #view first 10 predictions
+```
+
+Set threshold probability to be 0.5. Compute accuracy.
+
+```{r}
+test_set$Pred_Survived = (ifelse(logistic_prediction >=0.5, 1,0))
+test_set$Pred_Survived = as.factor(test_set$Pred_Survived)
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+```
+
+Ans: 0.793
+
+
+```{r}
+
+confusion <- test_set |>
+             conf_mat(truth = Survived, estimate = Pred_Survived)
+confusion
+
+
+# Caret's confusion matrix
+#library(caret)
+#confusionMatrix( table(test_set$Pred_Survived, test_set$Survived) ) #table(prediction, true_value) 
+```
+
+What are the true positives (survivors identified correctly by the prediction model)? 
+
+Ans:52
+
+What are the true negatives (passengers that did not survive predicted correctly)?
+
+Ans:90
+
+### Model 2: 
+
+$Survived ~ Age$
+
+```{r}
+logistic_model2 <- glm(Survived ~ Age, data = titanic_train, family = binomial ) 
+tidy(logistic_model2)
+logistic_prediction2 = predict(logistic_model2, newdata = test_set,type = "response")
+test_set$Pred_Survived = (ifelse(logistic_prediction2 >=0.5, 1,0))
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+
+```
+
+Ans:0.6145
+### Model 3: 
+
+$Survived ~ Gender + Age + Pclass$
+
+```{r}
+logistic_model3 <- glm(Survived ~  Sex + Age + Pclass, data = titanic_train, family = binomial ) 
+tidy(logistic_model3)
+logistic_prediction3 = predict(logistic_model3, newdata = test_set,type = "response")
+test_set$Pred_Survived = (ifelse(logistic_prediction3 >=0.5, 1,0))
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+
+```
+Ans: 0.8324022
+
+
+### Model 4: 
+
+ Sex + Age + Pclass+ SibSp + Fare + Embarked
+ 
+```{r}
+
+logistic_model3 <- glm(Survived ~  Sex + Age + Pclass+ SibSp + Fare + Embarked, data = titanic_train, family = binomial ) 
+tidy(logistic_model3)
+logistic_prediction3 = predict(logistic_model3, newdata = test_set,type = "response")
+test_set$Pred_Survived = (ifelse(logistic_prediction3 >=0.5, 1,0))
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+
+```
+
+Ans: 0.8603352
+
+Question: What if we add the PassengerId as predictor?
+
+```{r}
+
+logistic_model3 <- glm(Survived ~ PassengerId+ Sex + Age + Pclass+ SibSp + Fare + Embarked, data = titanic_train, family = binomial ) 
+tidy(logistic_model3)
+logistic_prediction3 = predict(logistic_model3, newdata = test_set,type = "response")
+test_set$Pred_Survived = (ifelse(logistic_prediction3 >=0.5, 1,0))
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+
+```
+
+## Decision tree
+
+Depth = 1
+
+```{r}
+# Generate the decision tree
+library(rpart)
+model <- rpart(Survived ~ Sex + Age + Pclass+ SibSp + Fare + Embarked, data = titanic_train,
+                 control = list(maxdepth = 1)) 
+pred = predict(model, newdata = test_set,type = "class")
+test_set$Pred_Survived = pred
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+```
+
+Ans: 0.7932961
+
+Depth = 2
+
+```{r}
+# Generate the decision tree
+library(rpart)
+model <- rpart(Survived ~ Sex + Age + Pclass+ SibSp + Fare + Embarked, data = titanic_train,
+                 control = list(maxdepth = 2)) 
+pred = predict(model, newdata = test_set,type = "class")
+test_set$Pred_Survived = pred
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+```
+
+Ans: 0.7988827
+
+
+
+Depth = 3 and 4
+
+```{r}
+# Generate the decision tree
+
+model <- rpart(Survived ~ Sex + Age + Pclass+ SibSp + Fare + Embarked, data = titanic_train, control = list(maxdepth = 5)) 
+rpart.plot(model)
+
+pred = predict(model, newdata = test_set,type = "class")
+test_set$Pred_Survived = pred
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+```
+
+Ans: 0.849162 (depth 3)
+Ans: 0.8659218 (depth 4)
+
+
+In decision trees the main hyperparameter (configuration setting) is the **complexity parameter** (CP). A high CP results in a simple decision tree with few splits, whereas a low CP results in a larger decision tree with many splits.  
+
+
+```{r}
+# Generate the decision tree
+library(rpart)
+library(rpart.plot)
+model <- rpart(Survived ~ Sex + Age + Pclass+ SibSp + Fare + Embarked, data = titanic_train,   control = list(cp=0.00001)) 
+
+rpart.plot(model)
+pred = predict(model, newdata = test_set,type = "class")
+test_set$Pred_Survived = pred
+
+#check accuracy
+mean(test_set$Survived == test_set$Pred_Survived)
+```
+
+Accuracy: cp=0.0001: 0.8659218
+
+
+### Ploting the variable importance
+
+```{r}
+names(model)
+model$variable.importance
+```
+
+Plot variable importance
+
+```{r fig.width=10,fig.height=6}
+
+x<-names(model$variable.importance)
+y<-as.numeric(model$variable.importance)
+df<-data.frame(Attribute=as.factor(x),Importance=y)
+glimpse(df)
+ggplot(df,aes(x=reorder(x,y),y=y))+geom_bar(stat="identity")+coord_flip() 
+
+```
+
+
+
+
+
+### Prunning a decision tree
+
+Pruning a decision tree is used to reduce complexity (bias). printcp displays the complexity parameter (CP) table and plotcp gives a visual display 
+
+```{r}
+printcp(model)
+plotcp(model)
+
+```
+
+
+
+## References
+
+- https://www.gormanalysis.com/blog/decision-trees-in-r-using-rpart/
+
+- https://cran.r-project.org/web/packages/explore/vignettes/explore_titanic.html
+- https://rolkra.github.io/explore-count-data/
+- https://cran.r-project.org/web/packages/DataExplorer/vignettes/dataexplorer-intro.html
+- https://www.youtube.com/watch?v=Zx2TguRHrJE&list=PLLSmf_EmjdvTiXrtivMJA63SR7yhxgTic&index=5&t=792s
+- https://www.youtube.com/watch?v=GSk-EEu1zkA&list=PLLSmf_EmjdvTiXrtivMJA63SR7yhxgTic&index=3&t=573s
+- https://trevorstephens.com/kaggle-titanic-tutorial/getting-started-with-r/
+- https://r.smartana.org/
+- https://medium.com/analytics-vidhya/identifying-cleaning-and-replacing-outliers-titanic-dataset-20182a062893
+
+

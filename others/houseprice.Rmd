@@ -1,0 +1,139 @@
+---
+title: "House Price Prediction"
+output: html_document
+date: '2022-06-14'
+---
+
+```{r}
+x<- 50.393 #m
+y<- 99.595 #b
+m <-x
+b<-y
+
+1/6*((155-(m*(1)+b))^2+(197-(m*(2)+b))^2+(244-(m*(3)+b))^2+(356-(m*(5)+b))^2+(407-(m*(6)+b))^2+(448-(m*(7)+b))^2)
+y^2 +8*x*y+62/3*x^2 -1807/3*y -8639/3*x +205153/2
+  
+#2/3*y^2 +10/3*y*x+13/3*x^2-453*y -5503/3*x +138401/2
+
+```
+
+
+
+```{r}
+#the data set
+num_rooms = c(1,2,3,5,6,7)
+price = c(155, 197, 244, 356,407,448)
+data <- data.frame(num_rooms, price)
+data
+
+#plot scatter chart
+library(ggplot2)
+ggplot(data,aes(x=num_rooms, y=price)) +
+  geom_point()+
+  ggtitle("House price against number of rooms") +
+  labs(x="Number of rooms", y="House price ($1000)")+
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 8)) + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 500))
+```
+
+```{r}
+#compute correlation
+library(dplyr)
+cor(data)
+```
+
+
+```{r}
+#generate linear regerssion model
+model<-lm(price~num_rooms)
+summary(model)
+```
+
+
+```{r}
+ggplot(data,aes(x=num_rooms, y=price)) +
+  geom_point()+
+  ggtitle("House price against number of rooms") +
+  labs(x="Number of rooms", y="House price") +
+  geom_smooth(method = "lm", se=FALSE) 
+```
+
+
+
+```{r}
+#add lm line to scatter plot
+ggplot(data,aes(x=num_rooms, y=price)) +
+  geom_point()+
+  ggtitle("House price against number of rooms ($1000)") +
+  labs(x="Number of rooms", y="House price") +
+  geom_smooth(method = "lm", se=FALSE) +
+  xlim(0,8) +
+  ylim(0,500)
+```
+
+
+```{r}
+#colors: https://r-graph-gallery.com/ggplot2-color.html
+#manually draw the regression line
+ggplot(data,aes(x=num_rooms, y=price)) +
+  geom_point()+
+  ggtitle("House price against number of rooms ($1000)") +
+  labs(x="Number of rooms", y="House price") +
+  geom_abline(aes(intercept=99.595,slope=50.393),color="red")+
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 8)) + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 500))
+```
+
+What is the y-intercept which minimize the MSE?
+
+```{r}
+#colors: https://r-graph-gallery.com/ggplot2-color.html
+#manually draw the regression line
+#Assume the slope is 50.393
+s <- 50.393
+
+ggplot(data,aes(x=num_rooms, y=price)) +
+  geom_point()+
+  ggtitle("House price against number of rooms") +
+  labs(x="Number of rooms", y="House price ($1000)") +
+  geom_abline(aes(intercept=100,slope=s),color="red")+
+  geom_abline(aes(intercept=120,slope=s),color="coral")+
+  geom_abline(aes(intercept=90,slope=s),color="darkgreen")+
+  geom_abline(aes(intercept=80,slope=s),color="blueviolet")+
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 8)) + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 500))
+```
+
+What is the slope which minimize MSE?
+
+```{r}
+b<-99.594665
+
+ggplot(data,aes(x=num_rooms, y=price)) +
+  geom_point()+
+  ggtitle("House price against number of rooms") +
+  labs(x="Number of rooms", y="House price ($1000)") +
+  geom_abline(aes(intercept=b,slope=40),color="red")+
+  geom_abline(aes(intercept=b,slope=50),color="coral")+
+  geom_abline(aes(intercept=b,slope=60),color="darkgreen")+
+  geom_abline(aes(intercept=b,slope=70),color="blueviolet")+
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 8)) + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 500))
+```
+
+
+
+
+# Prediction
+
+```{r}
+predict(model, data)n
+```
+
+```{r}
+data %>%
+  mutate(price_hat=predict(model, data)) %>%
+  mutate(residual = price - price_hat)
+```
+```
+

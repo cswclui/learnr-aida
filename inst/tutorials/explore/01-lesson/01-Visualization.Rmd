@@ -1,0 +1,497 @@
+---
+title: "Data Visualization with R"
+output: 
+  learnr::tutorial:
+    progressive: false #true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
+library(testthat)
+library(knitr)
+library(gridExtra)
+library(png)
+library(gtable)
+library(stringr)
+library(grid)
+library(learnr)
+library(kableExtra)
+library(tidyverse)
+library(emo)
+library(gt)
+library(gradethis)
+gradethis_setup()
+
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      fig.height = 3,
+                      fig.width = 5,
+                      fig.align = "center")
+
+# prepare dataset
+comics <- read_csv("data/comics.csv")
+#comics <- read_csv("data/comics.csv") %>% 
+#  filter(!is.na(align), 
+#         !is.na(id), 
+#         !is.na(gender)) %>%
+#  droplevels()
+
+
+```
+
+## Overview
+
+Visualization is one of the most important tools for data science.
+
+The tutorial focuses on three basic skills:
+
+1.  How to create graphs with a reusable **template**
+2.  How to add variables to a graph with **aesthetics**
+3.  How to make different "types" of graphs with **geoms**
+
+## Loading the Tidyverse package
+
+Packages are the fundamental units of reproducible R code. They include reusable functions, the documentation that describes how to use them, and sample data. In this lesson we will make use of two packages:
+
+Tidyverse is a collection of R packages for data science that adhere to a common philosophy of data and R programming syntax, and are designed to work together naturally. You can learn more about tidyverse [here](https://tidyverse.org/). But no need to go digging through the package documentation, we will walk you through what you need to know about these packages as they become relevant.
+
+Once we have installed the packages, we use the `library()` function to load packages into R.
+
+Let's load the packages to be used in the remainder of this lesson.
+
+```{r load-packages, exercise=TRUE}
+library(tidyverse)
+```
+
+
+
+## The mpg dataset
+
+
+The `mpg` sample dataset is included in the `ggplot2` package. `mpg` contains observations collected on 38 models of cars by the US Environmental Protection Agency.
+
+To see the `mpg` data frame, type `mpg` in the code block below and click "Submit Answer". 
+You can use the black triangle that appears at the top right of the table to scroll through all of the columns in `mpg`.
+
+```{r mpg0, exercise = TRUE}
+
+```
+
+```{r mpg0-solution}
+mpg
+```
+
+
+```{r mpg0-check}
+grade_this({
+  print(.result)
+  print(.solution)
+  # custom checking code appears here
+  if (identical(.result, .solution)) {
+    pass("Good job!  We'll use interactive code chunks like this throughout these tutorials. Whenever you encounter one, you can click Submit Answer to run (or re-run) the code in the chunk. If there is a Solution button, you can click it to see the answer.")
+  }
+  
+  # call log for mistake
+  fail("Please try again!")
+})
+
+#grade_code()
+```
+
+## Scatterplots
+
+### 
+
+Among the variables in `mpg` are:
+
+1.  `displ`, a car's engine size, in liters.
+2.  `hwy`, a car's fuel efficiency on the highway, in miles per gallon (mpg). A car with a low mpg consumes more fuel than a car with a high mpg when they travel the same distance.
+
+Now let's use this data to make our first graph.
+
+### Creating a scatterplot
+
+The code below uses functions from the **ggplot2** package to plot the relationship between `displ` and `hwy`.
+
+To see the plot, click "Run Code."
+
+```{r ggplot1, exercise = TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+Can you spot the relationship?
+
+
+```{r mc, echo=FALSE}
+question("Which of the following statement correctly describes the relationship between between engine size (`displ`) and fuel efficiency (`hwy`)?",
+  answer("The plot shows a positive relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *more* fuel."),
+  answer("The plot shows a positive relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *less* fuel.",  message = "Try again!"), 
+  answer("The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *more* fuel.", correct = TRUE),
+  answer("The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *less* fuel.",  message = "Try again!"), 
+  allow_retry = TRUE
+)
+```
+
+
+
+### A closer look
+
+In the plot below, one group of points (highlighted in red) seems to fall outside of the linear trend between engine size and gas mileage. These cars have a higher mileage than you might expect. How can you explain these cars? 
+
+```{r, echo = FALSE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point() + 
+  geom_point(data = dplyr::filter(mpg, displ > 5, hwy > 20), colour = "red", size = 2.2)
+```
+
+
+
+### Aesthetics
+
+You can add a third variable, like `class`, to a two dimensional scatterplot by mapping it to a new __aesthetic__. An aesthetic is a visual property of the objects in your plot. Aesthetics include things like the size, the shape, or the color of your points. You can display a point in different ways by changing the values of its aesthetic properties. 
+
+
+We can add the `class` variable to the plot by mapping the levels of an aesthetic (like color) to the values of `class`. For example, we can color a point green if it belongs to the compact class, blue if it belongs to the midsize class, and so on. 
+
+Let's give this a try. Fill in the blank piece of code below with `color = class`. What happens? Delete the commenting symbols (`#`) before running your code. (If you prefer British English, you can use `colour` instead of `color`.)
+
+```{r aesthetics, exercise = TRUE, exercise.eval = FALSE}
+# ggplot(data = mpg) + 
+#   geom_point(mapping = aes(x = displ, y = hwy, ____________))
+```
+
+<div id="aesthetics-hint">
+**Hint:** Be sure to remove all of the underlines and hashtags from the code.
+</div>
+
+```{r aesthetics-solution}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+```{r aesthetics-check}
+"Great Job! You can now tell which class of car each point represents by examining the color of the point."
+```
+
+### And the answer is...
+
+The colors reveal that many of the unusual points in `mpg` are two-seater cars. These cars don't seem like hybrids, and are, in fact, sports cars! Sports cars have large engines like SUVs and pickup trucks, but small bodies like midsize and compact cars, which improves their gas mileage. In hindsight, these cars were unlikely to be hybrids since they have large engines.
+
+This isn't the only insight we've gleaned; you've also learned how to add new aesthetics to your graph. Let's review the process.
+
+
+### Other aesthetics
+
+To map an aesthetic to a variable, we set the name of the aesthetic equal to the name of the variable, and do this inside `mapping = aes()`. ggplot2 will automatically assign a unique level of the aesthetic (here a unique color) to each unique value of the variable. ggplot2 will also add a legend that explains which levels correspond to which values.
+
+This insight gives us a new way to think about the mapping argument. Mappings tell ggplot2 more than which variables to put on which axes, they tell ggplot2 which variables to map to which visual properties. The x and y locations of each point are just two of the many visual properties displayed by a point.
+
+
+In the above example, we mapped color to `class`, but we could have mapped size to `class` in the same way. 
+
+Change the code below to map `size` to `class`. What happens? 
+
+```{r size, exercise = TRUE, exercise.eval = FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+<div id="size-hint">
+**Hint:** If `color` controls the _aesthetic_, what word do you suppose controls the _size_ aesthetic?
+</div>
+
+```{r size-solution}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+
+```{r size-check}
+"Great Job! Now the size of a point represents its class. Did you notice the warning message? ggplot2 gives us a warning here because mapping an unordered variable (class) to an ordered aesthetic (size) is not a good idea."
+```
+
+### alpha
+
+You can also map `class` to the `alpha` aesthetic, which controls the transparency of the points. Try it below.
+
+```{r alpha, exercise = TRUE, exercise.eval = FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+<div id="alpha-hint">
+**Hint:** If `color` controls the _aesthetic_, what word do you suppose controls the _alpha_ aesthetic?
+</div>
+
+```{r alpha-solution}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
+```
+
+```{r alpha-check}
+"Great Job! If you look closely, you can spot something subtle: many locations contain multiple points stacked on top of each other (alpha is additive so multiple transparent points will appear opaque)."
+```
+
+### Shape
+
+Let's try one more aesthetic. This time map the class of the points to `shape`, then look for the SUVs. What happened?
+
+```{r shape, exercise = TRUE, exercise.eval = FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+<div id="shape-hint">
+**Hint:** If `color` controls the _aesthetic_, what word do you suppose controls the _shape_ aesthetic?
+</div>
+
+```{r shape-solution}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+```
+
+```{r shape-check}
+"Good work! What happened to the SUVs? ggplot2 will only use six shapes at a time. By default, additional groups will go unplotted when you use the shape aesthetic. So only use it when you have fewer than seven groups."
+```
+
+### Task 1
+
+In the code below, map `cty`, which is a continuous variable, to `color`, `size`, and `shape`. How do these aesthetics behave differently for continuous variables, like `cty`, vs. categorical variables, like `class`? 
+
+```{r cty, exercise = TRUE, exercise.eval = FALSE}
+# Map cty to color
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+# Map cty to size
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+# Map cty to shape
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r cty-check}
+"Very nice! ggplot2 treats continuous and categorical variables differently. Noteably, ggplot2 supplies a blue gradient when you map a continuous variable to color, and ggplot2 will not map continuous variables to shape."
+```
+    
+### Task 2
+
+Map `class` to `color`, `size`, and `shape` all in the same plot. Does it work?
+
+```{r multiple, exercise = TRUE, exercise.eval = FALSE, warning=TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r multiple-check}
+"Very nice! ggplot2 can map the same variable to multiple aesthetics."
+```
+    
+<div id="multiple-hint">
+**Hint:** Be sure to set each mapping separately, e.g. `color = class`, `size = class`, etc.
+</div>    
+    
+
+
+## Boxplot
+
+To create a box plot, replace the geom function in the code below  with  `geom_boxplot`.
+
+
+```{r boxplot1, exercise = TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = class, y = hwy))
+```
+
+
+```{r boxplot1-solution}
+ggplot(data = mpg) + 
+  geom_boxplot(mapping = aes(x = class, y = hwy))
+```
+
+```{r boxplot1-check}
+
+ test_that('world_vacc_plot should be a scatter plot.', {
+        expect_true("GeomPoint" %in% c(class(world_vacc_plot$layers[[1]]$geom)))
+        })
+
+grade_code("Good job! This plot uses boxplots to compare the fuel efficiencies of different types of cars. ggplot2 comes with many geom functions that each add a different type of layer to a plot.")
+
+```
+
+
+
+## The Comic dataset
+
+Our second dataset comes from comic books. Two publishers, Marvel and DC, have created a host of superheroes that have made their way into popular culture. You're probably familiar with Batman and Spiderman, but what about Mor the Mighty? 
+The comics dataset has information on all comic characters that have been introduced by DC and Marvel. 
+
+Let's load the dataset (stored at `data/comics.csv`) and glimpse the dataset.
+
+
+```{r comics, exercise=TRUE}
+#load the dataset
+comics <- read_csv("data/comics.csv")
+
+#glimpse the dataset
+glimpse(comics)
+
+```
+
+With one exception (appearances) we see that that all variables are characters, or of the `chr` data type. These are variables that we could potentially consider categorical, as they all have a finite number of levels.
+
+### 
+
+At the top the output tell us the dimensions of this dataset.
+
+```{r no_of_rows_comics, echo=FALSE}
+question_text(
+  "What is the number of rows in the Comics dataset? Please input an integer",
+  answer("23272", correct = TRUE),
+  incorrect = "Please try again",
+  try_again_button = "Modify your answer",
+  allow_retry = TRUE
+)
+```
+
+
+```{r no_of_cols_comics, echo=FALSE}
+question_text(
+  "What is the number of columns in the Comics dataset? Please input an integer",
+  answer("11", correct = TRUE),
+  incorrect = "Please try again",
+  try_again_button = "Modify your answer",
+  allow_retry = TRUE
+)
+```
+
+
+
+### 
+
+Let's view the first few rows of the dataset
+
+```{r comics-head, exercise=TRUE}
+head(comics)
+```
+
+The first case in the dataset is Peter Parker, alias: Spiderman, where his alias and character name are included in the first variable `name`. The second column, `id`, shows that Peter Parker's personal identity is kept secret, and the third column tell us that his `align`ment is good; that he's a superhero, not a super villain.
+
+
+## Bar charts
+
+In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis, and adding a `geom_bar()` layer to the plot.
+
+```{r formula2, exercise=TRUE}
+ggplot(comics, aes(x = align)) +
+  geom_bar() 
+```
+
+A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a second categorical variable into the `fill` argument of the `aes()` function. This looks something like this:
+
+```{r formula3, exercise=TRUE}
+ggplot(comics, aes(x = gender, fill = align)) +
+  geom_bar() 
+```
+
+Add the argument `position = "dodge"` to the `geom_bar()` and observe the change to the bar chart.
+
+```{r formula4, exercise=TRUE, eval=FALSE}
+ggplot(comics, aes(x = gender, fill = align)) +
+  geom_bar(_______) 
+```
+
+```{r mc-barchart, echo=FALSE}
+question("Which of the following interpretations of the bar charts above is NOT valid?",
+  answer("Among characters with `Neutral` alignment, males are the most common.", message = "Nope, not quite!"),
+  answer("Across all genders, `Bad` is the most common alignment.", correct = TRUE),
+  answer("There are more male characters than female characters in this dataset.",  message = "Try again!"), 
+  allow_retry = TRUE
+)
+```
+
+
+### Task: Frequency count by gender
+
+Plot a bar chart to show the frequency count by gender in the Comic dataset.
+
+
+```{r barchart-comics, exercise=TRUE}
+
+
+
+```
+
+## Faceting
+
+Another useful way to visualize the distribution of a single variable is to condition on a particular value of another variable. We might be interested, for example, in the distribution of id for all neutral characters. We could either filter the dataset and build a barchart using only cases where `align`ment was "Neutral", or we could use a technique called faceting. Faceting breaks the data into subsets based on the levels of a categorical variable and then constructs a plot for each level.
+
+To implement faceting in ggplot2, all we need to do is add another layer to our plot. To add a faceting layer we use the `facet_wrap()` function. Inside the `facet_wrap()` function we add a tilde (`~`) and then the name of the variable we want to facet by (e.g. `~align`). This can be read as creating the above plot "broken down by align". The result is three simple bar charts side-by-side, the first one corresponding to the distribution of `gender` within all cases that have a "Bad" alignment, and so on, for "Good" and "Neutral" alignments.
+
+```{r md4, fig.height=3, fig.width=8}
+ggplot(comics, aes(x = align, fill=align)) +
+  geom_bar() +
+  facet_wrap(~gender)
+```
+
+### Task
+
+The text labels in the x-axis in the plot above is overlapping with each others. Add an extra layer to the above plot such that the x-Axis labels are rotated by 45 degrees with right-justified for horizontal justification.
+
+    +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```{r faceting-ex-solution}
+ggplot(comics, aes(x = align, fill=align)) +
+  geom_bar() +
+  facet_wrap(~gender)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r faceting-ex, exercise=TRUE}
+
+```
+
+## Exercises
+
+### Exercise 1
+
+Make a scatterplot of `cty` vs `hwy`.
+
+- cyl: number of cylinders
+- hwy: highway miles per gallon
+
+```{r scatterplot, exercise = TRUE}
+
+```
+
+```{r scatterplot-check}
+"Excellent work!"
+```
+
+
+### Exercise 2
+
+Make a histogram of the `hwy` variable from `mpg`. Make the bins 2 units wide.
+
+Hint: 
+
+- Do not supply a y variable.
+- Use the help page for `geom_histogram` or consult the ggplot2 cheatsheet if needed.
+
+```{r}
+
+```
+
+
+
+### Exercise 3
+
+Make a bar chart `class` colored by `class`. Use the help page for `geom_bar` to choose a "color" aesthetic for class.
+
+```{r}
+
+```
+
+

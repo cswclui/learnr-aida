@@ -108,71 +108,142 @@ if (window.hljs) {
 
 <div class="topics">
 
-<div id="section-strength-of-bivariate-relationships" class="section level2">
+<div id="section-strength-of-bivariate-relationships"
+class="section level2">
 <h2>Strength of bivariate relationships</h2>
 <div id="section-correlation" class="section level3">
 <h3>Correlation</h3>
-<p>In the previous lesson, we learned how to visually assess the <em>strength</em> of the relationship between two variables by examining a scatterplot. Correlation is a way to quantify the strength of that linear relationship.</p>
-<p>The correlation coefficient is a number between -1 and 1 that indicates the strength of a linear relationship. The <em>sign</em> of the correlation coefficient corresponds to the direction—positive or negative. The <em>magnitude</em> of the correlation corresponds to the strength–values near 0 are weaker and values near 1 or -1 are stronger.</p>
+<p>In the previous lesson, we learned how to visually assess the
+<em>strength</em> of the relationship between two variables by examining
+a scatterplot. Correlation is a way to quantify the strength of that
+linear relationship.</p>
+<p>The correlation coefficient is a number between -1 and 1 that
+indicates the strength of a linear relationship. The <em>sign</em> of
+the correlation coefficient corresponds to the direction—positive or
+negative. The <em>magnitude</em> of the correlation corresponds to the
+strength–values near 0 are weaker and values near 1 or -1 are
+stronger.</p>
 </div>
 <div id="section-near-perfect-correlation" class="section level3">
 <h3>Near perfect correlation</h3>
-<p>A correlation coefficient of close to 1 indicates near-perfect positive correlation, as we see in this plot.</p>
+<p>A correlation coefficient of close to 1 indicates near-perfect
+positive correlation, as we see in this plot.</p>
 <p><img src="03-02-lesson_files/figure-html/plot-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-strong" class="section level3">
 <h3>Strong</h3>
-<p>For scatterplots in which the points are more spread out, the value of the correlation coefficient is lower. Here we see a scatterplot with correlation that we might call “strong.”</p>
+<p>For scatterplots in which the points are more spread out, the value
+of the correlation coefficient is lower. Here we see a scatterplot with
+correlation that we might call “strong.”</p>
 <p><img src="03-02-lesson_files/figure-html/cor-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-moderate" class="section level3">
 <h3>Moderate</h3>
-<p>Values of the correlation coefficient that are closer to 0.5 might be considered “moderate”…</p>
+<p>Values of the correlation coefficient that are closer to 0.5 might be
+considered “moderate”…</p>
 <p><img src="03-02-lesson_files/figure-html/cor2-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-weak" class="section level3">
 <h3>Weak</h3>
-<p>…while values of the correlation coefficient closer to 0.2 might be considered “weak.”</p>
+<p>…while values of the correlation coefficient closer to 0.2 might be
+considered “weak.”</p>
 <p><img src="03-02-lesson_files/figure-html/cor3-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-zero" class="section level3">
 <h3>Zero</h3>
-<p>If there really is no linear relationship between the two variables, then the correlation coefficient will be close to zero. This scatterplot shows two variables that are relatively uncorrelated. Note how knowing one of the <span class="math inline">\(x\)</span> values gives you very little information about where the corresponding value of <span class="math inline">\(y\)</span> will be.</p>
+<p>If there really is no linear relationship between the two variables,
+then the correlation coefficient will be close to zero. This scatterplot
+shows two variables that are relatively uncorrelated. Note how knowing
+one of the <span class="math inline">\(x\)</span> values gives you very
+little information about where the corresponding value of <span
+class="math inline">\(y\)</span> will be.</p>
 <p><img src="03-02-lesson_files/figure-html/cor4-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-negative" class="section level3">
 <h3>Negative</h3>
-<p>Alternatively, when the direction of the relationship is negative, the value of the correlation coefficient is negative as well.</p>
+<p>Alternatively, when the direction of the relationship is negative,
+the value of the correlation coefficient is negative as well.</p>
 <p><img src="03-02-lesson_files/figure-html/cor5-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="section-non-linear-relationships" class="section level2">
 <h2>Non-linear relationships</h2>
-<p>It is crucial to remember that the correlation coefficient only captures the strength of the <em>linear</em> relationship between two variables. It is quite common to encounter variables that are strongly-related, but in a non-linear way. Blindly computing and reporting the correlation between such variables <strong>does not</strong> yield meaningful results.</p>
+<p>It is crucial to remember that the correlation coefficient only
+captures the strength of the <em>linear</em> relationship between two
+variables. It is quite common to encounter variables that are
+strongly-related, but in a non-linear way. Blindly computing and
+reporting the correlation between such variables <strong>does
+not</strong> yield meaningful results.</p>
 <p><img src="03-02-lesson_files/figure-html/plot2-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Here, this scatterplot shows a clear, quadratic relationship. To simply interpret the low correlation coefficient as evidence that <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are unrelated would be plainly incorrect. Here, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are very closely related—just not in a linear fashion.</p>
+<p>Here, this scatterplot shows a clear, quadratic relationship. To
+simply interpret the low correlation coefficient as evidence that <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are unrelated would be plainly
+incorrect. Here, <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are very closely related—just not in a
+linear fashion.</p>
 <div id="section-non-linear-correlation" class="section level3">
 <h3>Non-linear correlation</h3>
-<p>Here is an example of real data from a 10-mile run. The pace of the top 10 finishers in each age group are plotted against their age. Note how the relationship between the pace and age is non-linear: 25-year-olds tend to actually be faster than 20-year-olds, but as people age beyond their thirties, they tend to get slower. This pattern is present for both men and women.</p>
+<p>Here is an example of real data from a 10-mile run. The pace of the
+top 10 finishers in each age group are plotted against their age. Note
+how the relationship between the pace and age is non-linear:
+25-year-olds tend to actually be faster than 20-year-olds, but as people
+age beyond their thirties, they tend to get slower. This pattern is
+present for both men and women.</p>
 <p><img src="03-02-lesson_files/figure-html/code1-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>The value of the correlation coefficient here is about 0.718, but we have some intuitive sense that pace and age are more closely-related than the figure indicates.</p>
+<p>The value of the correlation coefficient here is about 0.718, but we
+have some intuitive sense that pace and age are more closely-related
+than the figure indicates.</p>
 </div>
 </div>
 <div id="section-calculating-the-correlation" class="section level2">
 <h2>Calculating the Correlation</h2>
-<p>There are several different ways that correlation can be defined in statistics, but by far the most common is the <strong>Pearson Product-Moment correlation</strong>. When we say “correlation” we are talking about this value, but you should be aware that there are other definitions that are preferred in other contexts.</p>
+<p>There are several different ways that correlation can be defined in
+statistics, but by far the most common is the <strong>Pearson
+Product-Moment correlation</strong>. When we say “correlation” we are
+talking about this value, but you should be aware that there are other
+definitions that are preferred in other contexts.</p>
 <p><span class="math display">\[
-  r(x,y) = \frac{Cov(x, y)}{\sqrt{S_{XX} \cdot S_{YY}}} 
+  r(x,y) = \frac{Cov(x, y)}{\sqrt{S_{XX} \cdot S_{YY}}}
 \]</span></p>
-<p>Correlation is most often denoted with the letter <span class="math inline">\(r\)</span>, and it is a function of two variables, most commonly <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The definition in terms of covariance and the sums of squares of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, which we haven’t defined.</p>
-<div id="section-pearson-product-moment-correlation" class="section level3">
+<p>Correlation is most often denoted with the letter <span
+class="math inline">\(r\)</span>, and it is a function of two variables,
+most commonly <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. The definition in terms of covariance
+and the sums of squares of <span class="math inline">\(x\)</span> and
+<span class="math inline">\(y\)</span>, which we haven’t defined.</p>
+<div id="section-pearson-product-moment-correlation"
+class="section level3">
 <h3>Pearson Product-Moment Correlation</h3>
-<p>This is an alternative definition using only <span class="math inline">\(x\)</span>’s and <span class="math inline">\(y\)</span>’s, and their means: <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\bar{y}\)</span>. In the denominator, we see the sums of the squared deviations in both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. In the numerator, we see a sum of terms involving both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. In fact, each term in the sum is the area of the rectangle with corners at each data point <span class="math inline">\((x_i, y_i)\)</span> and the means <span class="math inline">\((\bar{x}, \bar{y})\)</span>. So in some sense this is measuring the deviation from the mean in both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
+<p>This is an alternative definition using only <span
+class="math inline">\(x\)</span>’s and <span
+class="math inline">\(y\)</span>’s, and their means: <span
+class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(\bar{y}\)</span>. In the denominator, we see the
+sums of the squared deviations in both <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. In the numerator, we see a sum of
+terms involving both <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. In fact, each term in the sum is the
+area of the rectangle with corners at each data point <span
+class="math inline">\((x_i, y_i)\)</span> and the means <span
+class="math inline">\((\bar{x}, \bar{y})\)</span>. So in some sense this
+is measuring the deviation from the mean in both <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.</p>
 <p><span class="math display">\[
-  r(x,y) = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2 \cdot \sum_{i=1}^n (y_i - \bar{y})^2}
+  r(x,y) = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i -
+\bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2 \cdot \sum_{i=1}^n (y_i -
+\bar{y})^2}
 \]</span></p>
-<p>In practice, we always have R do these computations for us, so memorizing the formulas is not important. For some of you, the mathematics may help reinforce your intuition about what the correlation coefficient actually measures. For others, it may simply be a confusing blur of symbols that can be safely ignored. Having a solid conceptual understanding of correlation is the important thing.</p>
-<p>You’ll get some more practice computing correlation in the next set of exercises.</p>
+<p>In practice, we always have R do these computations for us, so
+memorizing the formulas is not important. For some of you, the
+mathematics may help reinforce your intuition about what the correlation
+coefficient actually measures. For others, it may simply be a confusing
+blur of symbols that can be safely ignored. Having a solid conceptual
+understanding of correlation is the important thing.</p>
+<p>You’ll get some more practice computing correlation in the next set
+of exercises.</p>
 </div>
 <div id="section-section" class="section level3">
 <h3></h3>
@@ -196,17 +267,38 @@ if (window.hljs) {
 </div>
 </div>
 </div>
-<div id="section-using-r-to-compute-the-correlation" class="section level3">
+<div id="section-using-r-to-compute-the-correlation"
+class="section level3">
 <h3>Using R to compute the correlation</h3>
-<p>The <code>cor()</code> function will compute the Pearson product-moment correlation between variables, <code>x</code> and <code>y</code>. Since this quantity is symmetric with respect to <code>x</code> and <code>y</code>, it doesn’t matter which order you input the variables.</p>
-<p>At the same time, the <code>cor()</code> function is very conservative when it encounters missing data (e.g. <code>NA</code>s). If either variable (x or y) has missing values, the <code>cor()</code> function will output <code>NA</code>.</p>
-<p>The <code>use</code> argument allows you to override the default behavior of returning <code>NA</code> whenever any of the values encountered is <code>NA</code>. Setting the <code>use</code> argument to <code>"pairwise.complete.obs"</code> allows <code>cor()</code> to compute the correlation coefficient for those observations where the values of <code>x</code> and <code>y</code> are both not missing.</p>
+<p>The <code>cor()</code> function will compute the Pearson
+product-moment correlation between variables, <code>x</code> and
+<code>y</code>. Since this quantity is symmetric with respect to
+<code>x</code> and <code>y</code>, it doesn’t matter which order you
+input the variables.</p>
+<p>At the same time, the <code>cor()</code> function is very
+conservative when it encounters missing data (e.g. <code>NA</code>s). If
+either variable (x or y) has missing values, the <code>cor()</code>
+function will output <code>NA</code>.</p>
+<p>The <code>use</code> argument allows you to override the default
+behavior of returning <code>NA</code> whenever any of the values
+encountered is <code>NA</code>. Setting the <code>use</code> argument to
+<code>"pairwise.complete.obs"</code> allows <code>cor()</code> to
+compute the correlation coefficient for those observations where the
+values of <code>x</code> and <code>y</code> are both not missing.</p>
 </div>
 <div id="section-section-1" class="section level3">
 <h3></h3>
-<p>In this exercise, you will use <code>cor()</code> to compute the correlation between the birthweight of babies (<code>weight</code>) in the <code>ncbirths</code> dataset and their mother’s age (<code>mage</code>). There is no missing data in either variable, so you can use the plain <code>cor()</code> function to do this.</p>
-<p>Then, you will use <code>cor()</code> to compute the correlation between the birthweight (<code>weight</code>) and the number of weeks of gestation (<code>weeks</code>) for all non-missing pairs of observations</p>
-<div class="tutorial-exercise" data-label="ex1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>In this exercise, you will use <code>cor()</code> to compute the
+correlation between the birthweight of babies (<code>weight</code>) in
+the <code>ncbirths</code> dataset and their mother’s age
+(<code>mage</code>). There is no missing data in either variable, so you
+can use the plain <code>cor()</code> function to do this.</p>
+<p>Then, you will use <code>cor()</code> to compute the correlation
+between the birthweight (<code>weight</code>) and the number of weeks of
+gestation (<code>weeks</code>) for all non-missing pairs of
+observations</p>
+<div class="tutorial-exercise" data-label="ex1" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Compute correlation of birthweight and mother&#39;s age
 ncbirths %&gt;%
   summarize(N = n(), 
@@ -218,17 +310,23 @@ ncbirths %&gt;%
             r = cor(___, ___, use = ___))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex1-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex1-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ncbirths %&gt;%
   summarize(N = n(), 
             r = cor(weight, mage))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex1-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex1-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ncbirths %&gt;%
   summarize(N = n(), 
             r = cor(___, ___, use = &quot;pairwise.complete.obs&quot;))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex1-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex1-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Compute correlation
 ncbirths %&gt;%
   summarize(N = n(), 
@@ -245,36 +343,85 @@ ncbirths %&gt;%
 <h2>The Anscombe dataset</h2>
 <div id="section-anscombe" class="section level3">
 <h3>Anscombe</h3>
-<p>In 1973, statistician Francis Anscombe created a synthetic data set that has been used extensively to illustrate concepts related to correlation and regression.</p>
+<p>In 1973, statistician Francis Anscombe created a synthetic data set
+that has been used extensively to illustrate concepts related to
+correlation and regression.</p>
 <p><img src="03-02-lesson_files/figure-html/ans-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Here we see four datasets, each having a very different graphical presentation. However, these datasets have the same number of points, the same mean and standard deviation in both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the same correlation, and the same regression line. How is it possible that four datasets with such obvious visual differences could have so many identical important properties?</p>
-<p>The first set looks the most like “real data.” Here we see a positive, linear, moderately strong relationship. As you gain experience working with real data, you will see lots of scatterplots that look similar to this one. Here, the correlation coefficient of 0.82 is giving us an accurate measurement of the strength of the linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
+<p>Here we see four datasets, each having a very different graphical
+presentation. However, these datasets have the same number of points,
+the same mean and standard deviation in both <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>, the same correlation, and the same
+regression line. How is it possible that four datasets with such obvious
+visual differences could have so many identical important
+properties?</p>
+<p>The first set looks the most like “real data.” Here we see a
+positive, linear, moderately strong relationship. As you gain experience
+working with real data, you will see lots of scatterplots that look
+similar to this one. Here, the correlation coefficient of 0.82 is giving
+us an accurate measurement of the strength of the linear relationship
+between <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.</p>
 <p><img src="03-02-lesson_files/figure-html/ans2-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>However, in the next set we see something quite different. The relationship here is clearly non-linear. But note also that while the value of the correlation coefficient is 0.82, the correlation—in an intuitive sense—is <em>perfect</em>. That is, knowing the value of <span class="math inline">\(x\)</span> tells you the value of <span class="math inline">\(y\)</span> exactly—there is no statistical noise. It’s just that the relationship is not linear.</p>
+<p>However, in the next set we see something quite different. The
+relationship here is clearly non-linear. But note also that while the
+value of the correlation coefficient is 0.82, the correlation—in an
+intuitive sense—is <em>perfect</em>. That is, knowing the value of <span
+class="math inline">\(x\)</span> tells you the value of <span
+class="math inline">\(y\)</span> exactly—there is no statistical noise.
+It’s just that the relationship is not linear.</p>
 <p><img src="03-02-lesson_files/figure-html/ans3-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>In the third data set, we have an outlier. Here again, our eyes tell us that with the exception of the outlier, the correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is perfect, and in this case, it is linear. However, the presence of the outlier has lowered the value of the correlation coefficient, and (as you will learn later) the slope of the regression line.</p>
+<p>In the third data set, we have an outlier. Here again, our eyes tell
+us that with the exception of the outlier, the correlation between <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> is perfect, and in this case, it is
+linear. However, the presence of the outlier has lowered the value of
+the correlation coefficient, and (as you will learn later) the slope of
+the regression line.</p>
 <p><img src="03-02-lesson_files/figure-html/ans4-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Finally, in the fourth data set we see a pathological example with almost the opposite problem. In the previous plot, we saw that the presence of a single outlier had lowered the correlation from 1 to 0.82. In this plot, the presence of a single outlier raises the correlation from undefined to 0.82. Note that here, with the exception of the outlier, knowing <span class="math inline">\(x\)</span> doesn’t tell you anything about <span class="math inline">\(y\)</span>. It is only the outlier that gives you the appearance of a correlation, but that correlation is very spurious!</p>
+<p>Finally, in the fourth data set we see a pathological example with
+almost the opposite problem. In the previous plot, we saw that the
+presence of a single outlier had lowered the correlation from 1 to 0.82.
+In this plot, the presence of a single outlier raises the correlation
+from undefined to 0.82. Note that here, with the exception of the
+outlier, knowing <span class="math inline">\(x\)</span> doesn’t tell you
+anything about <span class="math inline">\(y\)</span>. It is only the
+outlier that gives you the appearance of a correlation, but that
+correlation is very spurious!</p>
 <p><img src="03-02-lesson_files/figure-html/ans5-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>The Anscombe datasets are fabricated, but they help to illustrate some properties of correlation. Above all else, these examples help to underscore the importance of visually inspecting your data! You never know what you are going to see.</p>
+<p>The Anscombe datasets are fabricated, but they help to illustrate
+some properties of correlation. Above all else, these examples help to
+underscore the importance of visually inspecting your data! You never
+know what you are going to see.</p>
 <p>Now it’s your turn to explore the Anscombe data set.</p>
 </div>
 </div>
 <div id="section-your-turn" class="section level2">
 <h2>Your turn!</h2>
-<p>In 1973, Francis Anscombe famously created four datasets with remarkably similar numerical properties, but obviously different graphic relationships. The <code>anscombe</code> dataset contains the <code>x</code> and <code>y</code> coordinates for these four datasets, along with a grouping variable, <code>set</code>, that distinguishes which quartet the observations belong to (e.g. 1, 2, 3, or 4).</p>
-<p>It may be helpful to remind yourself of the graphic relationship by viewing the four scatterplots:</p>
+<p>In 1973, Francis Anscombe famously created four datasets with
+remarkably similar numerical properties, but obviously different graphic
+relationships. The <code>anscombe</code> dataset contains the
+<code>x</code> and <code>y</code> coordinates for these four datasets,
+along with a grouping variable, <code>set</code>, that distinguishes
+which quartet the observations belong to (e.g. 1, 2, 3, or 4).</p>
+<p>It may be helpful to remind yourself of the graphic relationship by
+viewing the four scatterplots:</p>
 <p><img src="03-02-lesson_files/figure-html/explot-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>For each of the four <code>set</code>s of data points in the <code>anscombe</code> dataset, compute the following in the order specified. Names are provided in your call to <code>summarize()</code>.</p>
+<p>For each of the four <code>set</code>s of data points in the
+<code>anscombe</code> dataset, compute the following in the order
+specified. Names are provided in your call to
+<code>summarize()</code>.</p>
 <ul>
 <li>Number of observations, <code>N</code></li>
 <li>Mean of <code>x</code></li>
 <li>Standard deviation of <code>x</code></li>
 <li>Mean of <code>y</code></li>
 <li>Standard deviation of <code>y</code></li>
-<li>Correlation coefficient between <code>x</code> and <code>y</code></li>
+<li>Correlation coefficient between <code>x</code> and
+<code>y</code></li>
 </ul>
-<div class="tutorial-exercise" data-label="ex2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex2" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Compute properties of anscombe
  anscombe %&gt;%
   group_by(___) %&gt;%
@@ -288,12 +435,16 @@ ncbirths %&gt;%
   )</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex2-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex2-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code> anscombe %&gt;%
   group_by(set) %&gt;%
   ...</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex2-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex2-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code> anscombe %&gt;%
   group_by(set) %&gt;%
   summarize(
@@ -301,7 +452,9 @@ ncbirths %&gt;%
     ...
   )</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex2-hint-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex2-hint-3"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code> anscombe %&gt;%
   group_by(set) %&gt;%
   summarize(
@@ -310,7 +463,9 @@ ncbirths %&gt;%
     ...
   )</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex2-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex2-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Compute properties of anscombe
 anscombe %&gt;%
   group_by(set) %&gt;%
@@ -326,7 +481,11 @@ anscombe %&gt;%
 </div>
 <div id="section-perception-of-correlation" class="section level2">
 <h2>Perception of correlation</h2>
-<p>Recall the scatterplot between the poverty rate of counties in the United States and the high school graduation rate in those counties from the <a href="https://openintro.shinyapps.io/ims-03-model-01/#section-your-turn-1" target="_blank">previous lesson</a>.</p>
+<p>Recall the scatterplot between the poverty rate of counties in the
+United States and the high school graduation rate in those counties from
+the
+<a href="https://openintro.shinyapps.io/ims-03-model-01/#section-your-turn-1" target="_blank">previous
+lesson</a>.</p>
 <p><img src="03-02-lesson_files/figure-html/mr3-pre-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div class="panel panel-default">
 <div data-label="mc3" class="tutorial-question panel-body">
@@ -336,10 +495,22 @@ anscombe %&gt;%
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<p>Estimating the value of the correlation coefficient between two quantities from their scatterplot can be tricky. <a href="https://statistics.stanford.edu/sites/default/files/EFS%20NSF%20206.pdf">Statisticians have shown that</a> people’s perception of the strength of these relationships can be influenced by design choices like the x and y scales. Nevertheless, with some practice your perception of correlation will improve.</p>
-<p>We are going to recreate scatterplots from the previous tutorial, jot down your best estimate of the value of the correlation coefficient between each pair of variables, and compare these values to the actual values you compute.</p>
-<p>First, we will start with the relationship between <code>obp</code> and <code>slg</code> for all players in the <code>mlbbat10</code> dataset.</p>
-<div class="tutorial-exercise" data-label="ex3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Estimating the value of the correlation coefficient between two
+quantities from their scatterplot can be tricky. <a
+href="https://statistics.stanford.edu/sites/default/files/EFS%20NSF%20206.pdf">Statisticians
+have shown that</a> people’s perception of the strength of these
+relationships can be influenced by design choices like the x and y
+scales. Nevertheless, with some practice your perception of correlation
+will improve.</p>
+<p>We are going to recreate scatterplots from the previous tutorial, jot
+down your best estimate of the value of the correlation coefficient
+between each pair of variables, and compare these values to the actual
+values you compute.</p>
+<p>First, we will start with the relationship between <code>obp</code>
+and <code>slg</code> for all players in the <code>mlbbat10</code>
+dataset.</p>
+<div class="tutorial-exercise" data-label="ex3" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Run this and look at the plot
 ggplot(data = mlbbat10, aes(x = obp, y = slg)) +
   geom_point()
@@ -349,22 +520,30 @@ ___ %&gt;%
   summarize(N = ___, r = cor(___, ___))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex3-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex3-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   summarize(N = ___, r = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex3-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex3-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   summarize(N = n(), r = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex3-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex3-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   summarize(N = n(), r = cor(obp, slg))</code></pre>
 </div>
 <div id="section-section-2" class="section level3">
 <h3></h3>
-<p>Next, let’s look at the plot of the filtered <code>mlbbat10</code> data, with only the players with at least 200 at-bats.</p>
-<div class="tutorial-exercise" data-label="ex4" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Next, let’s look at the plot of the filtered <code>mlbbat10</code>
+data, with only the players with at least 200 at-bats.</p>
+<div class="tutorial-exercise" data-label="ex4" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Run this and look at the plot
 mlbbat10 %&gt;% 
   filter(at_bat &gt; 200) %&gt;%
@@ -377,22 +556,30 @@ ___ %&gt;%
   summarize(N = ___, r = cor(___, ___))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex4-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex4-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   filter(___) %&gt;%
   summarize(N = ___, r = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex4-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex4-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   filter(at_bat &gt;= 200) %&gt;%
   summarize(N = n(), r = cor(, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex4-hint-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex4-hint-3"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   filter(at_bat &gt;= 200) %&gt;%
   summarize(N = n(), r = cor(obp, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex4-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex4-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mlbbat10 %&gt;%
   filter(at_bat &gt;= 200) %&gt;%
   summarize(N = n(), r = cor(obp, slg))</code></pre>
@@ -400,8 +587,11 @@ ___ %&gt;%
 </div>
 <div id="section-section-3" class="section level3">
 <h3></h3>
-<p>Next, using the <code>bdims</code> dataset, draw the plot then calculate the correlation between height (<code>hgt</code>) and weight (<code>wgt</code>) <em>separately for each sex</em>.</p>
-<div class="tutorial-exercise" data-label="ex5" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Next, using the <code>bdims</code> dataset, draw the plot then
+calculate the correlation between height (<code>hgt</code>) and weight
+(<code>wgt</code>) <em>separately for each sex</em>.</p>
+<div class="tutorial-exercise" data-label="ex5" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Run this and look at the plot
 ggplot(data = bdims, aes(x = hgt, y = wgt, color = as.factor(sex))) +
   geom_point() 
@@ -413,25 +603,33 @@ ___ %&gt;%
             r = cor(___, ___))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>bdims %&gt;%
   group_by(___) %&gt;%
   summarize(N = ___, 
             r = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>bdims %&gt;%
   group_by(sex) %&gt;%
   summarize(N = ___, 
             r = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-3"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>bdims %&gt;%
   group_by(sex) %&gt;%
   summarize(N = n(), 
             r = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>bdims %&gt;%
   group_by(sex) %&gt;%
   summarize(N = n(), 
@@ -440,8 +638,13 @@ ___ %&gt;%
 </div>
 <div id="section-section-4" class="section level3">
 <h3></h3>
-<p>Finally, draw the plot then calculate the correlation between body weight (<code>body_wt</code>) and brain weight (<code>brain_wt</code>) for all species of <code>mammals</code>. Alongside this computation, compute the correlation between the same two quantities after taking their natural logarithms (using the <code>log()</code> function).</p>
-<div class="tutorial-exercise" data-label="ex6" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Finally, draw the plot then calculate the correlation between body
+weight (<code>body_wt</code>) and brain weight (<code>brain_wt</code>)
+for all species of <code>mammals</code>. Alongside this computation,
+compute the correlation between the same two quantities after taking
+their natural logarithms (using the <code>log()</code> function).</p>
+<div class="tutorial-exercise" data-label="ex6" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Run this and look at the plot
 ggplot(data = mammals, aes(x = body_wt, y = brain_wt)) +
   geom_point() + 
@@ -455,25 +658,33 @@ ___ %&gt;%
             r_log = cor(log(___), log(___)))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex6-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex6-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mammals %&gt;%
   summarize(N = ___, 
             r = cor(___, ___), 
             r_log = cor(log(___), log(___)))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex6-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex6-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mammals %&gt;%
   summarize(N = n(), 
             r = cor(body_wt, brain_wt), 
             r_log = cor(log(___), log(___)))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex6-hint-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex6-hint-3"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mammals %&gt;%
   summarize(N = n(), 
             r = cor(body_wt, brain_wt), 
             r_log = cor(log(___), log(___)))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex6-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex6-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>mammals %&gt;%
   summarize(N = n(), 
             r = cor(body_wt, brain_wt), 
@@ -485,50 +696,114 @@ ___ %&gt;%
 <h2>Interpretation of Correlation</h2>
 <div id="section-exercise-and-beer" class="section level3">
 <h3>Exercise and Beer</h3>
-<p>The word “correlation” has both a precise mathematical definition and a more general definition for typical usage in English. While these uses of the word are obviously related and generally in sync, there are times when these two uses can be conflated and/or misconstrued. This occurs frequently in the media when journalists write about scientific results—particularly in health-related studies.</p>
-<p>For example, consider the following article from the New York Times about the connection between exercise and drinking beer.</p>
+<p>The word “correlation” has both a precise mathematical definition and
+a more general definition for typical usage in English. While these uses
+of the word are obviously related and generally in sync, there are times
+when these two uses can be conflated and/or misconstrued. This occurs
+frequently in the media when journalists write about scientific
+results—particularly in health-related studies.</p>
+<p>For example, consider the following article from the New York Times
+about the connection between exercise and drinking beer.</p>
 <p><img src="images/nytimes_beer.png" width="600" style="display: block; margin: auto;" /></p>
 <p></br></p>
-<p>After discussing some relatable scenarios, the lead-in raises the question of causation: “But whether exercise encourages people to drink and, likewise, whether drinking encourages people to exercise has been in dispute.”</p>
+<p>After discussing some relatable scenarios, the lead-in raises the
+question of causation: “But whether exercise encourages people to drink
+and, likewise, whether drinking encourages people to exercise has been
+in dispute.”</p>
 </div>
 <div id="section-exercise-and-beer-contd" class="section level3">
 <h3>Exercise and Beer (cont’d)</h3>
-<p>But causation is not really the goal here. Notice how in the next two paragraphs, verbs linking exercise and beer-drinking include: “influence”, “affect”, and “tend to”. The “interplay between” the two activities is also mentioned.</p>
+<p>But causation is not really the goal here. Notice how in the next two
+paragraphs, verbs linking exercise and beer-drinking include:
+“influence”, “affect”, and “tend to”. The “interplay between” the two
+activities is also mentioned.</p>
 <p><img src="images/nytimes_beer2.png" width="600" style="display: block; margin: auto;" /></p>
 <p></br></p>
-<p>In the end, this article is worded fairly carefully. Although many different possible connections between exercising and drinking are explored, the author has taken steps not to imply that the research demonstrates that exercising causes one to drink, nor that drinking causes one to exercise. The best interpretation is quoted from the actual study: “people drank more than usual on the same days that they engaged in more physical activity than usual.”</p>
-<p>Note how this statement makes it clear that <em>an association was observed</em>, but does not try to imply causality.</p>
-<p>In observational studies–which are especially common in nutritional science, health, and epidemiology–one must always be careful not to erroneously suggest that correlation implies causation.</p>
+<p>In the end, this article is worded fairly carefully. Although many
+different possible connections between exercising and drinking are
+explored, the author has taken steps not to imply that the research
+demonstrates that exercising causes one to drink, nor that drinking
+causes one to exercise. The best interpretation is quoted from the
+actual study: “people drank more than usual on the same days that they
+engaged in more physical activity than usual.”</p>
+<p>Note how this statement makes it clear that <em>an association was
+observed</em>, but does not try to imply causality.</p>
+<p>In observational studies–which are especially common in nutritional
+science, health, and epidemiology–one must always be careful not to
+erroneously suggest that correlation implies causation.</p>
 <p><img src="images/nytimes_beer3.png" width="600" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-nfl-arrests" class="section level3">
 <h3>NFL arrests</h3>
-<p>Here is another interesting use of correlation from the New York Times. The article examines the arrest records of National Football League players, and considers whether certain franchises tend to have more or fewer players arrested consistently over time. This use of correlation—often called <em>serial correlation</em> or <em>autocorrelation</em>—checks to see whether a single numeric variable is highly correlated with past measurements of itself.</p>
+<p>Here is another interesting use of correlation from the New York
+Times. The article examines the arrest records of National Football
+League players, and considers whether certain franchises tend to have
+more or fewer players arrested consistently over time. This use of
+correlation—often called <em>serial correlation</em> or
+<em>autocorrelation</em>—checks to see whether a single numeric variable
+is highly correlated with past measurements of itself.</p>
 <p><img src="images/nytimes_nfl.png" width="600" style="display: block; margin: auto;" /></p>
-<p>From the plot and the reported 0.53 correlation, we see some evidence that the number of players arrested from each team during the seven-year period from 2000 to 2006 was positively associated with the number of players arrested by that same team during the subsequent seven-year period from 2007 to 2013.</p>
+<p>From the plot and the reported 0.53 correlation, we see some evidence
+that the number of players arrested from each team during the seven-year
+period from 2000 to 2006 was positively associated with the number of
+players arrested by that same team during the subsequent seven-year
+period from 2007 to 2013.</p>
 </div>
 <div id="section-nfl-arrests-contd" class="section level3">
 <h3>NFL arrests (cont’d)</h3>
-<p>The author interprets both the plot and reported “pretty solid” correlation as evidence of a team-specific effect. Without offering explanations or implying cause-and-effect, the author effectively communicates that player arrests in the NFL do not appear to be randomly distributed across teams, but rather that certain teams may have player-acquisition philosophies that result in them having consistently higher numbers of players arrested.</p>
+<p>The author interprets both the plot and reported “pretty solid”
+correlation as evidence of a team-specific effect. Without offering
+explanations or implying cause-and-effect, the author effectively
+communicates that player arrests in the NFL do not appear to be randomly
+distributed across teams, but rather that certain teams may have
+player-acquisition philosophies that result in them having consistently
+higher numbers of players arrested.</p>
 <p><img src="images/nytimes_nfl2.png" width="600" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-correlation-vs.-regression" class="section level3">
 <h3>Correlation vs. Regression</h3>
-<p>Sometimes journalists can leave statistical concepts lost in translation. The first sentence of this article reports that no correlation was found between economic growth and lower tax rates at the top of the income bracket. This is a politically-sensitive finding, and indeed much of the article discusses attempts by Senate Republicans to bury these findings, which run counter to their ideological position on macroeconomic issues.</p>
+<p>Sometimes journalists can leave statistical concepts lost in
+translation. The first sentence of this article reports that no
+correlation was found between economic growth and lower tax rates at the
+top of the income bracket. This is a politically-sensitive finding, and
+indeed much of the article discusses attempts by Senate Republicans to
+bury these findings, which run counter to their ideological position on
+macroeconomic issues.</p>
 <p><img src="images/nytimes_tax.png" width="600" style="display: block; margin: auto;" /></p>
-<p>Of greater interest to us is that the word “correlation” here is not being used in its precise statistical sense. The link to the actual report reveals that the findings are based on a multiple regression model, not a simple correlation. Multiple regression models are the subject of the next tutorial, but for now, it is enough to know that multiple regression is a technique that extends regression such that more than one explanatory variable can be taken into account. Although you can extend regression to include more than one explanatory variable, this is impossible to do with correlation.</p>
+<p>Of greater interest to us is that the word “correlation” here is not
+being used in its precise statistical sense. The link to the actual
+report reveals that the findings are based on a multiple regression
+model, not a simple correlation. Multiple regression models are the
+subject of the next tutorial, but for now, it is enough to know that
+multiple regression is a technique that extends regression such that
+more than one explanatory variable can be taken into account. Although
+you can extend regression to include more than one explanatory variable,
+this is impossible to do with correlation.</p>
 </div>
 <div id="section-can-you-plot-a-correlation" class="section level3">
 <h3>Can you plot a correlation?</h3>
-<p>Finally, it is not uncommon to encounter references to a “plot” of a correlation. This doesn’t quite make sense. In this tutorial you’ve seen that a scatterplot is a graphical presentation of two variables, and the strength of a linear relationship shown in a scatterplot can be neatly summarized by a correlation. In this case, the article refers to a table of correlations between several variables–often called a <em>correlation matrix</em>–as a “plot” of a correlation.</p>
-<p>The authors reached the conclusion that there was no correlation between voting for Brexit and racism, based on the small correlation values. What other evidence would you want to see in order to have confidence in these findings?</p>
+<p>Finally, it is not uncommon to encounter references to a “plot” of a
+correlation. This doesn’t quite make sense. In this tutorial you’ve seen
+that a scatterplot is a graphical presentation of two variables, and the
+strength of a linear relationship shown in a scatterplot can be neatly
+summarized by a correlation. In this case, the article refers to a table
+of correlations between several variables–often called a <em>correlation
+matrix</em>–as a “plot” of a correlation.</p>
+<p>The authors reached the conclusion that there was no correlation
+between voting for Brexit and racism, based on the small correlation
+values. What other evidence would you want to see in order to have
+confidence in these findings?</p>
 <p><img src="images/heatst_brexit.png" width="600" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="section-your-turn-1" class="section level2">
 <h2>Your turn!</h2>
-<p>The next few exercises will test your ability to interpret correlation like a pro.</p>
-<p>Recall that you previously determined the value of the correlation coefficient between the poverty rate of counties in the United States and the high school graduation rate in those counties was -0.6808085.</p>
+<p>The next few exercises will test your ability to interpret
+correlation like a pro.</p>
+<p>Recall that you previously determined the value of the correlation
+coefficient between the poverty rate of counties in the United States
+and the high school graduation rate in those counties was
+-0.6808085.</p>
 <p><img src="03-02-lesson_files/figure-html/mc4-pre-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div class="panel panel-default">
 <div data-label="mc4" class="tutorial-question panel-body">
@@ -540,7 +815,9 @@ ___ %&gt;%
 </div>
 <div id="section-correlation-and-causation" class="section level3">
 <h3>Correlation and causation</h3>
-<p>In the San Francisco Bay Area from 1960-1967, the correlation between the birthweight of 1,236 babies and the length of their gestational period was 0.408.</p>
+<p>In the San Francisco Bay Area from 1960-1967, the correlation between
+the birthweight of 1,236 babies and the length of their gestational
+period was 0.408.</p>
 <div class="panel panel-default">
 <div data-label="mc5" class="tutorial-question panel-body">
 <div id="mc5-answer_container" class="shiny-html-output"></div>
@@ -553,58 +830,102 @@ ___ %&gt;%
 </div>
 <div id="section-spurious-correlations" class="section level2">
 <h2>Spurious correlations</h2>
-<p>Above all else, we must always remember that correlation does not imply causation. That is, just because two variables appear to move together does not mean that changes in one are causing changes in the other. There are many potential confounders that can cloud our ability to determine cause-and-effect.</p>
-<p>Remarkable–but nonsensical–correlations are called “spurious.” In fact, there is an <a href="https://tylervigen.com/" target="_blank">entire blog</a> devoted to them. Here is how the number of films Nicolas Cage has appeared in correlates with the number of people who drowned by falling into a pool.</p>
+<p>Above all else, we must always remember that correlation does not
+imply causation. That is, just because two variables appear to move
+together does not mean that changes in one are causing changes in the
+other. There are many potential confounders that can cloud our ability
+to determine cause-and-effect.</p>
+<p>Remarkable–but nonsensical–correlations are called “spurious.” In
+fact, there is an
+<a href="https://tylervigen.com/" target="_blank">entire blog</a>
+devoted to them. Here is how the number of films Nicolas Cage has
+appeared in correlates with the number of people who drowned by falling
+into a pool.</p>
 <p><img src="http://tylervigen.com/images/spurious-correlations-share.png" width="600" style="display: block; margin: auto;" /></p>
-<p>Are these two variables related by any substantive means? Of course not.</p>
+<p>Are these two variables related by any substantive means? Of course
+not.</p>
 <div id="section-spurious-over-time" class="section level3">
 <h3>Spurious over time</h3>
-<p>Here is another example that traces U.S. oil production to the quality of rock music. We suppose one may need to burn the midnight oil to make a truly endearing rock classic!</p>
+<p>Here is another example that traces U.S. oil production to the
+quality of rock music. We suppose one may need to burn the midnight oil
+to make a truly endearing rock classic!</p>
 <p><img src="http://strata.uga.edu/6370/lecturenotes/images/spuriousCorrelationOilMusic.jpg" width="500" style="display: block; margin: auto;" /></p>
-<p>In each of these cases, the correlation was illustrated as two variables that seem to move together over time. In fact, time is an obvious confounder for many of these spurious correlations. Any time you see two variables linked over time, you should be skeptical of the role that time can play as a confounder.</p>
+<p>In each of these cases, the correlation was illustrated as two
+variables that seem to move together over time. In fact, time is an
+obvious confounder for many of these spurious correlations. Any time you
+see two variables linked over time, you should be skeptical of the role
+that time can play as a confounder.</p>
 </div>
 <div id="section-spurious-over-space" class="section level3">
 <h3>Spurious over space</h3>
-<p>This webcomic from XKCD illustrates how space can also be present in spurious correlations. Colored maps–called choropleths–can be visually arresting ways of conveying information, but they can also reveal spurious correlations. Many things occur more often in places where there are more people, so failure to control for the confounding influence of population can lead to spurious correlations.</p>
+<p>This webcomic from XKCD illustrates how space can also be present in
+spurious correlations. Colored maps–called choropleths–can be visually
+arresting ways of conveying information, but they can also reveal
+spurious correlations. Many things occur more often in places where
+there are more people, so failure to control for the confounding
+influence of population can lead to spurious correlations.</p>
 <p><img src="http://imgs.xkcd.com/comics/heatmap.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-spurious-for-whatever-reason" class="section level3">
 <h3>Spurious for whatever reason</h3>
-<p>In other cases it may not be so obvious what confounding variables are driving the spurious correlation. This plot shows that as the number of lemons imported into the U.S. from Mexico has increased over time, the number of U.S. highway fatalities has decreased. The relationship appears to be strong, but there is no plausible causative mechanism that could explain the relationship.</p>
+<p>In other cases it may not be so obvious what confounding variables
+are driving the spurious correlation. This plot shows that as the number
+of lemons imported into the U.S. from Mexico has increased over time,
+the number of U.S. highway fatalities has decreased. The relationship
+appears to be strong, but there is no plausible causative mechanism that
+could explain the relationship.</p>
 <p><img src="http://www.tutor2u.net/_legacy/blog/files//blog-correlation-291209.gif" width="500" style="display: block; margin: auto;" /></p>
-<p>Now it’s time for you to get your hands dirty with some truly spurious correlations.</p>
+<p>Now it’s time for you to get your hands dirty with some truly
+spurious correlations.</p>
 </div>
 </div>
 <div id="section-your-turn-2" class="section level2">
 <h2>Your turn!</h2>
-<p>Statisticians must always be skeptical of potentially spurious correlations. Human beings are very good at seeing patterns in data, sometimes when the patterns themselves are actually just random noise. To illustrate how easy it can be to fall into this trap, we will look for patterns in truly random data.</p>
-<p>The <code>noise</code> dataset contains 20 sets of <code>x</code> and <code>y</code> variables drawn at random from a standard normal distribution. Each set, denoted as <code>z</code>, has 50 <code>x</code>, <code>y</code> pairs. A preview of the <code>noise</code> dataset is shown below.</p>
+<p>Statisticians must always be skeptical of potentially spurious
+correlations. Human beings are very good at seeing patterns in data,
+sometimes when the patterns themselves are actually just random noise.
+To illustrate how easy it can be to fall into this trap, we will look
+for patterns in truly random data.</p>
+<p>The <code>noise</code> dataset contains 20 sets of <code>x</code> and
+<code>y</code> variables drawn at random from a standard normal
+distribution. Each set, denoted as <code>z</code>, has 50
+<code>x</code>, <code>y</code> pairs. A preview of the
+<code>noise</code> dataset is shown below.</p>
 <pre class="r"><code>glimpse(noise)</code></pre>
 <pre><code>## Rows: 1,000
 ## Columns: 3
 ## $ y &lt;dbl&gt; -1.20706575, 0.27742924, 1.08444118, -2.34569770, 0.42912469, 0.5060…
 ## $ x &lt;dbl&gt; -1.20533342, 0.30146674, -1.53914522, 0.63537072, 0.70295177, -1.905…
 ## $ z &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2…</code></pre>
-<p>We will use these simulated data to explore if any pairs of variables might be meaningfully correlated or if the correlation coefficients close to zero. To do this take the following steps:</p>
+<p>We will use these simulated data to explore if any pairs of variables
+might be meaningfully correlated or if the correlation coefficients
+close to zero. To do this take the following steps:</p>
 <ol style="list-style-type: decimal">
-<li>Create a scatterplot that shows the relationship between <code>x</code> and <code>y</code>, faceted by the set (<code>z</code>).</li>
+<li>Create a scatterplot that shows the relationship between
+<code>x</code> and <code>y</code>, faceted by the set
+(<code>z</code>).</li>
 </ol>
-<div class="tutorial-exercise" data-label="ex7" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex7" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Create faceted scatterplot
 ggplot(data = noise, aes(x = x, y = y)) + 
   geom_point() + 
   ___</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex7-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex7-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = noise, aes(x = x, y = y)) +
   geom_point() + 
   facet_wrap(vars(z))</code></pre>
 </div>
 <ol start="2" style="list-style-type: decimal">
-<li>Compute the correlation between each set of <code>x</code> and <code>y</code>.</li>
+<li>Compute the correlation between each set of <code>x</code> and
+<code>y</code>.</li>
 </ol>
-<div class="tutorial-exercise" data-label="ex8" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex8" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Compute correlations for each dataset
 noise_summary &lt;- noise %&gt;%
   group_by(___) %&gt;%
@@ -614,53 +935,84 @@ noise_summary &lt;- noise %&gt;%
 noise_summary</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex8-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex8-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>noise_summary &lt;- noise %&gt;%
   group_by(z) %&gt;%
   summarize(N = n(), 
             spurious_cor = cor(___, ___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex8-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex8-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>noise_summary &lt;- noise %&gt;%
   group_by(z) %&gt;%
   summarize(N = n(), 
             spurious_cor = cor(x, y))</code></pre>
 </div>
 <ol start="3" style="list-style-type: decimal">
-<li>Identify the datasets that show non-trivial correlation of greater than 0.2 in absolute value.</li>
+<li>Identify the datasets that show non-trivial correlation of greater
+than 0.2 in absolute value.</li>
 </ol>
-<div class="tutorial-exercise" data-label="ex9" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex9" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Isolate sets with correlations above 0.2 in absolute strength
 noise_summary %&gt;%
   filter(abs(___) &gt; ___)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex9-hint" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex9-hint"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>noise_summary %&gt;%
   filter(abs(spurious_cor) &gt; ___)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex9-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex9-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>noise_summary %&gt;%
   filter(abs(spurious_cor) &gt; 0.2)</code></pre>
 </div>
 </div>
 <div id="section-congratulations" class="section level2">
 <h2>Congratulations!</h2>
-<p>You have successfully completed Lesson 2 in Tutorial 3: Introduction to Linear Models.</p>
+<p>You have successfully completed Lesson 2 in Tutorial 3: Introduction
+to Linear Models.</p>
 <p>What’s next?</p>
-<p>📒 <a href="https://openintrostat.github.io/ims-tutorials/">Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics</a></p>
-<p>🗒 <a href="https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/">Tutorial 3: Introduction to Linear Models Data</a></p>
-<p>1️⃣ <a href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/">Tutorial 3 - Lesson 1: Visualizing two variables</a></p>
-<p>2️⃣ <a href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/">Tutorial 3 - Lesson 2: Correlation</a></p>
-<p>3️⃣ <a href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/">Tutorial 3 - Lesson 3: Simple linear regression</a></p>
-<p>4️⃣ <a href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/">Tutorial 3 - Lesson 4: Interpreting regression models</a></p>
-<p>5️⃣ <a href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/">Tutorial 3 - Lesson 5: Model fit</a></p>
-<p>6️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-06/">Tutorial 3 - Lesson 6: Parallel slopes</a></p>
-<p>7️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-07/">Tutorial 3 - Lesson 7: Evaluating and extending parallel slopes model</a></p>
-<p>8️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-08/">Tutorial 3 - Lesson 8: Multiple regression</a></p>
-<p>9️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-09/">Tutorial 3 - Lesson 9: Logistic regression</a></p>
-<p>🔟 <a href="https://openintro.shinyapps.io/ims-03-model-10/">Tutorial 3 - Lesson 10: Case study: Italian restaurants in NYC</a></p>
-<p>📖 <a href="http://openintro-ims.netlify.app/">Learn more at Introduction to Modern Statistics</a> 
+<p>📒 <a href="https://openintrostat.github.io/ims-tutorials/">Full list
+of tutorials supporting OpenIntro::Introduction to Modern
+Statistics</a></p>
+<p>🗒 <a
+href="https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/">Tutorial
+3: Introduction to Linear Models Data</a></p>
+<p>1️⃣ <a
+href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/">Tutorial
+3 - Lesson 1: Visualizing two variables</a></p>
+<p>2️⃣ <a
+href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/">Tutorial
+3 - Lesson 2: Correlation</a></p>
+<p>3️⃣ <a
+href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/">Tutorial
+3 - Lesson 3: Simple linear regression</a></p>
+<p>4️⃣ <a
+href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/">Tutorial
+3 - Lesson 4: Interpreting regression models</a></p>
+<p>5️⃣ <a
+href="https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/">Tutorial
+3 - Lesson 5: Model fit</a></p>
+<p>6️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-06/">Tutorial
+3 - Lesson 6: Parallel slopes</a></p>
+<p>7️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-07/">Tutorial
+3 - Lesson 7: Evaluating and extending parallel slopes model</a></p>
+<p>8️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-08/">Tutorial
+3 - Lesson 8: Multiple regression</a></p>
+<p>9️⃣ <a href="https://openintro.shinyapps.io/ims-03-model-09/">Tutorial
+3 - Lesson 9: Logistic regression</a></p>
+<p>🔟 <a href="https://openintro.shinyapps.io/ims-03-model-10/">Tutorial
+3 - Lesson 10: Case study: Italian restaurants in NYC</a></p>
+<p>📖 <a href="http://openintro-ims.netlify.app/">Learn more at
+Introduction to Modern Statistics</a> 
 <script type="application/shiny-prerendered" data-context="server-start">
 library(learnr)
 library(tidyverse)
@@ -680,7 +1032,8 @@ anscombe <- datasets::anscombe %>%
   separate(key, into = c("variable", "set"), sep = 1) %>%
   spread(key = variable, value = val)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::register_http_handlers(session, metadata = NULL)
 </script>
@@ -688,7 +1041,8 @@ learnr:::register_http_handlers(session, metadata = NULL)
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::prepare_tutorial_state(session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::i18n_observe_tutorial_language(input, session)
 </script>
@@ -698,27 +1052,28 @@ session$onSessionEnded(function() {
         learnr:::event_trigger(session, "session_stop")
       })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mc1", question = structure("In a scientific paper, three correlations are reported with the following values:\n         (1) -0.395\n         (2) 1.827\n         (3) 0.738", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_da62625", 
+"character")), answers = list(structure(list(id = "lnr_ans_248c4ff", 
     option = "(1) is invalid.", value = "(1) is invalid.", label = structure("(1) is invalid.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("(1) is valid", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9f7de50", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac7435b", 
     option = "(2) is invalid.", value = "(2) is invalid.", label = structure("(2) is invalid.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Right! Correlation coefficients are always between -1 and 1.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d87a8be", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_85de78c", 
     option = "(3) is invalid.", value = "(3) is invalid.", label = structure("(3) is invalid.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("(3) is perfectly valid!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d79eac8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_19540e", 
     option = "Both (1) and (2) are invalid.", value = "Both (1) and (2) are invalid.", 
     label = structure("Both (1) and (2) are invalid.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Wrong!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_82e56a5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f0cfd72", 
     option = "Both (2) and (3) are invalid.", value = "Both (2) and (3) are invalid.", 
     label = structure("Both (2) and (3) are invalid.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect!", html = TRUE, class = c("html", 
@@ -731,24 +1086,24 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mc1-answer", question = "mc1"), loading = structure("<strong>Loading:<\u002fstrong> \nIn a scientific paper, three correlations are reported with the following values:\n         (1) -0.395\n         (2) 1.827\n         (3) 0.738\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1038572140.51638, options = list()), class = c("learnr_radio", 
+    seed = 1534508424.78544, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mc2", question = structure("In a scientific paper, three correlations are reported: 0.582, 0.134, -0.795. Which of these values represents the strongest correlation?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_46d1b1c", 
+"character")), answers = list(structure(list(id = "lnr_ans_4082413", 
     option = "0.582", value = "0.582", label = structure("0.582", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f1730af", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2e6156", 
     option = "0.134", value = "0.134", label = structure("0.134", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is the weakest correlation.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6ed198d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_af221cd", 
     option = "-0.795", value = "-0.795", label = structure("-0.795", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Indeed, the closer to 1 or -1, the stronger the correlation.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fe5a66d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_11edd25", 
     option = "Can't tell!", value = "Can't tell!", label = structure("Can&#39;t tell!", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -759,10 +1114,11 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mc2-answer", question = "mc2"), loading = structure("<strong>Loading:<\u002fstrong> \nIn a scientific paper, three correlations are reported: 0.582, 0.134, -0.795. Which of these values represents the strongest correlation?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 2009063234.56446, options = list()), class = c("learnr_radio", 
+    seed = 2033672340.053, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-ex1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-ex1-code-editor`)), session)
 output$`tutorial-exercise-ex1-output` <- renderUI({
@@ -811,7 +1167,8 @@ learnr:::store_exercise_cache(structure(list(label = "ex1", global_setup = struc
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r"), class = "tutorial_exercise"))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-ex2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-ex2-code-editor`)), session)
 output$`tutorial-exercise-ex2-output` <- renderUI({
@@ -861,30 +1218,31 @@ learnr:::store_exercise_cache(structure(list(label = "ex2", global_setup = struc
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r"), class = "tutorial_exercise"))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mc3", question = structure("Which of the following values is the correct correlation between poverty rate and high school graduation rate?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e33b758", 
+"character")), answers = list(structure(list(id = "lnr_ans_4fc486a", 
     option = "-0.861", value = "-0.861", label = structure("-0.861", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Close, but a correlation of -0.861 seems a bit too strong for the relationship shown on the plot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9d79a32", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_448221a", 
     option = "-0.681", value = "-0.681", label = structure("-0.681", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("The relationship is clearly negative, not too strong, and not too weak...", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4324795", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6e47cec", 
     option = "-0.186", value = "-0.186", label = structure("-0.186", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Not quite!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4a507e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e605c65", 
     option = "0.186", value = "0.186", label = structure("0.186", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, the slope is not positive!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_32b1099", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc36d19", 
     option = "0.681", value = "0.681", label = structure("0.681", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Wrong, the relationship isn&#39;t positive!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c02bfbe", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b45678e", 
     option = "0.861", value = "0.861", label = structure("0.861", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Try again!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -896,7 +1254,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mc3-answer", question = "mc3"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following values is the correct correlation between poverty rate and high school graduation rate?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1087812102.49345, options = list()), class = c("learnr_radio", 
+    seed = 1299360338.89494, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -906,7 +1264,8 @@ output$`tutorial-exercise-ex3-output` <- renderUI({
   `tutorial-exercise-ex3-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex3", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -952,7 +1311,8 @@ output$`tutorial-exercise-ex4-output` <- renderUI({
   `tutorial-exercise-ex4-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex4", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -999,7 +1359,8 @@ output$`tutorial-exercise-ex5-output` <- renderUI({
   `tutorial-exercise-ex5-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex5", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -1047,7 +1408,8 @@ output$`tutorial-exercise-ex6-output` <- renderUI({
   `tutorial-exercise-ex6-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex6", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -1092,31 +1454,31 @@ learnr:::store_exercise_cache(structure(list(label = "ex6", global_setup = struc
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mc4", question = structure("Choose the correct interpretation of this value.", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b8d532c", 
+"character")), answers = list(structure(list(id = "lnr_ans_b6b4d2d", 
     option = "People who graduate from high school are less likely to be poor.", 
     value = "People who graduate from high school are less likely to be poor.", 
     label = structure("People who graduate from high school are less likely to be poor.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Beware the ecological fallacy!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_85d8646", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c4338b", 
     option = "Counties with lower high school graduation rates are likely to have lower poverty rates.", 
     value = "Counties with lower high school graduation rates are likely to have lower poverty rates.", 
     label = structure("Counties with lower high school graduation rates are likely to have lower poverty rates.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Check the sign!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_216b878", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9bc95bc", 
     option = "Counties with lower high school graduation rates are likely to have higher poverty rates.", 
     value = "Counties with lower high school graduation rates are likely to have higher poverty rates.", 
     label = structure("Counties with lower high school graduation rates are likely to have higher poverty rates.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Correlation doesn&#39;t imply causation, which rules out a couple of the options!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8c2a8d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f8b84fd", 
     option = "Because the correlation is negative, there is no relationship between poverty rates and high school graduate rates. ", 
     value = "Because the correlation is negative, there is no relationship between poverty rates and high school graduate rates. ", 
     label = structure("Because the correlation is negative, there is no relationship between poverty rates and high school graduate rates. ", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Negative correlation is still correlation!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d326c2a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_caf42ac", 
     option = "Having a higher percentage of high school graduates in a county results in that county having lower poverty rates.", 
     value = "Having a higher percentage of high school graduates in a county results in that county having lower poverty rates.", 
     label = structure("Having a higher percentage of high school graduates in a county results in that county having lower poverty rates.", html = TRUE, class = c("html", 
@@ -1130,31 +1492,32 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mc4-answer", question = "mc4"), loading = structure("<strong>Loading:<\u002fstrong> \nChoose the correct interpretation of this value.\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 3116181.49854891, options = list()), class = c("learnr_radio", 
+    seed = 1541212444.28232, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mc5", question = structure("Which of the following conclusions <strong>is not<\u002fstrong> a valid statistical interpretation of these results?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b3640da", 
+"character")), answers = list(structure(list(id = "lnr_ans_4dd7c84", 
     option = "We observed that babies with longer gestational periods tended to be heavier at birth.", 
     value = "We observed that babies with longer gestational periods tended to be heavier at birth.", 
     label = structure("We observed that babies with longer gestational periods tended to be heavier at birth.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This statement <strong>is<\u002fstrong> a valid interpretation of the results! It uses with &#39;tended&#39; wording carefully to prevent a causal implication.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4eb359", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_57ef514", 
     option = "It may be that a longer gestational period contributes to a heavier birth weight among babies, but a randomized, controlled experiment is needed to confirm this observation.", 
     value = "It may be that a longer gestational period contributes to a heavier birth weight among babies, but a randomized, controlled experiment is needed to confirm this observation.", 
     label = structure("It may be that a longer gestational period contributes to a heavier birth weight among babies, but a randomized, controlled experiment is needed to confirm this observation.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This statement <strong>is<\u002fstrong> a valid interpretation of the results! It uses a cautionary language and refers explicitly to a randomized experiment to avoid that correlation also implies causation.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7bd87ee", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6778558", 
     option = "Staying in the womb longer causes babies to be heavier when they are born.", 
     value = "Staying in the womb longer causes babies to be heavier when they are born.", 
     label = structure("Staying in the womb longer causes babies to be heavier when they are born.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Correlation does not imply causation! This is the only <strong>wrong interpretation<\u002fstrong>. All the other interpretations choose words carefully (&#39;tend&#39;, &#39;experiment needed&#39;, &#39;beware of confounding factors&#39;, etc.) to prevent a causal implication.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1bd2f9d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_efa22df", 
     option = "These data suggest that babies with longer gestational periods tend to be heavier at birth, but there are many potential confounding factors that were not taken into account.", 
     value = "These data suggest that babies with longer gestational periods tend to be heavier at birth, but there are many potential confounding factors that were not taken into account.", 
     label = structure("These data suggest that babies with longer gestational periods tend to be heavier at birth, but there are many potential confounding factors that were not taken into account.", html = TRUE, class = c("html", 
@@ -1168,7 +1531,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mc5-answer", question = "mc5"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following conclusions <strong>is not<\u002fstrong> a valid statistical interpretation of these results?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 473090048.7797, options = list()), class = c("learnr_radio", 
+    seed = 190750877.911175, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1178,7 +1541,8 @@ output$`tutorial-exercise-ex7-output` <- renderUI({
   `tutorial-exercise-ex7-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex7", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -1224,7 +1588,8 @@ output$`tutorial-exercise-ex8-output` <- renderUI({
   `tutorial-exercise-ex8-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex8", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -1268,7 +1633,8 @@ output$`tutorial-exercise-ex9-output` <- renderUI({
   `tutorial-exercise-ex9-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex9", global_setup = structure(c("library(learnr)", 
 "library(tidyverse)", "library(openintro)", "library(emo)", "", 
@@ -1316,7 +1682,7 @@ learnr:::store_exercise_cache(structure(list(label = "ex9", global_setup = struc
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92]}},"value":[{"type":"character","attributes":{},"value":["airports","assertthat","backports","base","broom","bslib","cellranger","checkmate","cherryblossom","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","emo","evaluate","fansi","farver","fastmap","forcats","fs","generics","ggplot2","glue","graphics","grDevices","grid","gtable","haven","highr","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","methods","mime","modelr","munsell","openintro","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","usdata","utf8","utils","vctrs","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.1.0","0.2.1","1.4.1","4.1.2","0.8.0","0.3.1","1.1.0","2.1.0","0.1.0","3.3.0","2.0-3","4.1.2","1.5.1","4.3.2","4.1.2","1.1.2","2.1.1","0.6.29","1.0.9","0.3.2","0.0.0.9000","0.15","1.0.3","2.1.0","1.1.0","0.5.1","1.5.2","0.1.2","3.3.6","1.6.2","4.1.2","4.1.2","4.1.2","0.3.0","2.5.0","0.9","1.1.1","0.5.2","1.5.4","1.6.5","1.4.3","0.1.4","1.8.0","1.39","0.4.2","1.3.0","0.10.1.9022","1.0.1","1.8.0","2.0.3","1.1","7.3-54","4.1.2","0.12","0.1.8","0.5.0","2.3.0","1.7.0","2.0.3","1.2.0.1","0.3.4","2.5.1","1.0.8.3","2.1.2","1.4.0","2.0.1","1.0.2","2.14","2.0.3","0.13","1.0.2","0.4.1","1.2.0","1.7.1","4.1.2","1.7.6","1.4.0","3.1.7","1.2.0","1.1.2","1.3.1","4.1.2","0.3.0","0.2.0","1.2.2","4.1.2","0.4.1","2.5.0","0.30","1.3.3","1.8-4","2.3.5"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92]}},"value":[{"type":"character","attributes":{},"value":["airports","assertthat","backports","base","broom","bslib","cellranger","checkmate","cherryblossom","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","emo","evaluate","fansi","farver","fastmap","forcats","fs","generics","ggplot2","glue","graphics","grDevices","grid","gtable","haven","highr","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","methods","mime","modelr","munsell","openintro","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","usdata","utf8","utils","vctrs","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.1.0","0.2.1","1.4.1","4.2.0","0.8.0","0.3.1","1.1.0","2.1.0","0.1.0","3.3.0","2.0-3","4.2.0","1.5.1","4.3.2","4.2.0","1.1.2","2.1.1","0.6.29","1.0.9","0.3.2","0.0.0.9000","0.15","1.0.3","2.1.0","1.1.0","0.5.1","1.5.2","0.1.2","3.3.6","1.6.2","4.2.0","4.2.0","4.2.0","0.3.0","2.5.0","0.9","1.1.1","0.5.2","1.5.4","1.6.5","1.4.3","0.1.4","1.8.0","1.39","0.4.2","1.3.0","0.10.1.9022","1.0.1","1.8.0","2.0.3","1.1","7.3-56","4.2.0","0.12","0.1.8","0.5.0","2.3.0","1.7.0","2.0.3","1.2.0.1","0.3.4","2.5.1","1.0.8.3","2.1.2","1.4.0","2.0.1","1.0.2","2.14","2.0.3","0.13","1.0.2","0.4.1","1.2.0","1.7.1","4.2.0","1.7.6","1.4.0","3.1.7","1.2.0","1.1.2","1.3.1","4.2.0","0.3.0","0.2.0","1.2.2","4.2.0","0.4.1","2.5.0","0.31","1.3.3","1.8-4","2.3.5"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
@@ -1330,7 +1696,8 @@ learnr:::store_exercise_cache(structure(list(label = "ex9", global_setup = struc
 
 <!-- begin doc-metadata -->
 <div id="doc-metadata">
-<h2 class="title toc-ignore" style="display:none;">Regression modeling: 2 - Correlation</h2>
+<h2 class="title toc-ignore" style="display:none;">Regression modeling:
+2 - Correlation</h2>
 </div>
 <!-- end doc-metadata -->
 

@@ -12,6 +12,177 @@ knitr::opts_chunk$set(echo = TRUE)
 renv::dependencies()
 ```
 
+## purchase data
+
+```{r}
+library(tidyverse)
+age=22:41
+purchase = c(0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1)
+mydata<-data.frame(age, purchase)
+mydata
+
+ggplot(data=mydata, aes(x=age, y=purchase)) + 
+   geom_point() +
+    xlim(10, 50) + ylim(-0.5, 1.5)  +
+    geom_smooth(method = "lm", se = FALSE)
+
+#nrow(mydata$age)
+```
+
+Let's fit a linear regression model.
+
+```{r}
+model <- lm(purchase ~ age, data=mydata)
+model
+```
+
+Let's fit a logistic regression model.
+
+```{r}
+model <- glm(purchase ~ age,family=binomial(link='logit'),data=mydata)
+model
+```
+
+
+Prediction
+
+```{r}
+age=22:41
+purchase = c(0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1)
+mydata<-data.frame(age, purchase)
+mydata$pred_purchase <-  exp(-11.9434+0.3792*age)/ (exp(-11.9434+0.3792*age)+1)
+  
+mydata
+```
+
+
+```{r}
+ggplot(data=mydata, aes(x=age, y=purchase)) + 
+   geom_point() +
+    xlim(20, 45) + ylim(-0.5, 1.5)  +
+  geom_line(aes(x=age, y=pred_purchase))
+
+```
+
+
+What's probability of purchase when age=20 and 45?
+
+
+```{r}
+age=20
+prob_20<-exp(-11.9434+0.3792*age)/ (exp(-11.9434+0.3792*age)+1)
+prob_20
+```
+
+
+```{r}
+age=45
+prob_45<-exp(-11.9434+0.3792*age)/ (exp(-11.9434+0.3792*age)+1)
+prob_45
+```
+
+
+At what age will the probability of purchase =0.5?
+
+```{r}
+(log(0.5/(1-0.5))+11.9434)/0.3792
+```
+
+```{r}
+log(0.5/(1-0.5))
+```
+
+```{r}
+age=31.49631
+prob<-exp(-11.9434+0.3792*age)/ (exp(-11.9434+0.3792*age)+1)
+prob
+```
+
+# Adding the gender variable
+
+```{r}
+#age=22:41
+#purchase = c(0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1)
+#salary =   c(25,10,30, 10,25,35,15,10,18,50,14,65,15,80,10,15,20,15,12,10)
+#female    = c(0,1,1,0,1,0,0,0,0,1,0,1,0,1,0,0,0,1,0,0)
+
+#mydata<-data.frame(age, salary,female, purchase)
+
+mydata <- read.csv(file = 'data/purchase.csv')
+mydata
+
+mydata$purchase = factor(mydata$purchase)
+mydata
+#View(mydata)
+#write.csv(mydata,"purchase.csv", row.names = TRUE)
+
+```
+
+```{r}
+model <- glm(purchase ~ age + salary,family=binomial(link='logit'),data=mydata)
+model
+
+```
+
+
+
+```{r}
+ggplot(data=mydata, aes(x=age, y=woman, color=purchase)) + 
+   geom_point() +
+    xlim(20, 45) + ylim(-0.5, 1.5) 
+
+```
+
+
+```{r}
+model <- glm(purchase ~ age + woman,family=binomial(link='logit'),data=mydata)
+model
+```
+
+
+
+```{r}
+
+# Draw the equation is -38.995+1.368 ∗age + -11.668∗woman=0
+x_age=20:45
+y_woman = (-38.995+1.368*age)/11.668
+df<-data.frame(x_age, y_woman)
+
+df
+
+library(ggthemes)
+ggplot() + 
+   geom_point(data=mydata, aes(x=age, y=woman, color=purchase)) +
+  geom_line(aes(x=x_age, y=y_woman))+
+    xlim(20, 45) + ylim(-0.5, 1.5) +
+    theme_gray()
+  
+```
+
+
+
+
+
+
+
+```{r}
+ggplot() + 
+   geom_point(data=mydata, aes(x=hours, y=pass, color="admit")) 
+
+```
+
+
+```{r}
+model <- glm(pass ~ hours,family=binomial(link='logit'),data=mydata)
+model$coefficients
+```
+
+
+
+
+
+
+
 
 ## Ex
 

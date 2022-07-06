@@ -45,13 +45,15 @@ Titanic is an R package containing data sets providing information on the fate o
 
 
 ### Loading the libaries and dataset
-First, we  load the dataset and libraries. In this tutorial, we will make use of the data frame `titanic_train`.
+First, we should load the dataset and libraries. 
 
 ```{r echo=TRUE}
-library(titanic) #contains the titanic dataset
+library(titanic) 
 library(tidyverse) 
-library(visdat) #visualize missing 
+library(visdat) #visualize missing  values
 ```
+
+In this tutorial, we will make use of the data frame `titanic_train` in the `titanic` package.
 
 We first convert the variables `Survived`, `sex` and `Pclass` variables to factors.
 
@@ -263,7 +265,7 @@ check_result()
 ```
 
 
-###
+### Exercise 3
 
 **Exercise:**
 Complete the code to find out the proportion of passenger survived using the `prob.table` function.
@@ -531,13 +533,14 @@ vis_dat(titanic_train)
 
 
 ```{r visualize_NA, exercise=TRUE, warning=FALSE, eval=FALSE}
-library(visdat)
 vis_dat(_____)
 ```
 
 ### Handling Missing Values
 
-One way to to handle missing values is to replace them with the average age of passengers. Complete the code below to replace the missing values in the `Age` attribute of the `titanic_train` dataset.
+One way to to handle missing values is to replace them with the average age of passengers. 
+
+**Exericse:** Complete the code below to replace the missing values in the `Age` attribute of the `titanic_train` dataset.
 
 
 ```{r handle_NA, exercise=TRUE, eval=FALSE, warning=FALSE}
@@ -560,9 +563,32 @@ vis_dat(titanic_train)
 ```
 
 
+```{r handle_NA-check, warning=FALSE}
+grade_this({
+  avg<-mean(titanic_train$Age, na.rm = TRUE)
+  titanic_train$Age[is.na(titanic_train$Age)] = avg 
+  
+  #expected
+  expected_age_vector = titanic_train$Age
+  
+  df = get("titanic_train", envir = .envir_result)
+  actual_age_vector = df$Age
+   
+  if (identical(expected_age_vector, actual_age_vector))
+    pass()
+  else
+    fail("Please replace the missing values with the mean age")
+})
+```
+
+
 ## Discretize variables
 
-The attribute `Age` is a continuous variable which makes drawing proportion tables almost useless as there may only be one or two passengers for each age! Let’s create a factor variable `IsAdult` to indicate whether the passenger is a child (below the age of 18) or adult (aged 18 or above). 
+The attribute `Age` is a continuous variable which makes creating proportion tables almost useless as there may only be one or two passengers for each age! 
+
+### Exercise 1 
+
+**Exercise:** Create a factor variable `IsAdult` to indicate whether the passenger is a child (below the age of 18) or adult (aged 18 or above). 
 
 ```{r discretize_age-solution}
 #Create the isAdult variable
@@ -596,7 +622,7 @@ table(________)
 table(titanic_train$isAdult)
 ```
 
-###
+### Exercise 2
 
 Is Child or Adult more likely to survive? 
 
@@ -744,6 +770,32 @@ data_without_outlier <- titanic_train[_______,]
 # Create the boxplot to verify that the outliers are removed
 ggplot(data_without_outlier, aes(x=_________)) +
   _________
+```
+
+```{r remove_outlier-check, warning=FALSE}
+grade_this({
+  if (!exists("data_without_outlier", envir=.envir_result))
+    fail("The variable data_without_outlier should be defined")  
+  
+
+  #expected
+  Q3=quantile(titanic_train$Fare)[[4]] 
+  iqr = IQR(titanic_train$Fare) 
+  data_without_outlier <- titanic_train[titanic_train$Fare<=Q3+1.5*iqr,]
+  expected=data_without_outlier$Fare
+
+  #actual
+  df = get("data_without_outlier", envir = .envir_result)
+  print("1")
+  if("Fare" %in% colnames(df)){
+    actual = df$Fare
+     
+    if (identical(expected, actual))
+      pass()  
+  }
+   
+  fail("The outliers are not correct removed")
+})
 ```
 
 Compare the boxplot before and after removing the outliers.

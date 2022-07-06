@@ -117,10 +117,11 @@ if (window.hljs) {
 </div>
 <div id="section-loading-the-libaries-and-dataset" class="section level3">
 <h3>Loading the libaries and dataset</h3>
-<p>First, we load the dataset and libraries. In this tutorial, we will make use of the data frame <code>titanic_train</code>.</p>
-<pre class="r"><code>library(titanic) #contains the titanic dataset
+<p>First, we should load the dataset and libraries.</p>
+<pre class="r"><code>library(titanic) 
 library(tidyverse) 
-library(visdat) #visualize missing </code></pre>
+library(visdat) #visualize missing  values</code></pre>
+<p>In this tutorial, we will make use of the data frame <code>titanic_train</code> in the <code>titanic</code> package.</p>
 <p>We first convert the variables <code>Survived</code>, <code>sex</code> and <code>Pclass</code> variables to factors.</p>
 <pre class="r"><code>titanic_train$Survived&lt;-factor(titanic_train$Survived)
 titanic_train$Pclass&lt;-factor(titanic_train$Pclass)
@@ -263,8 +264,8 @@ prop.table(t)</code></pre>
 prop.table(t)</code></pre>
 </div>
 </div>
-<div id="section-section-2" class="section level3">
-<h3></h3>
+<div id="section-exercise-3" class="section level3">
+<h3>Exercise 3</h3>
 <p><strong>Exercise:</strong> Complete the code to find out the proportion of passenger survived using the <code>prob.table</code> function.</p>
 <div class="tutorial-exercise-support" data-label="prop_survived-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>t&lt;-table(titanic_train$Survived) 
@@ -275,7 +276,7 @@ prop.table(t)</code></pre>
 </div>
 <hr />
 </div>
-<div id="section-exercise-3" class="section level3">
+<div id="section-exercise-3-1" class="section level3">
 <h3>Exercise 3:</h3>
 <p><strong>Exercise:</strong> To understand if male or female is more likely to survive, compute the proportion of survivors grouped by Gender by passing the vectors <code>titanic_train$Sex</code> and <code>titanic_train$Survived</code> below.</p>
 <div class="tutorial-exercise" data-label="prop_sex_survived" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
@@ -318,7 +319,7 @@ prop.table(t)</code></pre>
 </div>
 <hr />
 </div>
-<div id="section-section-3" class="section level3">
+<div id="section-section-2" class="section level3">
 <h3></h3>
 <p><strong>Exercise:</strong> Complete the code to replicate the bar chart below.</p>
 <p><img src="titanic_files/figure-html/unnamed-chunk-3-1.png" width="624" /></p>
@@ -356,7 +357,7 @@ prop.table(t)</code></pre>
 </div>
 <hr />
 </div>
-<div id="section-section-4" class="section level3">
+<div id="section-section-3" class="section level3">
 <h3></h3>
 <p><strong>Exercise:</strong> To understand if the passenger class may affect the survival probability, complete the code below to replicate the following bar chart.</p>
 <p><img src="titanic_files/figure-html/unnamed-chunk-4-1.png" width="624" /></p>
@@ -393,7 +394,7 @@ prop.table(t)</code></pre>
    geom_histogram(binwidth = 10)</code></pre>
 </div>
 </div>
-<div id="section-section-5" class="section level3">
+<div id="section-section-4" class="section level3">
 <h3></h3>
 <p>Suppose we want to compute the average age of the passenger by passing the vector containing the passenger’s age from the <code>titanic_train</code> data frame to the <code>mean</code> function.</p>
 <pre class="r"><code>mean(titanic_train$Age)</code></pre>
@@ -421,14 +422,14 @@ prop.table(t)</code></pre>
 <pre class="text"><code>vis_dat(titanic_train)</code></pre>
 </div>
 <div class="tutorial-exercise" data-label="visualize_NA" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>library(visdat)
-vis_dat(_____)</code></pre>
+<pre class="text"><code>vis_dat(_____)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
 <div id="section-handling-missing-values" class="section level3">
 <h3>Handling Missing Values</h3>
-<p>One way to to handle missing values is to replace them with the average age of passengers. Complete the code below to replace the missing values in the <code>Age</code> attribute of the <code>titanic_train</code> dataset.</p>
+<p>One way to to handle missing values is to replace them with the average age of passengers.</p>
+<p><strong>Exericse:</strong> Complete the code below to replace the missing values in the <code>Age</code> attribute of the <code>titanic_train</code> dataset.</p>
 <div class="tutorial-exercise" data-label="handle_NA" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>#handle missing values
 avg&lt;-mean(_______, _______)
@@ -436,7 +437,7 @@ titanic_train$Age[_______] = avg
 
 #Verify that there are no more missing values.
 vis_dat(___________)</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="handle_NA-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>#handle missing values
@@ -450,7 +451,10 @@ vis_dat(titanic_train)</code></pre>
 </div>
 <div id="section-discretize-variables" class="section level2">
 <h2>Discretize variables</h2>
-<p>The attribute <code>Age</code> is a continuous variable which makes drawing proportion tables almost useless as there may only be one or two passengers for each age! Let’s create a factor variable <code>IsAdult</code> to indicate whether the passenger is a child (below the age of 18) or adult (aged 18 or above).</p>
+<p>The attribute <code>Age</code> is a continuous variable which makes creating proportion tables almost useless as there may only be one or two passengers for each age!</p>
+<div id="section-exercise-1-1" class="section level3">
+<h3>Exercise 1</h3>
+<p><strong>Exercise:</strong> Create a factor variable <code>IsAdult</code> to indicate whether the passenger is a child (below the age of 18) or adult (aged 18 or above).</p>
 <div class="tutorial-exercise-support" data-label="discretize_age-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 
 </div>
@@ -472,8 +476,9 @@ titanic_train$isAdult &lt;- ______</code></pre>
 <div class="tutorial-exercise-support" data-label="isAdult-prob-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>table(titanic_train$isAdult)</code></pre>
 </div>
-<div id="section-section-6" class="section level3">
-<h3></h3>
+</div>
+<div id="section-exercise-2-1" class="section level3">
+<h3>Exercise 2</h3>
 <p>Is Child or Adult more likely to survive?</p>
 <p><strong>Exercise:</strong> Complete the code to replicate the following bar chart which show the number of survived/killed passenger for children and adults.</p>
 <p><img src="titanic_files/figure-html/unnamed-chunk-6-1.png" width="624" /></p>
@@ -508,8 +513,8 @@ titanic_train$isAdult &lt;- ______</code></pre>
 <li>Third quartile (Q3 or 75th percentile): also known as the upper quartile qn(0.75), it is the median of the upper half of the datase</li>
 </ul>
 <p>The <strong>interquartile range (IQR)</strong> is the distance between the upper (Q3) and lower quartile (Q1).</p>
-<p><span class="math inline">\(IRQ = Q3 - Q1\)</span></p>
-<p>Outlines appears above or below the minimum and maximum of the boxplot (Q1-1.5*IRQ or Q3+1.5IRQ).</p>
+<p><span class="math inline">\(IQR = Q3 - Q1\)</span></p>
+<p>Outlines appears above or below the minimum and maximum of the boxplot (Q1-1.5<em>IQR or Q3+1.5</em>IQR).</p>
 </div>
 <div id="section-passengers-fare" class="section level3">
 <h3>Passenger’s Fare</h3>
@@ -548,7 +553,7 @@ titanic_train$isAdult &lt;- ______</code></pre>
 </div>
 <div id="section-removing-the-outliers" class="section level3">
 <h3>Removing the outliers</h3>
-<p>Complete the following code to remove the outliers (with fare above <span class="math inline">\(Q3+1.5IRQ\)</span>). Note that <code>[[]]</code> operator will convert a named vector to a vector</p>
+<p>Complete the following code to remove the outliers (with fare above <span class="math inline">\(Q3+1.5*IQR\)</span>). Note that <code>[[]]</code> operator will convert a named vector to a vector</p>
 <div class="tutorial-exercise-support" data-label="remove_outlier-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Calculate Q1, Q3 and IQR
 Q3=quantile(titanic_train$Fare)[[4]] 
@@ -556,7 +561,6 @@ iqr = IQR(titanic_train$Fare)  #interquartile range
 
 # Remove outliers for the fare attribute (with fare &gt; Q3+1.5*IQR)
 data_without_outlier &lt;- titanic_train[titanic_train$Fare&lt;=Q3+1.5*iqr,]
-summary(data_without_outlier$Fare)
 
 # Create the boxplot to verify that the outliers are removed
 ggplot(data_without_outlier, aes(x=Fare)) +
@@ -567,13 +571,13 @@ ggplot(data_without_outlier, aes(x=Fare)) +
 Q3=quantile(titanic_train$Fare)[[4]] 
 iqr = IQR(titanic_train$Fare)  #interquartile range 
 
-# Remove outliers for the fare  &gt; Q3+1.5*IQR
+# Remove outliers with fare  &gt; Q3+1.5*IQR
 data_without_outlier &lt;- titanic_train[_______,]
 
 # Create the boxplot to verify that the outliers are removed
 ggplot(data_without_outlier, aes(x=_________)) +
  _________</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Compare the boxplot before and after removing the outliers.</p>
 </div>
@@ -680,7 +684,7 @@ learnr:::store_exercise_cache(structure(list(label = "glimpse", global_setup = s
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "pasenger_count", 
     question = structure("Answer:", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_2431d23", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f32ba90", 
         option = "891", value = "891", label = structure("891", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -692,7 +696,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
         answer = "pasenger_count-answer", question = "pasenger_count"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nAnswer:\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 76949128.9641678, options = list(placeholder = "Enter answer here...", 
+    seed = 472904190.279787, options = list(placeholder = "Enter answer here...", 
         trim = TRUE)), class = c("learnr_text", "tutorial_question"
 )), session = session)
 </script>
@@ -880,7 +884,7 @@ learnr:::store_exercise_cache(structure(list(label = "prop_survival", global_set
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "details", question = structure("Answer: ", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_df916f0", 
+"character")), answers = list(structure(list(id = "lnr_ans_1a7a110", 
     option = "0.38", value = "0.38", label = structure("0.38", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -891,7 +895,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "details-answer", question = "details"), loading = structure("<strong>Loading:<\u002fstrong> \nAnswer: \n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1191807579.94502, options = list(placeholder = "Enter answer here...", 
+    seed = 1624245648.74365, options = list(placeholder = "Enter answer here...", 
         trim = TRUE)), class = c("learnr_text", "tutorial_question"
 )), session = session)
 </script>
@@ -941,7 +945,7 @@ learnr:::store_exercise_cache(structure(list(label = "gender", global_setup = st
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "male-count", question = structure("Answer: ", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_d706fb5", 
+"character")), answers = list(structure(list(id = "lnr_ans_b31d971", 
     option = "577", value = "577", label = structure("577", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -952,7 +956,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "male-count-answer", question = "male-count"), loading = structure("<strong>Loading:<\u002fstrong> \nAnswer: \n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 520558466.757596, options = list(placeholder = "Enter answer here...", 
+    seed = 413013375.807676, options = list(placeholder = "Enter answer here...", 
         trim = TRUE)), class = c("learnr_text", "tutorial_question"
 )), session = session)
 </script>
@@ -1249,18 +1253,18 @@ learnr:::store_exercise_cache(structure(list(label = "plot_survived_sex", global
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "survive_prob", 
     question = structure("Which of the following statements is TRUE related to chance of survival of female and male?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_5971e3e", 
+    "character")), answers = list(structure(list(id = "lnr_ans_992be4a", 
         option = "Male passengers have higher probability of survival than female", 
         value = "Male passengers have higher probability of survival than female", 
         label = structure("Male passengers have higher probability of survival than female", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Nope, not quite!", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f7f74d", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c477b2c", 
         option = "Female passengers have higher probability of survival than male", 
         value = "Female passengers have higher probability of survival than male", 
         label = structure("Female passengers have higher probability of survival than male", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5b0cab2", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7873bdd", 
         option = "Male and female passengers have equal probability of survival", 
         value = "Male and female passengers have equal probability of survival", 
         label = structure("Male and female passengers have equal probability of survival", html = TRUE, class = c("html", 
@@ -1275,7 +1279,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "survive_prob-answer", question = "survive_prob"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following statements is TRUE related to chance of survival of female and male?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 231979328.391976, options = list()), class = c("learnr_radio", 
+    seed = 2076018348.53328, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1371,15 +1375,15 @@ learnr:::store_exercise_cache(structure(list(label = "barchart_PClass", global_s
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "survive_prob_class", 
     question = structure("Which of the following passenger class has the highest chance of survival?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_6efa589", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ec37840", 
         option = "Class 2", value = "Class 2", label = structure("Class 2", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Nope, not quite!", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3fce607", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bbfcc23", 
         option = "Class 3", value = "Class 3", label = structure("Class 3", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Try again!", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_de3cfa", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_eda70d7", 
         option = "Class 1", value = "Class 1", label = structure("Class 1", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1391,7 +1395,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "survive_prob_class-answer", question = "survive_prob_class"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following passenger class has the highest chance of survival?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1675292876.71988, options = list()), class = c("learnr_radio", 
+    seed = 1274069133.90672, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1504,7 +1508,7 @@ learnr:::store_exercise_cache(structure(list(label = "visualize_NA", global_setu
 "titanic_train$Sex<-factor(titanic_train$Sex)", "", "#remove unnecessary variables.", 
 "rm(titanic_test, titanic_gender_class_model, titanic_gender_class_model)"
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "visualize_NA", code = "library(visdat)\nvis_dat(_____)", 
+    chunks = list(list(label = "visualize_NA", code = "vis_dat(_____)", 
         opts = list(label = "\"visualize_NA\"", exercise = "TRUE", 
             warning = "FALSE", eval = "FALSE"), engine = "r")), 
     code_check = NULL, error_check = NULL, check = NULL, solution = structure("vis_dat(titanic_train)", chunk_opts = list(
@@ -1527,9 +1531,8 @@ learnr:::store_exercise_cache(structure(list(label = "visualize_NA", global_setu
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ...) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        label = "visualize_NA", exercise = TRUE, code = c("library(visdat)", 
-        "vis_dat(_____)"), out.width.px = 624, out.height.px = 384, 
-        params.src = "visualize_NA, exercise=TRUE, warning=FALSE, eval=FALSE", 
+        label = "visualize_NA", exercise = TRUE, code = "vis_dat(_____)", 
+        out.width.px = 624, out.height.px = 384, params.src = "visualize_NA, exercise=TRUE, warning=FALSE, eval=FALSE", 
         fig.num = 0, exercise.df_print = "paged"), engine = "r"), class = "tutorial_exercise"))
 </script>
  
@@ -1553,9 +1556,16 @@ learnr:::store_exercise_cache(structure(list(label = "handle_NA", global_setup =
     chunks = list(list(label = "handle_NA", code = "#handle missing values\navg<-mean(_______, _______)\ntitanic_train$Age[_______] = avg\n\n#Verify that there are no more missing values.\nvis_dat(___________)", 
         opts = list(label = "\"handle_NA\"", exercise = "TRUE", 
             eval = "FALSE", warning = "FALSE"), engine = "r")), 
-    code_check = NULL, error_check = NULL, check = NULL, solution = structure(c("#handle missing values", 
-    "avg<-mean(titanic_train$Age, na.rm = TRUE)", "titanic_train$Age[is.na(titanic_train$Age)] = avg", 
-    "", "#Verify that there are no more missing values.", "vis_dat(titanic_train)"
+    code_check = NULL, error_check = NULL, check = structure(c("grade_this({", 
+    "  avg<-mean(titanic_train$Age, na.rm = TRUE)", "  titanic_train$Age[is.na(titanic_train$Age)] = avg ", 
+    "  ", "  #expected", "  expected_age_vector = titanic_train$Age", 
+    "  ", "  df = get(\"titanic_train\", envir = .envir_result)", 
+    "  actual_age_vector = df$Age", "   ", "  if (identical(expected_age_vector, actual_age_vector))", 
+    "    pass()", "  else", "    fail(\"Please replace the missing values with the mean age\")", 
+    "})"), chunk_opts = list(label = "handle_NA-check", warning = FALSE)), 
+    solution = structure(c("#handle missing values", "avg<-mean(titanic_train$Age, na.rm = TRUE)", 
+    "titanic_train$Age[is.na(titanic_train$Age)] = avg", "", 
+    "#Verify that there are no more missing values.", "vis_dat(titanic_train)"
     ), chunk_opts = list(label = "handle_NA-solution")), test_cases = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
@@ -1736,18 +1746,18 @@ learnr:::store_exercise_cache(structure(list(label = "barchart_isAdult", global_
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "adult_child_survival", 
     question = structure("Which of the following statements is TRUE related to survival of Adults and Children?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_c387d5d", 
+    "character")), answers = list(structure(list(id = "lnr_ans_4a4b956", 
         option = "Adults had higher probability of survival than Children", 
         value = "Adults had higher probability of survival than Children", 
         label = structure("Adults had higher probability of survival than Children", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Nope, not quite!", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e892804", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bacee30", 
         option = "Children had higher probability of survival than Adults", 
         value = "Children had higher probability of survival than Adults", 
         label = structure("Children had higher probability of survival than Adults", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7478b19", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e6a7000", 
         option = "Children and Adults were equally likely to survive", 
         value = "Children and Adults were equally likely to survive", 
         label = structure("Children and Adults were equally likely to survive", html = TRUE, class = c("html", 
@@ -1762,7 +1772,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "adult_child_survival-answer", question = "adult_child_survival"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following statements is TRUE related to survival of Adults and Children?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1023812363.02325, options = list()), class = c("learnr_radio", 
+    seed = 181262301.415593, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1922,14 +1932,25 @@ learnr:::store_exercise_cache(structure(list(label = "remove_outlier", global_se
 "titanic_train$Sex<-factor(titanic_train$Sex)", "", "#remove unnecessary variables.", 
 "rm(titanic_test, titanic_gender_class_model, titanic_gender_class_model)"
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "remove_outlier", code = "# Calculate Q3 and IQR\nQ3=quantile(titanic_train$Fare)[[4]] \niqr = IQR(titanic_train$Fare)  #interquartile range \n\n# Remove outliers for the fare  > Q3+1.5*IQR\ndata_without_outlier <- titanic_train[_______,]\n\n# Create the boxplot to verify that the outliers are removed\nggplot(data_without_outlier, aes(x=_________)) +\n _________", 
+    chunks = list(list(label = "remove_outlier", code = "# Calculate Q3 and IQR\nQ3=quantile(titanic_train$Fare)[[4]] \niqr = IQR(titanic_train$Fare)  #interquartile range \n\n# Remove outliers with fare  > Q3+1.5*IQR\ndata_without_outlier <- titanic_train[_______,]\n\n# Create the boxplot to verify that the outliers are removed\nggplot(data_without_outlier, aes(x=_________)) +\n _________", 
         opts = list(label = "\"remove_outlier\"", exercise = "TRUE", 
             eval = "FALSE", indent = "\" \""), engine = "r")), 
-    code_check = NULL, error_check = NULL, check = NULL, solution = structure(c("# Calculate Q1, Q3 and IQR", 
+    code_check = NULL, error_check = NULL, check = structure(c("grade_this({", 
+    "  if (!exists(\"data_without_outlier\", envir=.envir_result))", 
+    "    fail(\"The variable data_without_outlier should be defined\")  ", 
+    "  ", "", "  #expected", "  Q3=quantile(titanic_train$Fare)[[4]] ", 
+    "  iqr = IQR(titanic_train$Fare) ", "  data_without_outlier <- titanic_train[titanic_train$Fare<=Q3+1.5*iqr,]", 
+    "  expected=data_without_outlier$Fare", "", "  #actual", 
+    "  df = get(\"data_without_outlier\", envir = .envir_result)", 
+    "  print(\"1\")", "  if(\"Fare\" %in% colnames(df)){", "    actual = df$Fare", 
+    "     ", "    if (identical(expected, actual))", "      pass()  ", 
+    "  }", "   ", "  fail(\"The outliers are not correct removed\")", 
+    "})"), chunk_opts = list(label = "remove_outlier-check", 
+        warning = FALSE)), solution = structure(c("# Calculate Q1, Q3 and IQR", 
     "Q3=quantile(titanic_train$Fare)[[4]] ", "iqr = IQR(titanic_train$Fare)  #interquartile range ", 
     "", "# Remove outliers for the fare attribute (with fare > Q3+1.5*IQR)", 
     "data_without_outlier <- titanic_train[titanic_train$Fare<=Q3+1.5*iqr,]", 
-    "summary(data_without_outlier$Fare)", "", "# Create the boxplot to verify that the outliers are removed", 
+    "", "# Create the boxplot to verify that the outliers are removed", 
     "ggplot(data_without_outlier, aes(x=Fare)) +", " geom_boxplot()"
     ), chunk_opts = list(label = "remove_outlier-solution", indent = " ")), 
     test_cases = NULL, options = list(eval = FALSE, echo = TRUE, 
@@ -1953,7 +1974,7 @@ learnr:::store_exercise_cache(structure(list(label = "remove_outlier", global_se
         label = "remove_outlier", exercise = TRUE, indent = " ", 
         code = c("# Calculate Q3 and IQR", "Q3=quantile(titanic_train$Fare)[[4]] ", 
         "iqr = IQR(titanic_train$Fare)  #interquartile range ", 
-        "", "# Remove outliers for the fare  > Q3+1.5*IQR", "data_without_outlier <- titanic_train[_______,]", 
+        "", "# Remove outliers with fare  > Q3+1.5*IQR", "data_without_outlier <- titanic_train[_______,]", 
         "", "# Create the boxplot to verify that the outliers are removed", 
         "ggplot(data_without_outlier, aes(x=_________)) +", " _________"
         ), out.width.px = 624, out.height.px = 384, params.src = "remove_outlier, exercise=TRUE, eval=FALSE", 

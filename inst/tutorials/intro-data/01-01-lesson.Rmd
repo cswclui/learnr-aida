@@ -6,6 +6,7 @@ output:
     allow_skip: true
     theme: "united"
     css: ./css/style.css
+#output: html_document
 runtime: shiny_prerendered
 ---
 

@@ -1,0 +1,12 @@
+---
+title: "test"
+output: html_document
+date: '2022-06-14'
+---
+
+```{r}
+library("openintro")
+email
+View(email)
+```
+

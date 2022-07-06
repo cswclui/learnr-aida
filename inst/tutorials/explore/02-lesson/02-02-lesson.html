@@ -110,11 +110,19 @@ if (window.hljs) {
 
 <div id="section-exploring-numerical-data" class="section level2">
 <h2>Exploring numerical data</h2>
-<p>In this lesson, we’ll broaden our tool box of exploratory techniques to encompass numerical data. Numerical data are data that take the form of number, where those numbers actually represent a value on the number line (in contrast to a number like zip code that can’t be ordered on a number line).</p>
-<p>The dataset that we’ll be working with is one that has information on the cars that were for sale in the US in a certain year.</p>
+<p>In this lesson, we’ll broaden our tool box of exploratory techniques
+to encompass numerical data. Numerical data are data that take the form
+of number, where those numbers actually represent a value on the number
+line (in contrast to a number like zip code that can’t be ordered on a
+number line).</p>
+<p>The dataset that we’ll be working with is one that has information on
+the cars that were for sale in the US in a certain year.</p>
 <div id="section-cars-dataset" class="section level3">
 <h3>Cars dataset</h3>
-<p>In this lesson, you’ll be working with the <code>cars</code> dataset, which records characteristics on all of the new models of cars for sale in the US in a certain year. We can learn more about each variable using the <code>glimpse()</code> function.</p>
+<p>In this lesson, you’ll be working with the <code>cars</code> dataset,
+which records characteristics on all of the new models of cars for sale
+in the US in a certain year. We can learn more about each variable using
+the <code>glimpse()</code> function.</p>
 <pre class="r"><code>glimpse(cars)</code></pre>
 <pre><code>## Rows: 428
 ## Columns: 19
@@ -137,37 +145,74 @@ if (window.hljs) {
 ## $ wheel_base  &lt;int&gt; 98, 98, 104, 104, 104, 105, 105, 103, 103, 103, 103, 103, …
 ## $ length      &lt;int&gt; 167, 153, 183, 183, 183, 174, 174, 168, 168, 168, 168, 175…
 ## $ width       &lt;int&gt; 66, 66, 69, 68, 69, 67, 67, 67, 67, 67, 67, 67, 67, 68, 66…</code></pre>
-<p>We learn that we have 428 observations, or cases, and 19 variables. Unlike most displays of data, the glimpse function puts each of the variables as a row, with its name followed by its data type, followed by the first several values.</p>
+<p>We learn that we have 428 observations, or cases, and 19 variables.
+Unlike most displays of data, the glimpse function puts each of the
+variables as a row, with its name followed by its data type, followed by
+the first several values.</p>
 <ul>
-<li>The car names are character strings, which are like factors, except its common for every case to take a unique value.</li>
-<li><strong><code>lgl</code></strong>, stands for logical variables, another simple case of a categorical variable where there are only two levels. For example, each car will take either TRUE or FALSE depending on if it is a sports car or not.</li>
-<li>We can see that the last set of variables are all either <strong><code>int</code></strong> for integer or <strong><code>dbl</code></strong> for double.<br />
-They are actually both numerical variables, but the integers are discrete and the double are continuous (and are allocated more computer memory). If you look at <code>ncyl</code>, the number of cylinders, it’s listed as an integer, but there are only a few different values that it can take. So, it actually behaves a bit like categorical variable.</li>
+<li>The car names are character strings, which are like factors, except
+its common for every case to take a unique value.</li>
+<li><strong><code>lgl</code></strong>, stands for logical variables,
+another simple case of a categorical variable where there are only two
+levels. For example, each car will take either TRUE or FALSE depending
+on if it is a sports car or not.</li>
+<li>We can see that the last set of variables are all either
+<strong><code>int</code></strong> for integer or
+<strong><code>dbl</code></strong> for double.<br />
+They are actually both numerical variables, but the integers are
+discrete and the double are continuous (and are allocated more computer
+memory). If you look at <code>ncyl</code>, the number of cylinders, it’s
+listed as an integer, but there are only a few different values that it
+can take. So, it actually behaves a bit like categorical variable.</li>
 </ul>
 <p>Let’s construct some plots to help us explore this data.</p>
 </div>
 </div>
 <div id="section-histogram" class="section level2">
 <h2>Histogram</h2>
-<p>One of the most common plots to use is a <em>histogram</em>, which solves this problem by aggregating the dots into bins on the x axis, then mapping the height of the bar to the number of cases that fall into that bin. Because of the binning, it’s not possible to perfectly reconstruct the dataset, but it allows us to gain a bigger picture of the shape of the distribution.</p>
-<p>Notice, the only aspect of the code that changes is the transition from <code>geom_dotplot()</code> to <code>geom_histogram()</code>.</p>
-<div class="tutorial-exercise" data-label="hist-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>One of the most common plots to use is a <em>histogram</em>, which
+solves this problem by aggregating the dots into bins on the x axis,
+then mapping the height of the bar to the number of cases that fall into
+that bin. Because of the binning, it’s not possible to perfectly
+reconstruct the dataset, but it allows us to gain a bigger picture of
+the shape of the distribution.</p>
+<p>Notice, the only aspect of the code that changes is the transition
+from <code>geom_dotplot()</code> to <code>geom_histogram()</code>.</p>
+<div class="tutorial-exercise" data-label="hist-try" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight)) +
   geom_histogram()</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<p><em>Note</em>: When we run the code above, we get a message. The message lets us know that it has picked a <code>binwidth</code> for us and a warning that there were 14 missing values. This is <strong>not</strong> an error, it is a message that <code>ggplot()</code> is providing you!</p>
+<p><em>Note</em>: When we run the code above, we get a message. The
+message lets us know that it has picked a <code>binwidth</code> for us
+and a warning that there were 14 missing values. This is
+<strong>not</strong> an error, it is a message that
+<code>ggplot()</code> is providing you!</p>
 <p>You may select the rows with missing values.</p>
-<div class="tutorial-exercise" data-label="na-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="na-try" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>cars[is.na(cars$weight),]</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div id="section-histogram-bins" class="section level3">
 <h3>Histogram bins</h3>
-<p>You can play around with the <code>bins</code> or <code>binwidth</code> arguments to find the number of bins to make the histogram as continuous as possible. Or, second, you could use a density plot, which is up next!</p>
-<p><strong>ggplot2</strong> does its best to select a sensible bin width by default, but you can override that option by specifying it yourself. The <code>bins</code> and <code>binwidth</code> arguments to <code>geom_histogram()</code> is similar to the <code>dotsize</code> argument to <code>geom_dotplot()</code>, as it is optional and controls one aspect of the histogram. W may choose to specify the number of bins we would like, instead of the 30 bins <code>geom_histogram()</code> defaults to.</p>
-<p>Create histograms of car width with <code>bindwidth</code> 15 and 50</p>
-<div class="tutorial-exercise" data-label="wbw-ex" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>You can play around with the <code>bins</code> or
+<code>binwidth</code> arguments to find the number of bins to make the
+histogram as continuous as possible. Or, second, you could use a density
+plot, which is up next!</p>
+<p><strong>ggplot2</strong> does its best to select a sensible bin width
+by default, but you can override that option by specifying it yourself.
+The <code>bins</code> and <code>binwidth</code> arguments to
+<code>geom_histogram()</code> is similar to the <code>dotsize</code>
+argument to <code>geom_dotplot()</code>, as it is optional and controls
+one aspect of the histogram. W may choose to specify the number of bins
+we would like, instead of the 30 bins <code>geom_histogram()</code>
+defaults to.</p>
+<p>Create histograms of car width with <code>bindwidth</code> 15 and
+50</p>
+<div class="tutorial-exercise" data-label="wbw-ex" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>ggplot(data = ____ , aes(x = ______)) +
   geom_histogram(bins = ______)+
   ggtitle(&quot;Histogram of car width with bindwidth of 15&quot;) +
@@ -177,7 +222,9 @@ ggplot(data = ______ , aes(x = ______)) +
   ggtitle(&quot;Histogram of car width with bindwidth of 50&quot;) +</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="wbw-ex-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="wbw-ex-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight)) +
   geom_histogram(bins = 10) +
   ggtitle(&quot;Histogram of car with 10 bins&quot;) 
@@ -186,29 +233,58 @@ ggplot(data = cars, aes(x = weight)) +
   geom_histogram(bins = 40) +
   ggtitle(&quot;Histogram of car with 40 bins&quot;) </code></pre>
 </div>
-<p>One thing that’s important to know about histograms like this one is that your sense of the shape of the distribution can change depending on the bin width that is selected.</p>
+<p>One thing that’s important to know about histograms like this one is
+that your sense of the shape of the distribution can change depending on
+the bin width that is selected.</p>
 </div>
 </div>
 <div id="section-dotplot" class="section level2">
 <h2>Dotplot</h2>
-<p>The most direct way to represent numerical data is with a <em>dotplot</em>, where each case is a dot that’s placed at it’s appropriate value on the x-axis. The dots are then stacked on top of other cases with similar values. You can think of a dotplot as a sibling to the histogram, except you know <em>exactly</em> how many observations are in each “bin,” because you can count the dots. Importantly, the plot has much less information loss than a histogram, as you could almost rebuild the dataset if you were only given this plot. As you can imagine, these plots start to get difficult to read as the number of cases gets very large.</p>
-<p>The code below produces a dotplot of the weight of the 428 cars in the dataset. Notice, since we are only interested in one numerical variable (<code>weight</code>), there is only one variable specified in the <code>aes</code>thetics. Additionally, this variable is specified as the <code>x</code> aesthetic, as it is “standard” to plot a numerical variable on the x-axis. Finally, we notice the <code>geom_dotplot()</code> function is used to add dots to the plot. This function has an optional argument (input) of <code>dotsize</code>, which specifies how large the dots should be (values closer to 0 are smaller, values closer to 1 are larger).</p>
-<div class="tutorial-exercise" data-label="dotplot-cars-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>The most direct way to represent numerical data is with a
+<em>dotplot</em>, where each case is a dot that’s placed at it’s
+appropriate value on the x-axis. The dots are then stacked on top of
+other cases with similar values. You can think of a dotplot as a sibling
+to the histogram, except you know <em>exactly</em> how many observations
+are in each “bin,” because you can count the dots. Importantly, the plot
+has much less information loss than a histogram, as you could almost
+rebuild the dataset if you were only given this plot. As you can
+imagine, these plots start to get difficult to read as the number of
+cases gets very large.</p>
+<p>The code below produces a dotplot of the weight of the 428 cars in
+the dataset. Notice, since we are only interested in one numerical
+variable (<code>weight</code>), there is only one variable specified in
+the <code>aes</code>thetics. Additionally, this variable is specified as
+the <code>x</code> aesthetic, as it is “standard” to plot a numerical
+variable on the x-axis. Finally, we notice the
+<code>geom_dotplot()</code> function is used to add dots to the plot.
+This function has an optional argument (input) of <code>dotsize</code>,
+which specifies how large the dots should be (values closer to 0 are
+smaller, values closer to 1 are larger).</p>
+<div class="tutorial-exercise" data-label="dotplot-cars-try"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight)) +
   geom_dotplot(dotsize = 0.4)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<p>We notice in the dotplot, the y-axis is a bit confusing, as it is unclear what the 0.0 and 1.0 refer to. This is an unfortunate limitation of ggplot2, where binning along the x axis and stacking along the y axis results in a non-meaningful y axis. As we progress in our plotting abilities, we could choose to hide the y axis or manually scale it to match the number of dots.</p>
+<p>We notice in the dotplot, the y-axis is a bit confusing, as it is
+unclear what the 0.0 and 1.0 refer to. This is an unfortunate limitation
+of ggplot2, where binning along the x axis and stacking along the y axis
+results in a non-meaningful y axis. As we progress in our plotting
+abilities, we could choose to hide the y axis or manually scale it to
+match the number of dots.</p>
 <div id="section-your-turn" class="section level3">
 <h3>Your turn!</h3>
 <p>Create the following three plots:</p>
 <ul>
-<li>A histogram of horsepower (i.e. <code>horsepwr</code>) with a binwidth of 3.</li>
+<li>A histogram of horsepower (i.e. <code>horsepwr</code>) with a
+binwidth of 3.</li>
 <li>A second histogram of horsepower with a binwidth of 30.</li>
 <li>A third histogram of horsepower with a binwidth of 60.</li>
 </ul>
 <p>Add appropriate titles to the plots</p>
-<div class="tutorial-exercise" data-label="ex4" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex4" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Create hist of horsepwr with binwidth of 3
 ggplot(data = cars, aes(___)) +
   geom_histogram(binwidth = ___) +
@@ -220,13 +296,17 @@ ggplot(data = cars, aes(___)) +
 # Create hist of horsepwr with binwidth of 60</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex4-hint" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex4-hint"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(horsepwr)) +
   geom_histogram(binwidth = 3)+
   ## adds on a title to the plot
   labs(title = &quot;binwidth = 3&quot;)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex4-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex4-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Create hist of horsepwr with binwidth of 3
 ggplot(data = cars, aes(horsepwr)) +
   geom_histogram(binwidth = 3) +
@@ -249,9 +329,17 @@ ggplot(data = cars, aes(horsepwr)) +
 </div>
 <div id="section-density-plot" class="section level2">
 <h2>Density plot</h2>
-<p>The <em>density plot</em> represents the shape of the histogram using a smooth line. You can think of the density plot as drawing a smoothed line over the top of a histogram, providing a smoother representation of the shape of the distribution. A density plot is fairly sensitive to spikiness in the data, so you’ll only want to use it when you have a large number of observations.</p>
-<p>Notice, the only line in our code that has changed switches to <code>geom_density()</code>.</p>
-<div class="tutorial-exercise" data-label="cars-density-plot-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>The <em>density plot</em> represents the shape of the histogram using
+a smooth line. You can think of the density plot as drawing a smoothed
+line over the top of a histogram, providing a smoother representation of
+the shape of the distribution. A density plot is fairly sensitive to
+spikiness in the data, so you’ll only want to use it when you have a
+large number of observations.</p>
+<p>Notice, the only line in our code that has changed switches to
+<code>geom_density()</code>.</p>
+<div class="tutorial-exercise" data-label="cars-density-plot-try"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight)) +
   geom_density()</code></pre>
 <img src="02-02-lesson_files/figure-html/cars-density-plot-try-1.png" width="480" style="display: block; margin: auto;" />
@@ -259,10 +347,23 @@ ggplot(data = cars, aes(horsepwr)) +
 </div>
 <div id="section-bandwidth" class="section level3">
 <h3>Bandwidth</h3>
-<p>If we wanted to make our density plot appear a bit smoother, we can increase what’s known as the <strong>bandwidth</strong> of the plot. When we increase the bandwidth, we get a smoother plot, and smaller bandwidths create more volatile looking plots.</p>
-<p>But how do we decide what the “best” binwidth or bandwidth is for our plots? Usually the defaults are sensible, but it’s good practice to tinker with both smoother and less-smooth versions of the plots to focus on different scales of structure in the data. Similar to the <code>bins</code> argument for histograms, the bandwidth specifies the number of bins <code>geom_density()</code> should use when making the plot. As you can imagine, it’s easier to smooth over a smaller number of bins, so if you want a smoother density plot, you would choose larger values of <code>bw</code>.</p>
+<p>If we wanted to make our density plot appear a bit smoother, we can
+increase what’s known as the <strong>bandwidth</strong> of the plot.
+When we increase the bandwidth, we get a smoother plot, and smaller
+bandwidths create more volatile looking plots.</p>
+<p>But how do we decide what the “best” binwidth or bandwidth is for our
+plots? Usually the defaults are sensible, but it’s good practice to
+tinker with both smoother and less-smooth versions of the plots to focus
+on different scales of structure in the data. Similar to the
+<code>bins</code> argument for histograms, the bandwidth specifies the
+number of bins <code>geom_density()</code> should use when making the
+plot. As you can imagine, it’s easier to smooth over a smaller number of
+bins, so if you want a smoother density plot, you would choose larger
+values of <code>bw</code>.</p>
 <p>Try a few other values for the bandwidth in the exercise below.</p>
-<div class="tutorial-exercise" data-label="bandwidth-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="bandwidth-try"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight)) +
   geom_density(btw=100)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
@@ -270,9 +371,19 @@ ggplot(data = cars, aes(horsepwr)) +
 </div>
 <div id="section-colored-density-plots" class="section level3">
 <h3>Colored density plots</h3>
-<p>It is a bit easier to compare the variability with density plots overlaid. Notice, we have two new aspects to our plot, (1) the <code>fill</code> aesthetic, and (2) the <code>alpha</code> option.</p>
-<p>The <code>fill</code> aesthetic maps a color to the categorical variable given to it. You can think of this as a “filling” the density plots with different colors for sports car and other types of cars. The <code>alpha</code> argument changes the transparency of the density plots. Ordinarily, it would be impossible to see the area where these plots overlap. However, by making them more transparent (an <code>alpha</code> less than 1), we can see the overlapping areas.</p>
-<div class="tutorial-exercise" data-label="cars-colored-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>It is a bit easier to compare the variability with density plots
+overlaid. Notice, we have two new aspects to our plot, (1) the
+<code>fill</code> aesthetic, and (2) the <code>alpha</code> option.</p>
+<p>The <code>fill</code> aesthetic maps a color to the categorical
+variable given to it. You can think of this as a “filling” the density
+plots with different colors for sports car and other types of cars. The
+<code>alpha</code> argument changes the transparency of the density
+plots. Ordinarily, it would be impossible to see the area where these
+plots overlap. However, by making them more transparent (an
+<code>alpha</code> less than 1), we can see the overlapping areas.</p>
+<div class="tutorial-exercise" data-label="cars-colored-try"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight, fill = sports_car)) +
   geom_density(alpha = 0.5)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
@@ -280,8 +391,17 @@ ggplot(data = cars, aes(horsepwr)) +
 </div>
 <div id="section-try-it-yourself" class="section level3">
 <h3>Try it yourself!</h3>
-<p>MPG is an abbreviation for ‘miles-per-gallon’ and it is used to give you an indication of the fuel economy of a car or commercial vehicle. The miles per gallon of a car tends to be associated with the size of its engine (as measured by the number of cylinders). To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you’ll try your hand at two alternatives: the boxplot and the density plot.</p>
-<p>First, let’s see how many unique values number of cylinders there are in the dataset. We can use the <code>count()</code> function to find the unique values for a variable and also see how many observations there are for each value.</p>
+<p>MPG is an abbreviation for ‘miles-per-gallon’ and it is used to give
+you an indication of the fuel economy of a car or commercial vehicle.
+The miles per gallon of a car tends to be associated with the size of
+its engine (as measured by the number of cylinders). To explore the
+relationship between these two variables, you could stick to using
+histograms, but in this exercise you’ll try your hand at two
+alternatives: the boxplot and the density plot.</p>
+<p>First, let’s see how many unique values number of cylinders there are
+in the dataset. We can use the <code>count()</code> function to find the
+unique values for a variable and also see how many observations there
+are for each value.</p>
 <pre class="r"><code>cars %&gt;%
   count(ncyl)</code></pre>
 <div data-pagedtable="false">
@@ -289,25 +409,47 @@ ggplot(data = cars, aes(horsepwr)) +
 {"columns":[{"label":["ncyl"],"name":[1],"type":["int"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"-1","2":"2"},{"1":"3","2":"1"},{"1":"4","2":"136"},{"1":"5","2":"7"},{"1":"6","2":"190"},{"1":"8","2":"87"},{"1":"10","2":"2"},{"1":"12","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>That’s probably more possible levels of <code>ncyl</code> than you might think! Particularly, the <code>ncly</code> of -1 should catch your eye! Here, we’re going to make a new dataset that only contains the most common values of <code>ncyl</code>.</p>
-<p>To do this, we are going to filter <code>cars</code> to include only cars with 4, 6, or 8 cylinders and save the result as <code>common_cyl</code>. When we wanted to filter our data to only include a particular level of a categorical variable, we used the <code>==</code> comparison, but here we want to include three different values. For this operation, we need to used the inclusion (<code>%in%</code>) operator!</p>
-<p>The inclusion operator keeps any values of a variable that are <em>included</em> in the vector of values given (e.g. <code>letter %in% c("a", "b", "c")</code>). Thus, the <code>%in%</code> operator always comes with the <code>c()</code> function, which makes the vector of values we are interested in.</p>
+<p>That’s probably more possible levels of <code>ncyl</code> than you
+might think! Particularly, the <code>ncly</code> of -1 should catch your
+eye! Here, we’re going to make a new dataset that only contains the most
+common values of <code>ncyl</code>.</p>
+<p>To do this, we are going to filter <code>cars</code> to include only
+cars with 4, 6, or 8 cylinders and save the result as
+<code>common_cyl</code>. When we wanted to filter our data to only
+include a particular level of a categorical variable, we used the
+<code>==</code> comparison, but here we want to include three different
+values. For this operation, we need to used the inclusion
+(<code>%in%</code>) operator!</p>
+<p>The inclusion operator keeps any values of a variable that are
+<em>included</em> in the vector of values given
+(e.g. <code>letter %in% c("a", "b", "c")</code>). Thus, the
+<code>%in%</code> operator always comes with the <code>c()</code>
+function, which makes the vector of values we are interested in.</p>
 <p>Putting this all together, our code looks like:</p>
 <pre class="r"><code>common_cyl &lt;- cars %&gt;%
   filter(ncyl %in% c(4, 6, 8))</code></pre>
-<p>Now, with the <code>common_cyl</code> dataset, create overlaid density plots of <code>city_mpg</code> colored by <code>ncyl</code>. Keep in mind that <code>ncyl</code> is a numerical variable, so you will need to convert it to a categorical variable to use it as the <code>fill</code> using the <code>as.factor()</code> function.</p>
-<div class="tutorial-exercise" data-label="ex2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Now, with the <code>common_cyl</code> dataset, create overlaid
+density plots of <code>city_mpg</code> colored by <code>ncyl</code>.
+Keep in mind that <code>ncyl</code> is a numerical variable, so you will
+need to convert it to a categorical variable to use it as the
+<code>fill</code> using the <code>as.factor()</code> function.</p>
+<div class="tutorial-exercise" data-label="ex2" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Create overlaid density plots for same data
 ggplot(data = common_cyl, aes(x = ___, fill = ___)) +
   geom_density(alpha = 0.3)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex2-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex2-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Create overlaid density plots for same data
 ggplot(data = common_cyl, aes(x = city_mpg, fill = ___)) +
   geom_density(alpha = 0.3)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex2-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex2-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Create overlaid density plots for same data
 ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
   geom_density(alpha = 0.3)</code></pre>
@@ -316,9 +458,16 @@ ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
 </div>
 <div id="section-boxplot" class="section level2">
 <h2>Boxplot</h2>
-<p>Similar to a histogram, a <em>boxplot</em> does not plot the raw data. Instead, it plots summaries of the data. A boxplot plots the center of the distribution (median), the values that mark off the middle half of the data (first and third quartiles), and the values that mark off the vast majority of the data (ends of the whiskers).</p>
-<p>Notice, we have only changed one line in our <code>R</code> code, switching to <code>geom_boxplot()</code>.</p>
-<div class="tutorial-exercise" data-label="cars-boxplot-try" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Similar to a histogram, a <em>boxplot</em> does not plot the raw
+data. Instead, it plots summaries of the data. A boxplot plots the
+center of the distribution (median), the values that mark off the middle
+half of the data (first and third quartiles), and the values that mark
+off the vast majority of the data (ends of the whiskers).</p>
+<p>Notice, we have only changed one line in our <code>R</code> code,
+switching to <code>geom_boxplot()</code>.</p>
+<div class="tutorial-exercise" data-label="cars-boxplot-try"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = weight)) +
   geom_boxplot()</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
@@ -328,10 +477,12 @@ ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
 </div>
 <div id="section-boxplots-dotplots" class="section level3">
 <h3>Boxplots &amp; Dotplots</h3>
-<p>Let’s dig deeper to understand how exactly boxplots are constructed by starting with a dotplot.</p>
+<p>Let’s dig deeper to understand how exactly boxplots are constructed
+by starting with a dotplot.</p>
 <p>The boxplot is based around three summary statistics:</p>
 <ul>
-<li>The first quartile of the data – 25% of the data falls below this number</li>
+<li>The first quartile of the data – 25% of the data falls below this
+number</li>
 </ul>
 <p><img src="02-02-lesson_files/figure-html/box1q-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
@@ -348,28 +499,56 @@ ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
 <li>The third quartile – 75% of the data falls below this number</li>
 </ul>
 <p><img src="02-02-lesson_files/figure-html/box3q-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>You might be more familiar with the second quartile as the median, the value that’s in the middle of the dataset. It’s the second quartile because two quarters, or half, of the data is below it, and half is above it. The first quartile, then, has only one quarter (25%) of the data below it and the third quartile has three quarters (75%) of the data below it.</p>
-<p>These three numbers form the box in the boxplot, with the median in the middle and the first and third quartiles as the edges. One thing you always know when looking at a boxplot is that the middle half of the data is inside this box. There are various rules for where to draw the whiskers, the lines that extend out from the box.</p>
+<p>You might be more familiar with the second quartile as the median,
+the value that’s in the middle of the dataset. It’s the second quartile
+because two quarters, or half, of the data is below it, and half is
+above it. The first quartile, then, has only one quarter (25%) of the
+data below it and the third quartile has three quarters (75%) of the
+data below it.</p>
+<p>These three numbers form the box in the boxplot, with the median in
+the middle and the first and third quartiles as the edges. One thing you
+always know when looking at a boxplot is that the middle half of the
+data is inside this box. There are various rules for where to draw the
+whiskers, the lines that extend out from the box.</p>
 <p><img src="02-02-lesson_files/figure-html/box-middle-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-outliers" class="section level3">
 <h3>Outliers</h3>
-<p>The rule used by <strong>ggplot2</strong> to determine if an observation is an “outlier” is calculate 1.5 times the length of the box (IQR) and use that to determine the upper and lower “fence” for observations. This is calculated as <span class="math inline">\(Q_1 - 1.5 \times \text{IQR}\)</span> and <span class="math inline">\(Q_3 + 1.5 \times \text{IQR}\)</span>. These numbers are the furthest that the whiskers are allowed to extend. If an observation is outside of these numbers, it is plotted as a point. This is one of the handy features of a boxplot: it flags for you points that are far away from the bulk of the data, a form of automated <em>potential</em> outlier detection.</p>
+<p>The rule used by <strong>ggplot2</strong> to determine if an
+observation is an “outlier” is calculate 1.5 times the length of the box
+(IQR) and use that to determine the upper and lower “fence” for
+observations. This is calculated as <span class="math inline">\(Q_1 -
+1.5 \times \text{IQR}\)</span> and <span class="math inline">\(Q_3 + 1.5
+\times \text{IQR}\)</span>. These numbers are the furthest that the
+whiskers are allowed to extend. If an observation is outside of these
+numbers, it is plotted as a point. This is one of the handy features of
+a boxplot: it flags for you points that are far away from the bulk of
+the data, a form of automated <em>potential</em> outlier detection.</p>
 <p><img src="02-02-lesson_files/figure-html/box-whiskers-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p><img src="02-02-lesson_files/figure-html/box-outliers-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="section-density-plots-vs.-boxplots" class="section level3">
 <h3>Density plots vs. boxplots</h3>
-<p>Boxplots really shine in situations where you need to compare several distributions at once and also as a means to detect outliers. One of their weaknesses, however, is their inability to indicate when a distribution has more than one hump or “mode”.</p>
-<p>Consider the density plot here, there are two distinct modes. If we construct a boxplot of the same distribution, it sweeps this important structure under the rug and will always only provide a single box.</p>
+<p>Boxplots really shine in situations where you need to compare several
+distributions at once and also as a means to detect outliers. One of
+their weaknesses, however, is their inability to indicate when a
+distribution has more than one hump or “mode”.</p>
+<p>Consider the density plot here, there are two distinct modes. If we
+construct a boxplot of the same distribution, it sweeps this important
+structure under the rug and will always only provide a single box.</p>
 <p><img src="02-02-lesson_files/figure-html/unnamed-chunk-2-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="section-building-a-data-pipeline" class="section level2">
 <h2>Building a data pipeline</h2>
-<p>In some of the previous exercises, you’ve been asked to filter the cars data in some way and save the filtered data as a new dataset. This workflow, however, is a bit inefficient, since we have no real interest in this intermediate dataset.</p>
-<p>We can solve this by linking these two components into a continuous data pipeline, like the one below.</p>
-<div class="tutorial-exercise" data-label="dp2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>In some of the previous exercises, you’ve been asked to filter the
+cars data in some way and save the filtered data as a new dataset. This
+workflow, however, is a bit inefficient, since we have no real interest
+in this intermediate dataset.</p>
+<p>We can solve this by linking these two components into a continuous
+data pipeline, like the one below.</p>
+<div class="tutorial-exercise" data-label="dp2" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>cars %&gt;%
   filter(eng_size &lt; 2.0) %&gt;%
   ggplot(aes(x = hwy_mpg)) +
@@ -380,23 +559,36 @@ ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
 <ol style="list-style-type: decimal">
 <li>we start with the raw data</li>
 <li>we pipe the data into the <code>filter()</code> function</li>
-<li>we filter out all of the cars that have engines smaller than 2 liters</li>
-<li>we pipe the filtered data into the <code>ggplot()</code> function</li>
-<li>we specify the variables we are interested in plotting in the <code>ggplot()</code> function<br />
+<li>we filter out all of the cars that have engines smaller than 2
+liters</li>
+<li>we pipe the filtered data into the <code>ggplot()</code>
+function</li>
+<li>we specify the variables we are interested in plotting in the
+<code>ggplot()</code> function<br />
 </li>
 <li>we add a histogram layer to the plot</li>
 </ol>
-<p>This is a powerful and very general paradigm: you can start with a raw dataset, process that dataset using the data wrangling verbs we’ve learned, and then visualize it!</p>
+<p>This is a powerful and very general paradigm: you can start with a
+raw dataset, process that dataset using the data wrangling verbs we’ve
+learned, and then visualize it!</p>
 </div>
 <div id="section-your-turn-1" class="section level2">
 <h2>Your turn!</h2>
-<p>Consider two columns in the <code>cars</code> dataset: <code>city_mpg</code> and <code>width</code>. Which is the most appropriate plot for displaying the important features of their distributions? Remember, both density plots and boxplots display the central tendency and spread of the data. A boxplot is more robust to outliers, but hides multiple modes in a distribution.</p>
-<p>Use density plots or boxplots to construct the following visualizations. For each variable, try both plots and submit the one that is better at capturing the important structure.</p>
+<p>Consider two columns in the <code>cars</code> dataset:
+<code>city_mpg</code> and <code>width</code>. Which is the most
+appropriate plot for displaying the important features of their
+distributions? Remember, both density plots and boxplots display the
+central tendency and spread of the data. A boxplot is more robust to
+outliers, but hides multiple modes in a distribution.</p>
+<p>Use density plots or boxplots to construct the following
+visualizations. For each variable, try both plots and submit the one
+that is better at capturing the important structure.</p>
 <ul>
 <li>Display the distribution of <code>city_mpg</code>.</li>
 <li>Display the distribution of <code>width</code>.</li>
 </ul>
-<div class="tutorial-exercise" data-label="ex6" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex6" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Create plot of city_mpg
 ggplot(data = cars, ___) +
   ___
@@ -407,9 +599,13 @@ ggplot(data = cars, ___) +
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div id="section-ex6-hint">
-<p><strong>Hint:</strong> Does a distribution appear to have outliers? If so, a boxplot is more appropriate. Does a distribution have multiple modes? If so, a density plot is more appropriate.</p>
+<p><strong>Hint:</strong> Does a distribution appear to have outliers?
+If so, a boxplot is more appropriate. Does a distribution have multiple
+modes? If so, a density plot is more appropriate.</p>
 </div>
-<div class="tutorial-exercise-support" data-label="ex6-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex6-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Create plots of city_mpg
 ggplot(data = cars, aes(x=city_mpg)) +
   geom_boxplot()
@@ -426,17 +622,25 @@ ggplot(data = cars, aes(x=width)) +
 </div>
 <div id="section-boxplots-for-outlier-detection" class="section level3">
 <h3>Boxplots for outlier detection</h3>
-<p>In addition to indicating the center and spread of a distribution, a boxplot provides a graphical means to detect outliers. You can apply this method to the <code>msrp</code> column (manufacturer’s suggested retail price) to detect if there are unusually expensive or cheap cars.</p>
+<p>In addition to indicating the center and spread of a distribution, a
+boxplot provides a graphical means to detect outliers. You can apply
+this method to the <code>msrp</code> column (manufacturer’s suggested
+retail price) to detect if there are unusually expensive or cheap
+cars.</p>
 <p>To do this, let’s carry out the following steps:</p>
 <ol style="list-style-type: decimal">
 <li>Construct a boxplot of <code>msrp</code>.<br />
 </li>
-<li>Create a new dataset named <code>cars_no_out</code> that excludes the largest 3-5 outliers, by filtering the rows to retain cars less than $100,000.<br />
+<li>Create a new dataset named <code>cars_no_out</code> that excludes
+the largest 3-5 outliers, by filtering the rows to retain cars less than
+$100,000.<br />
 </li>
-<li>Construct a new boxplot of <code>msrp</code> using this reduced dataset.</li>
+<li>Construct a new boxplot of <code>msrp</code> using this reduced
+dataset.</li>
 <li>Compare the two plots.</li>
 </ol>
-<div class="tutorial-exercise" data-label="ex5" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex5" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Construct boxplot of msrp
 ggplot(data = cars, aes(x = ___)) +
   ___
@@ -450,7 +654,9 @@ ggplot(data = ___, aes(___)) +
   ___ </code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Construct boxplot of msrp
 cars %&gt;%
   ggplot(aes(x = msrp)) +
@@ -464,7 +670,9 @@ cars_no_out &lt;- cars %&gt;%
 ggplot(data = ___, aes(___)) + 
   ___ </code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Construct boxplot of msrp
 cars %&gt;%
   ggplot(aes(x = msrp)) +
@@ -478,7 +686,9 @@ cars_no_out &lt;- cars %&gt;%
 ggplot(data = ___, aes(___)) + 
   ___ </code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-3"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Construct boxplot of msrp
 cars %&gt;%
   ggplot(aes(x = msrp)) +
@@ -492,7 +702,9 @@ cars_no_out &lt;- cars %&gt;%
 ggplot(data = cars_no_out, aes(___)) + 
   ___ </code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-hint-4" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-hint-4"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Construct boxplot of msrp
 cars %&gt;%
   ggplot(aes(x = msrp)) +
@@ -506,7 +718,9 @@ cars_no_out &lt;- cars %&gt;%
 ggplot(data = cars_no_out, aes(x = msrp)) + 
   + geom_boxplot()</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex5-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex5-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Construct boxplot of msrp
 cars %&gt;%
   ggplot(aes(x = msrp)) +
@@ -522,49 +736,76 @@ ggplot(data = cars_no_out, aes(x = msrp)) +
 </div>
 </div>
 </div>
-<div id="section-visualizations-of-two-variables" class="section level2">
+<div id="section-visualizations-of-two-variables"
+class="section level2">
 <h2>Visualizations of two variables</h2>
 <div id="section-overview" class="section level3">
 <h3>Overview</h3>
-<p>If you’re interested in the distribution of a single numerical variable, there are three ways you can get there. The first is to look at the marginal distribution, like, for example, the simple distribution of highway mileage.</p>
+<p>If you’re interested in the distribution of a single numerical
+variable, there are three ways you can get there. The first is to look
+at the marginal distribution, like, for example, the simple distribution
+of highway mileage.</p>
 <pre class="r"><code>ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram()</code></pre>
 <p><img src="02-02-lesson_files/figure-html/hist-hwy-mpg-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>However, if we want to look at the distribution on a different subset of the data, say cars that are pickup trucks, we can add a second variable to the plot.</p>
+<p>However, if we want to look at the distribution on a different subset
+of the data, say cars that are pickup trucks, we can add a second
+variable to the plot.</p>
 <pre class="r"><code>ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_wrap(vars(pickup))</code></pre>
 <p><img src="02-02-lesson_files/figure-html/hist-hwy-mpg-pickup-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>There are two main methods for incorporating a second variable into the plots we’ve explored, (1) adding a facet, or (2) adding colors.</p>
+<p>There are two main methods for incorporating a second variable into
+the plots we’ve explored, (1) adding a facet, or (2) adding colors.</p>
 </div>
 <div id="section-faceted-histograms" class="section level3">
 <h3>Faceted histograms</h3>
-<p>Let’s use a histogram to look at the distribution of highway mileage, with separate plots for whether or not the car is a pickup truck. We can make these separate plots by adding a <code>facet_wrap()</code> layer to our <code>ggplot()</code>. The variable you want to facet by goes inside the <code>facet_wrap()</code> function, and needs to be specified with the <code>vars()</code> function. The <code>vars()</code> function selects variables from the dataset with the name provided.</p>
-<div class="tutorial-exercise" data-label="cars-hist-faceted" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Let’s use a histogram to look at the distribution of highway mileage,
+with separate plots for whether or not the car is a pickup truck. We can
+make these separate plots by adding a <code>facet_wrap()</code> layer to
+our <code>ggplot()</code>. The variable you want to facet by goes inside
+the <code>facet_wrap()</code> function, and needs to be specified with
+the <code>vars()</code> function. The <code>vars()</code> function
+selects variables from the dataset with the name provided.</p>
+<div class="tutorial-exercise" data-label="cars-hist-faceted"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_wrap(vars(pickup))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<p>Based on the plot, it’s clear that are many more non-pickups (values of <code>FALSE</code>) than pickups (values of <code>TRUE</code>). The plot also shows that the typical pickup gets much lower mileage than the typical non-pickup and that non-pickups have more variability than do the pickups.</p>
+<p>Based on the plot, it’s clear that are many more non-pickups (values
+of <code>FALSE</code>) than pickups (values of <code>TRUE</code>). The
+plot also shows that the typical pickup gets much lower mileage than the
+typical non-pickup and that non-pickups have more variability than do
+the pickups.</p>
 </div>
 <div id="section-try-it-yourself-1" class="section level3">
 <h3>Try it yourself!</h3>
-<p>Let’s investigate the distribution of the fuel efficiency (<code>city_mpg</code>) faceted by whether the vehicle is classified as an <code>suv</code> (a logical variable indicating whether the car is a sport utility vehicle (SUV) or not).</p>
-<div class="tutorial-exercise" data-label="ex1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<p>Let’s investigate the distribution of the fuel efficiency
+(<code>city_mpg</code>) faceted by whether the vehicle is classified as
+an <code>suv</code> (a logical variable indicating whether the car is a
+sport utility vehicle (SUV) or not).</p>
+<div class="tutorial-exercise" data-label="ex1" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Create faceted histogram
 ggplot(data = cars, aes(x = ___)) +
   geom_histogram() +
   facet_wrap(vars(___))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex1-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex1-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Create faceted histogram
 ggplot(data = cars, aes(x = city_mpg)) +
   geom_histogram() +
   facet_wrap(vars(___))</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex1-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex1-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Create faceted histogram
 ggplot(data = cars, aes(x = city_mpg)) +
   geom_histogram() +
@@ -572,13 +813,31 @@ ggplot(data = cars, aes(x = city_mpg)) +
 </div>
 </div>
 </div>
-<div id="section-visualization-in-higher-dimensions" class="section level2">
+<div id="section-visualization-in-higher-dimensions"
+class="section level2">
 <h2>Visualization in higher dimensions</h2>
-<p>In this tutorial, we’ve been encouraging you to think about the question of “what is the association between this variable and that one” and “if you condition on one level of this variable, how does the distribution of another change”. The answers to these questions require multivariate thinking and it is an essential skill in reasoning about the structure of real data. But why stop at only two variables?</p>
+<p>In this tutorial, we’ve been encouraging you to think about the
+question of “what is the association between this variable and that one”
+and “if you condition on one level of this variable, how does the
+distribution of another change”. The answers to these questions require
+multivariate thinking and it is an essential skill in reasoning about
+the structure of real data. But why stop at only two variables?</p>
 <div id="section-plots-for-3-variables" class="section level3">
 <h3>Plots for 3 variables</h3>
-<p>One simple extension that allows you to plot the association between three variables is the <code>facet_grid()</code> function. Similar to its <code>facet_wrap()</code> counterpart, the <code>facet_grid()</code> function creates subplots based on the levels of the variable(s) input. However, unlike the <code>facet_wrap()</code> function, <code>facet_grid()</code> can facet by more than one variable, creating a matrix of subplots.</p>
-<p>Let’s see how this works by building a plot that explores <code>msrp</code>, the manufacturer’s suggested retail price. Since that variable is numerical, there are several plots we could use, but let’s go with a density plot. By adding a <code>facet_grid()</code> layer, we can break that distribution down by two categorical variables, each specified with the <code>vars()</code> function. In the end, we will have multiple density plots of the <code>msrp</code> variable!</p>
+<p>One simple extension that allows you to plot the association between
+three variables is the <code>facet_grid()</code> function. Similar to
+its <code>facet_wrap()</code> counterpart, the <code>facet_grid()</code>
+function creates subplots based on the levels of the variable(s) input.
+However, unlike the <code>facet_wrap()</code> function,
+<code>facet_grid()</code> can facet by more than one variable, creating
+a matrix of subplots.</p>
+<p>Let’s see how this works by building a plot that explores
+<code>msrp</code>, the manufacturer’s suggested retail price. Since that
+variable is numerical, there are several plots we could use, but let’s
+go with a density plot. By adding a <code>facet_grid()</code> layer, we
+can break that distribution down by two categorical variables, each
+specified with the <code>vars()</code> function. In the end, we will
+have multiple density plots of the <code>msrp</code> variable!</p>
 <p>The code for this would look something like:</p>
 <pre class="r"><code>cars %&gt;% 
   ggplot(aes(x = msrp)) +
@@ -588,7 +847,12 @@ ggplot(data = cars, aes(x = city_mpg)) +
 </div>
 <div id="section-section-3" class="section level3">
 <h3></h3>
-<p>Within the <code>facet_wrap()</code> function, whichever variable you put first will go in the rows of the grid and the the one that you put last form the columns. Unfortunately, this plot is difficult to interpret since it doesn’t remind us which variable is on the rows versus columns. We can solve this by adding an option to the facet grid layer: labeller is equal to <code>label_both</code>.</p>
+<p>Within the <code>facet_wrap()</code> function, whichever variable you
+put first will go in the rows of the grid and the the one that you put
+last form the columns. Unfortunately, this plot is difficult to
+interpret since it doesn’t remind us which variable is on the rows
+versus columns. We can solve this by adding an option to the facet grid
+layer: labeller is equal to <code>label_both</code>.</p>
 <pre class="r"><code>cars %&gt;% 
   ggplot(aes(x = msrp)) +
   geom_density() +
@@ -597,8 +861,18 @@ ggplot(data = cars, aes(x = city_mpg)) +
 </div>
 <div id="section-section-4" class="section level3">
 <h3></h3>
-<p>If we look at rear wheel drive pickups, there appear to actually be two modes, but in general, they’re a bit cheaper than front wheel drive pickups. In non-pickups, however, its the rear-wheel drive ones that are generally a bit pricier.</p>
-<p>An important investigation when making these comparisons is the number of observations at each level. We can use the <code>count()</code> function to do this! The code below should look familiar, with one addition: a second variable as an input to the <code>count()</code> function. When we add a second variable, the <code>count()</code> function will count the number of observations at the intersection of each of the two variables (e.g. non-rear wheel drive pickups).</p>
+<p>If we look at rear wheel drive pickups, there appear to actually be
+two modes, but in general, they’re a bit cheaper than front wheel drive
+pickups. In non-pickups, however, its the rear-wheel drive ones that are
+generally a bit pricier.</p>
+<p>An important investigation when making these comparisons is the
+number of observations at each level. We can use the
+<code>count()</code> function to do this! The code below should look
+familiar, with one addition: a second variable as an input to the
+<code>count()</code> function. When we add a second variable, the
+<code>count()</code> function will count the number of observations at
+the intersection of each of the two variables (e.g. non-rear wheel drive
+pickups).</p>
 <pre class="r"><code>cars %&gt;% 
   count(rear_wheel, pickup)</code></pre>
 <div data-pagedtable="false">
@@ -606,11 +880,19 @@ ggplot(data = cars, aes(x = city_mpg)) +
 {"columns":[{"label":["rear_wheel"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["pickup"],"name":[2],"type":["lgl"],"align":["right"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"FALSE","3":"306"},{"1":"FALSE","2":"TRUE","3":"12"},{"1":"TRUE","2":"FALSE","3":"98"},{"1":"TRUE","2":"TRUE","3":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Based on the table, we learn that there are relatively few rear wheel drive cars in this dataset. While this would be plainly obvious had we used histograms, density plots normalize each distribution so that they have the same area. The take home message is that our interpretation is still valid, but when we’re making comparisons across the rear wheel variable, there are fewer cases to compare.</p>
+<p>Based on the table, we learn that there are relatively few rear wheel
+drive cars in this dataset. While this would be plainly obvious had we
+used histograms, density plots normalize each distribution so that they
+have the same area. The take home message is that our interpretation is
+still valid, but when we’re making comparisons across the rear wheel
+variable, there are fewer cases to compare.</p>
 </div>
 <div id="section-higher-dimension-plots" class="section level3">
 <h3>Higher dimension plots</h3>
-<p>This is just the tip of the iceberg of high dimensional data graphics. Anything you can discern visually, things like shape, size, color, pattern, movement, in addition to relative location, can be mapped to a variable and plotted alongside other variables.</p>
+<p>This is just the tip of the iceberg of high dimensional data
+graphics. Anything you can discern visually, things like shape, size,
+color, pattern, movement, in addition to relative location, can be
+mapped to a variable and plotted alongside other variables.</p>
 <ul>
 <li><p>Shape</p></li>
 <li><p>Size</p></li>
@@ -623,15 +905,23 @@ ggplot(data = cars, aes(x = city_mpg)) +
 </div>
 <div id="section-your-turn-2" class="section level3">
 <h3>Your turn!</h3>
-<p>For our final exercise, let’s explore the relationship between highway mileage, the number of cylinders a car has, and whether it is an SUV or not.</p>
-<p>The <code>common_cyl</code> dataset you created before, containing only cars with 4, 6, or 8 cylinders, is available in your workspace.</p>
+<p>For our final exercise, let’s explore the relationship between
+highway mileage, the number of cylinders a car has, and whether it is an
+SUV or not.</p>
+<p>The <code>common_cyl</code> dataset you created before, containing
+only cars with 4, 6, or 8 cylinders, is available in your workspace.</p>
 <pre class="r"><code>common_cyl &lt;- filter(cars, ncyl %in% c(4, 6, 8))</code></pre>
 <ul>
-<li><p>To begin, using the <code>common_cyl</code> data, create a histogram of <code>hwy_mpg</code>.</p></li>
-<li><p>Next, add a <code>facet_grid()</code> to the plot, with <code>ncyl</code> on the rows and <code>suv</code> on the columns.</p></li>
-<li><p>Finally, add facet labels to your plot to indicate what variables are being faceted on.</p></li>
+<li><p>To begin, using the <code>common_cyl</code> data, create a
+histogram of <code>hwy_mpg</code>.</p></li>
+<li><p>Next, add a <code>facet_grid()</code> to the plot, with
+<code>ncyl</code> on the rows and <code>suv</code> on the
+columns.</p></li>
+<li><p>Finally, add facet labels to your plot to indicate what variables
+are being faceted on.</p></li>
 </ul>
-<div class="tutorial-exercise" data-label="ex7" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise" data-label="ex7" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code># Facet histograms using hwy mileage and ncyl
 common_cyl %&gt;%
   ggplot(aes(x = ___)) +
@@ -639,25 +929,33 @@ common_cyl %&gt;%
   facet_grid(vars(___), vars(___), labeller = ___)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="ex7-hint-1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex7-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>common_cyl %&gt;%
   ggplot(aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_grid(vars(___), vars(___), labeller = ___)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex7-hint-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex7-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>common_cyl %&gt;% 
   ggplot(aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_grid(vars(ncyl), vars(___), labeller = ___)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex7-hint-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex7-hint-3"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code>common_cyl %&gt;% 
   ggplot(aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_grid(vars(ncyl), vars(suv), labeller = ___)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="ex7-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<div class="tutorial-exercise-support" data-label="ex7-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
 <pre class="text"><code># Facet histograms using hwy mileage and ncyl
 common_cyl %&gt;% 
   ggplot(aes(x = hwy_mpg)) +
@@ -665,7 +963,8 @@ common_cyl %&gt;%
   facet_grid(vars(ncyl), vars(suv), labeller = label_both)</code></pre>
 </div>
 </div>
-<div id="section-interpreting-plots-with-three-variables" class="section level3">
+<div id="section-interpreting-plots-with-three-variables"
+class="section level3">
 <h3>Interpreting plots with three variables</h3>
 <div class="panel panel-default">
 <div data-label="mc4" class="tutorial-question panel-body">
@@ -713,7 +1012,8 @@ cars <- read_csv("./data/cars04.csv", col_types = cols(
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::register_http_handlers(session, metadata = NULL)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::prepare_tutorial_state(session)
 </script>
@@ -721,7 +1021,8 @@ learnr:::prepare_tutorial_state(session)
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::i18n_observe_tutorial_language(input, session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 session$onSessionEnded(function() {
         learnr:::event_trigger(session, "session_stop")
@@ -734,7 +1035,8 @@ output$`tutorial-exercise-hist-try-output` <- renderUI({
   `tutorial-exercise-hist-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "hist-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -782,7 +1084,8 @@ output$`tutorial-exercise-na-try-output` <- renderUI({
   `tutorial-exercise-na-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "na-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -829,7 +1132,8 @@ output$`tutorial-exercise-wbw-ex-output` <- renderUI({
   `tutorial-exercise-wbw-ex-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "wbw-ex", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -883,7 +1187,8 @@ output$`tutorial-exercise-dotplot-cars-try-output` <- renderUI({
   `tutorial-exercise-dotplot-cars-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "dotplot-cars-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -931,7 +1236,8 @@ output$`tutorial-exercise-ex4-output` <- renderUI({
   `tutorial-exercise-ex4-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex4", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -988,7 +1294,8 @@ output$`tutorial-exercise-cars-density-plot-try-output` <- renderUI({
   `tutorial-exercise-cars-density-plot-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "cars-density-plot-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1037,7 +1344,8 @@ output$`tutorial-exercise-bandwidth-try-output` <- renderUI({
   `tutorial-exercise-bandwidth-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "bandwidth-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1084,7 +1392,8 @@ output$`tutorial-exercise-cars-colored-try-output` <- renderUI({
   `tutorial-exercise-cars-colored-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "cars-colored-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1132,7 +1441,8 @@ output$`tutorial-exercise-ex2-output` <- renderUI({
   `tutorial-exercise-ex2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex2", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1185,7 +1495,8 @@ output$`tutorial-exercise-cars-boxplot-try-output` <- renderUI({
   `tutorial-exercise-cars-boxplot-try-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "cars-boxplot-try", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1233,7 +1544,8 @@ output$`tutorial-exercise-dp2-output` <- renderUI({
   `tutorial-exercise-dp2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "dp2", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1282,7 +1594,8 @@ output$`tutorial-exercise-ex6-output` <- renderUI({
   `tutorial-exercise-ex6-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex6", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1335,7 +1648,8 @@ output$`tutorial-exercise-ex5-output` <- renderUI({
   `tutorial-exercise-ex5-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex5", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1389,7 +1703,8 @@ output$`tutorial-exercise-cars-hist-faceted-output` <- renderUI({
   `tutorial-exercise-cars-hist-faceted-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "cars-hist-faceted", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1437,7 +1752,8 @@ output$`tutorial-exercise-ex1-output` <- renderUI({
   `tutorial-exercise-ex1-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex1", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1486,7 +1802,8 @@ output$`tutorial-exercise-ex7-output` <- renderUI({
   `tutorial-exercise-ex7-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex7", global_setup = structure(c("knitr::opts_chunk$set(echo = FALSE,", 
 "                      warning = FALSE,", "                      message = FALSE,", 
@@ -1572,7 +1889,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101]}},"value":[{"type":"character","attributes":{},"value":["airports","assertthat","backports","base","bit","bit64","broom","bslib","cellranger","checkmate","cherryblossom","cli","colorspace","compiler","cowplot","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","emo","evaluate","fansi","farver","fastmap","forcats","fs","generics","ggplot2","ggridges","glue","graphics","grDevices","grid","gridExtra","gtable","haven","highr","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","openintro","parallel","patchwork","pillar","pkgconfig","plyr","png","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","usdata","utf8","utils","vctrs","vroom","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.1.0","0.2.1","1.4.1","4.1.2","4.0.4","4.0.5","0.8.0","0.3.1","1.1.0","2.1.0","0.1.0","3.3.0","2.0-3","4.1.2","1.1.1","1.5.1","4.3.2","4.1.2","1.1.2","2.1.1","0.6.29","1.0.9","0.3.2","0.0.0.9000","0.15","1.0.3","2.1.0","1.1.0","0.5.1","1.5.2","0.1.2","3.3.6","0.5.3","1.6.2","4.1.2","4.1.2","4.1.2","2.3","0.3.0","2.5.0","0.9","1.1.1","0.5.2","1.5.4","1.6.5","1.4.3","0.1.4","1.8.0","1.39","0.4.2","1.3.0","0.10.1.9022","1.0.1","1.8.0","2.0.3","1.1","4.1.2","0.12","0.1.8","0.5.0","2.3.0","4.1.2","1.1.1","1.7.0","2.0.3","1.8.7","0.1-7","1.2.0.1","0.3.4","2.5.1","1.0.8.3","2.1.2","1.4.0","2.0.1","1.0.2","2.14","2.0.3","0.13","1.0.2","0.4.1","1.2.0","1.7.1","4.1.2","1.7.6","1.4.0","3.1.7","1.2.0","1.1.2","1.3.1","4.1.2","0.3.0","0.2.0","1.2.2","4.1.2","0.4.1","1.5.7","2.5.0","0.31","1.3.3","1.8-4","2.3.5"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101]}},"value":[{"type":"character","attributes":{},"value":["airports","assertthat","backports","base","bit","bit64","broom","bslib","cellranger","checkmate","cherryblossom","cli","colorspace","compiler","cowplot","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","emo","evaluate","fansi","farver","fastmap","forcats","fs","generics","ggplot2","ggridges","glue","graphics","grDevices","grid","gridExtra","gtable","haven","highr","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","openintro","parallel","patchwork","pillar","pkgconfig","plyr","png","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","usdata","utf8","utils","vctrs","vroom","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.1.0","0.2.1","1.4.1","4.2.0","4.0.4","4.0.5","0.8.0","0.3.1","1.1.0","2.1.0","0.1.0","3.3.0","2.0-3","4.2.0","1.1.1","1.5.1","4.3.2","4.2.0","1.1.2","2.1.1","0.6.29","1.0.9","0.3.2","0.0.0.9000","0.15","1.0.3","2.1.0","1.1.0","0.5.1","1.5.2","0.1.2","3.3.6","0.5.3","1.6.2","4.2.0","4.2.0","4.2.0","2.3","0.3.0","2.5.0","0.9","1.1.1","0.5.2","1.5.4","1.6.5","1.4.3","0.1.4","1.8.0","1.39","0.4.2","1.3.0","0.10.1.9022","1.0.1","1.8.0","2.0.3","1.1","4.2.0","0.12","0.1.8","0.5.0","2.3.0","4.2.0","1.1.1","1.7.0","2.0.3","1.8.7","0.1-7","1.2.0.1","0.3.4","2.5.1","1.0.8.3","2.1.2","1.4.0","2.0.1","1.0.2","2.14","2.0.3","0.13","1.0.2","0.4.1","1.2.0","1.7.1","4.2.0","1.7.6","1.4.0","3.1.7","1.2.0","1.1.2","1.3.1","4.2.0","0.3.0","0.2.0","1.2.2","4.2.0","0.4.1","1.5.7","2.5.0","0.31","1.3.3","1.8-4","2.3.5"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
@@ -1587,7 +1904,8 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <!-- begin doc-metadata -->
 <div id="doc-metadata">
-<h2 class="title toc-ignore" style="display:none;">Exploratory data analysis (II): Exploring Numerical Data</h2>
+<h2 class="title toc-ignore" style="display:none;">Exploratory data
+analysis (II): Exploring Numerical Data</h2>
 </div>
 <!-- end doc-metadata -->
 
