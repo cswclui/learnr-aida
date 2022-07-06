@@ -401,8 +401,7 @@ Answer the questions using the following chart.
 
 ```{r barchart-3, echo=FALSE}
 ggplot(data = mpg) +
-  geom_bar(aes(x = class)) + 
-  ggtitle("Classes of cars in mpg")
+  geom_bar(aes(x = class)) 
 ```
 
 ```{r ex2-task1a, echo = FALSE}
@@ -550,10 +549,16 @@ ggplot(data = mpg) +
 ```{r ex3-result, echo=FALSE, out.width = "100%"}
 ggplot(data = mpg) + 
   geom_boxplot(mapping = aes(x = class, y = hwy, fill=class)) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+ 
+  xlabel="Class" +
+  ylabel="Highway miles per gallon"+
+  ggtitle("Fuel Efficiency for different classes of cars") 
+  
 ```
 
 Recreate the chart above. 
+- Add the chart title using the `ggtitle()` function
+- Add the labels for x-axis and y-axis
 - The text labels in the x-axis in the plot may be overlapping with each others. We should add an extra layer to the plot such that the x-Axis labels are rotated by 45 degrees with right-justified for horizontal justification. (Refer to exercise 2)
 
 ```{r ex3, exercise = TRUE, eval=FALSE, out.width = "100%", exercise.reveal_solution=FALSE}

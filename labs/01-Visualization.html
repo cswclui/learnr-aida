@@ -670,7 +670,11 @@ data-lines="0">
 <div id="section-exercise-3" class="section level2">
 <h2>Exercise 3</h2>
 <p><img src="01-Visualization_files/figure-html/ex3-result-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Recreate the chart above.</p>
+<p>Recreate the chart above. - Add the chart title using the
+<code>ggtitle()</code> function - The text labels in the x-axis in the
+plot may be overlapping with each others. We should add an extra layer
+to the plot such that the x-Axis labels are rotated by 45 degrees with
+right-justified for horizontal justification. (Refer to exercise 2)</p>
 <div class="tutorial-exercise" data-label="ex3" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
@@ -859,23 +863,23 @@ learnr:::store_exercise_cache(structure(list(label = "ggplot1", global_setup = s
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mc", question = structure("Which of the following statement correctly describes the relationship between between engine size (<code>displ<\u002fcode>) and fuel efficiency (<code>hwy<\u002fcode>)?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_59aedad", 
+"character")), answers = list(structure(list(id = "lnr_ans_3c55465", 
     option = "The plot shows a positive relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *more* fuel.", 
     value = "The plot shows a positive relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *more* fuel.", 
     label = structure("The plot shows a positive relationship between engine size (<code>displ<\u002fcode>) and fuel efficiency (<code>hwy<\u002fcode>). The cars with big engines use <em>more<\u002fem> fuel.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7d4cff9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_39e08c7", 
     option = "The plot shows a positive relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *less* fuel.", 
     value = "The plot shows a positive relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *less* fuel.", 
     label = structure("The plot shows a positive relationship between engine size (<code>displ<\u002fcode>) and fuel efficiency (<code>hwy<\u002fcode>). The cars with big engines use <em>less<\u002fem> fuel.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Try again!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_efb0cf8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_74a0fec", 
     option = "The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *more* fuel.", 
     value = "The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *more* fuel.", 
     label = structure("The plot shows a negative relationship between engine size (<code>displ<\u002fcode>) and fuel efficiency (<code>hwy<\u002fcode>). The cars with big engines use <em>more<\u002fem> fuel.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e5f65cb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_def45bf", 
     option = "The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *less* fuel.", 
     value = "The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). The cars with big engines use *less* fuel.", 
     label = structure("The plot shows a negative relationship between engine size (<code>displ<\u002fcode>) and fuel efficiency (<code>hwy<\u002fcode>). The cars with big engines use <em>less<\u002fem> fuel.", html = TRUE, class = c("html", 
@@ -889,7 +893,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mc-answer", question = "mc"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following statement correctly describes the relationship between between engine size (<code>displ<\u002fcode>) and fuel efficiency (<code>hwy<\u002fcode>)?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 167704600.921906, options = list()), class = c("learnr_radio", 
+    seed = 906425721.077913, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1463,25 +1467,25 @@ learnr:::store_exercise_cache(structure(list(label = "barchart-dodge", global_se
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ex2-task1a", question = structure("What is the most common type of car in the <code>mpg<\u002fcode> data set?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e31c7e1", 
+"character")), answers = list(structure(list(id = "lnr_ans_d77916c", 
     option = "2seater", value = "2seater", label = structure("2seater", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_41b9a0f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_db661f6", 
     option = "compact", value = "compact", label = structure("compact", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_774670e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4402cb2", 
     option = "midsize", value = "midsize", label = structure("midsize", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_16fc4fd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e11762f", 
     option = "minivan", value = "minivan", label = structure("minivan", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_92c70f1", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b28af82", 
     option = "pickup", value = "pickup", label = structure("pickup", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_983f1c4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d3ee9c5", 
     option = "subcompact", value = "subcompact", label = structure("subcompact", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc5a835", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d053886", 
     option = "suv", value = "suv", label = structure("suv", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1492,31 +1496,31 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "ex2-task1a-answer", question = "ex2-task1a"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the most common type of car in the <code>mpg<\u002fcode> data set?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 727737128.161121, options = list()), class = c("learnr_radio", 
+    seed = 1309027498.89044, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ex2-task1b", question = structure("What is the least common type of car in the <code>mpg<\u002fcode> data set?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_56e9751", 
+"character")), answers = list(structure(list(id = "lnr_ans_b843f98", 
     option = "2seater", value = "2seater", label = structure("2seater", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff73b58", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8ead859", 
     option = "compact", value = "compact", label = structure("compact", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_583d1ee", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ed4dbfe", 
     option = "midsize", value = "midsize", label = structure("midsize", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3c61e5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a2f953", 
     option = "minivan", value = "minivan", label = structure("minivan", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4dbb652", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_90daaff", 
     option = "pickup", value = "pickup", label = structure("pickup", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6102229", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bf29173", 
     option = "subcompact", value = "subcompact", label = structure("subcompact", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_aeac300", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_695dc77", 
     option = "suv", value = "suv", label = structure("suv", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1527,7 +1531,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "ex2-task1b-answer", question = "ex2-task1b"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the least common type of car in the <code>mpg<\u002fcode> data set?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 2124400859.01075, options = list()), class = c("learnr_radio", 
+    seed = 1765961260.17766, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1784,8 +1788,8 @@ learnr:::store_exercise_cache(structure(list(label = "ex3", global_setup = struc
         out.width = "\"100%\"", exercise.reveal_solution = "FALSE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("ggplot(data = mpg) + ", 
-    "  geom_boxplot(mapping = aes(x = manufacturer, y = hwy, fill=class))", 
-    ""), chunk_opts = list(label = "ex3-solution")), test_cases = NULL, 
+    "  geom_boxplot(mapping = aes(x = class, y = hwy, fill=class))", 
+    "", ""), chunk_opts = list(label = "ex3-solution")), test_cases = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
