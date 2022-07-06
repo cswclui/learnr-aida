@@ -40,7 +40,7 @@ The tutorial focuses on three basic skills:
 2.  How to add variables to a graph with **aesthetics**
 3.  How to make different "types" of graphs with **geoms**
 
-## Loading the Tidyverse package
+### Loading the Tidyverse package
 
 Packages are the fundamental units of reproducible R code. They include reusable functions, the documentation that describes how to use them, and sample data. In this lesson we will make use of two packages:
 
@@ -241,247 +241,332 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, shape = class))
 ```
 
-```{r shape-check}
-"Good work! What happened to the SUVs? ggplot2 will only use six shapes at a time. By default, additional groups will go unplotted when you use the shape aesthetic. So only use it when you have fewer than seven groups."
-```
+
+
+## Exercise 1
 
 ### Task 1
 
-In the code below, map `cty`, which is a continuous variable, to `color`, `size`, and `shape`. How do these aesthetics behave differently for continuous variables, like `cty`, vs. categorical variables, like `class`? 
+Make a scatterplot of `cty` vs `hwy`.
 
-```{r cty, exercise = TRUE, exercise.eval = FALSE}
-# Map cty to color
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy))
-# Map cty to size
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy))
-# Map cty to shape
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy))
+- cty: city miles per gallon
+- hwy: highway miles per gallon
+
+```{r ex1-task1, exercise = TRUE}
+
 ```
 
-```{r cty-check}
-"Very nice! ggplot2 treats continuous and categorical variables differently. Noteably, ggplot2 supplies a blue gradient when you map a continuous variable to color, and ggplot2 will not map continuous variables to shape."
+
+```{r ex1-task1-solution}
+ggplot(data = mpg) + 
+  geom_point(aes(x = hwy, y = cty))
 ```
-    
+
+
+```{r ex1-task1-check}
+grade_code()
+```
+
+
+
 ### Task 2
 
-Map `class` to `color`, `size`, and `shape` all in the same plot. Does it work?
+Modify the code below to map `cty`, which is a continuous variable, to `color`, `size`, and `shape`. 
 
-```{r multiple, exercise = TRUE, exercise.eval = FALSE, warning=TRUE}
+
+a) Map `cty` to color
+
+```{r ex1-task2a, exercise = TRUE, exercise.eval = FALSE}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
-```{r multiple-check}
-"Very nice! ggplot2 can map the same variable to multiple aesthetics."
+
+b) Map cty to size
+
+```{r ex1-task2b, exercise = TRUE, exercise.eval = FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
 ```
-    
-<div id="multiple-hint">
-**Hint:** Be sure to set each mapping separately, e.g. `color = class`, `size = class`, etc.
-</div>    
-    
+
+
+c) Map cty to shape
+
+```{r ex1-task2c, exercise = TRUE, exercise.eval = FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+
+
+### 
+
+How do these aesthetics behave differently for continuous variables, like `cty`, vs. categorical variables, like `class`? 
+
+
+
+## Histograms
+
+Make a histogram of the `hwy` variable from the `mpg` dataset. Make the bins 2 units wide.
+
+Hint: 
+- You should not supply a $y$ aesthetic when you use `geom_histogram()`
+- Use the help page for `geom_histogram` or consult the ggplot2 cheatsheet if needed.
+
+```{r hist1, exercise=TRUE, eval=FALSE}
+ggplot(data = mpg) + 
+  geom_histogram(aes(x = ________),_____=______)
+```
+
+
+```{r hist1-solution, eval=FALSE}
+ggplot(data = mpg) +
+  geom_histogram(aes(x = hwy), binwidth = 2)
+```
+
+```{r hist1-check}
+grade_code()
+```
+
+
+## Bar Charts
+
+### Creating a bar chart
+
+A variable is **categorical** if it can take only one of a small set of values.  You can visualize the distribution of a categorical variable with a bar chart.  
+
+- In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis, and adding a `geom_bar()` layer to the plot.
+- The height of the bars reveal how many cars in the data set come from each class. 
+
+
+The bar chart below visualizes the distribution of the `class` variable in the `mpg` data set, which comes in the ggplot2 package.
+
+
+
+```{r barchart-1, exercise=TRUE}
+ggplot(data = mpg) +
+  geom_bar(aes(x = class)) 
+```
+
+** Remark: **
+
+You should not supply a $y$ aesthetic when you use `geom_bar()`; ggplot2 will count how many times each $x$ value appears in the data, and then display the counts on the $y$ axis. 
+
+### Interpretation
+
+In histogram and bar charts, tall bars show the common values of a variable, i.e. the values that appear frequently. Shorter bars show less-common values, i.e. values that appear infrequently. Places that do not have bars reveal values that were not seen in your data. To turn this information into useful questions, look for anything unexpected:
+
+- Which values are the most common? Why?
+- Which values are rare? Why? Does that match your expectations?
+- Can you see any unusual patterns? What might explain them?
+
+
+### Stacked Bar Chart
+
+A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a second categorical variable into the `fill` argument of the `aes()` function. 
+
+This looks something like this:
+
+```{r barchart-2, exercise=TRUE, out.width = "100%"}
+ggplot(data = mpg) +
+  geom_bar(aes(x = class, fill=drv)) 
+```
+
+**Remark:**
+
+- `drv`: the type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+
+### Position Adjustment
+
+`geom_bar()` lays out the rectangles by stacking rectangles that have the same `class` value on top of one another. You can change this behavior with a _position adjustment_.
+
+To place rectangles that have the same `class` value beside each other, set `position = "dodge"`. Add the argument `position = "dodge"` to the `geom_bar()` below and observe the change to the bar chart.
+
+```{r barchart-dodge, exercise=TRUE, eval=FALSE, out.width = "80%"}
+ggplot(data = mpg) +
+  geom_bar(aes(x = class, fill=drv), _____________) 
+```
+
+```{r barchart-dodge-solution}
+ggplot(data = mpg) +
+  geom_bar(aes(x = class, fill=drv), position = "dodge") 
+```
+
+
+## Exercise 2
+
+### Task 1
+
+Answer the questions using the following chart.
+
+```{r barchart-3, echo=FALSE}
+ggplot(data = mpg) +
+  geom_bar(aes(x = class)) + 
+  ggtitle("Classes of cars in mpg")
+```
+
+```{r ex2-task1a, echo = FALSE}
+ question("What is the most common type of car in the `mpg` data set?",
+           answer("2seater"),
+           answer("compact"),
+           answer("midsize"),
+           answer("minivan"),
+           answer("pickup"),
+           answer("subcompact"),
+           answer("suv", correct = TRUE),
+           allow_retry = TRUE
+  )
+```
+
+```{r ex2-task1b, echo = FALSE}
+
+  question("What is the least common type of car in the `mpg` data set?",
+           answer("2seater", correct = TRUE),
+           answer("compact"),
+           answer("midsize"),
+           answer("minivan"),
+           answer("pickup"),
+           answer("subcompact"),
+           answer("suv"),
+           allow_retry = TRUE
+  )
+```
+
+
+
+### Exercise 2
+
+```{r echo=FALSE, out.width = "80%"}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, fill = class))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+Create a bar chart `class` colored by `class` to recreate the graph above.  
+
+- Use the help page for `geom_bar` or the `ggplot` cheatsheet to choose a "color" aesthetic for class.
+- The text labels in the x-axis in the plot may be overlapping with each others. We should add an extra layer to the above plot such that the x-Axis labels are rotated by 45 degrees with right-justified for horizontal justification.
+
+```
+    + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r ex2-task2, exercise=TRUE, out.width = "80%", eval=FALSE}
+ggplot(_____________) +
+  ______________________ +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r ex2-task2-solution, out.width = "80%"}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, fill = class))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Facets
+
+
+Faceting breaks the data into subsets based on the levels of a categorical variable and then constructs a subplot for each level.
+
+ggplot2 provides two functions for facetting: `facet_grid()` and `facet_wrap()`. 
+
+### `facet_wrap()`
+
+`facet_wrap()` provides a  way to facet a plot on a _single_ variable. It will split the plot into subplots and then reorganize the subplots into multiple rows so that each plot has a more or less square aspect ratio. 
+
+To add a faceting layer we use the `facet_wrap()` function. Inside the `facet_wrap()` function we add a tilde (`~`) and then the name of the variable we want to facet by (e.g. `~ class`). This can be read as creating the above plot "broken down by class".
+
+**Example:**
+
+```{r facet-wrap1, exercise=TRUE}
+ggplot(mpg) + geom_point(aes(x = displ, y = hwy)) +
+  facet_wrap(~ class)
+
+```
+
+
+### facet_grid()
+
+`facet_grid()` divides the plot into a grid of subplots based on the values of one or two facetting variables. To use it, add `facet_grid()` to the end of your plot call. 
+
+** Example:**
+
+```{r facet-grid1, exercise=TRUE}
+q <- ggplot(mpg) + geom_point(aes(x = displ, y = hwy))
+q + facet_grid(drv ~ cyl)
+q + facet_wrap(~ class)
+
+```
+
+As you saw in the code examples, you use `facet_grid()` by passing it a formula, the names of two variables connected by a `~`.  
+
+- `facet_grid()` will split the plot into facets vertically by the values of the first variable: each facet will contain the observations that have a common value of the variable. 
+- `facet_grid()` will split the plot horizontally by values of the second variable. The result is a grid of facets, where each specific subplot shows a specific combination of values. 
+- If you do not wish to split on the vertical or horizontal dimension, pass `facet_grid()` a `.` instead of a variable name as a place holder.
+
+
+** Example:**
+
+```{r facet-grid2, exercise=TRUE}
+q <- ggplot(mpg) + geom_point(aes(x = displ, y = hwy))
+q + facet_grid(. ~ cyl)
+q + facet_grid(drv ~ .)
+
+```
 
 
 ## Boxplot
 
-To create a box plot, replace the geom function in the code below  with  `geom_boxplot`.
+### Creating a boxplort
+Boxplot allows you to visualize the distribution of continuous variables.
 
+Here is a boxplot for showing the distribution of highway miles per gallon (`hwy`).
 
-```{r boxplot1, exercise = TRUE}
+```{r echo = TRUE, out.width = "100%"}
 ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = class, y = hwy))
+  geom_boxplot( aes( y = hwy))
+```
+
+### Relationship between one continuous and one categorical variable
+
+You can visualize the relationship between one continuous and one categorical variable by using a boxplot. 
+For instance, to create a box plot to compare the fuel efficiencies of different types of cars, modify the code below to add a mapping of the y-xis to the  `hwy` attribute.
+
+
+```{r boxplot1, exercise = TRUE, eval=FALSE}
+ggplot(data = mpg) + 
+  geom_boxplot(aes(x = ________ , y = hwy))
 ```
 
 
 ```{r boxplot1-solution}
 ggplot(data = mpg) + 
-  geom_boxplot(mapping = aes(x = class, y = hwy))
+  geom_boxplot( aes(x = class, y = hwy))
 ```
 
-```{r boxplot1-check}
+## Exercise 3
 
- test_that('world_vacc_plot should be a scatter plot.', {
-        expect_true("GeomPoint" %in% c(class(world_vacc_plot$layers[[1]]$geom)))
-        })
-
-grade_code("Good job! This plot uses boxplots to compare the fuel efficiencies of different types of cars. ggplot2 comes with many geom functions that each add a different type of layer to a plot.")
-
-```
-
-
-
-## The Comic dataset
-
-Our second dataset comes from comic books. Two publishers, Marvel and DC, have created a host of superheroes that have made their way into popular culture. You're probably familiar with Batman and Spiderman, but what about Mor the Mighty? 
-The comics dataset has information on all comic characters that have been introduced by DC and Marvel. 
-
-Let's load the dataset (stored at `data/comics.csv`) and glimpse the dataset.
-
-
-```{r comics, exercise=TRUE}
-#load the dataset
-comics <- read_csv("data/comics.csv")
-
-#glimpse the dataset
-glimpse(comics)
-
-```
-
-With one exception (appearances) we see that that all variables are characters, or of the `chr` data type. These are variables that we could potentially consider categorical, as they all have a finite number of levels.
-
-### 
-
-At the top the output tell us the dimensions of this dataset.
-
-```{r no_of_rows_comics, echo=FALSE}
-question_text(
-  "What is the number of rows in the Comics dataset? Please input an integer",
-  answer("23272", correct = TRUE),
-  incorrect = "Please try again",
-  try_again_button = "Modify your answer",
-  allow_retry = TRUE
-)
-```
-
-
-```{r no_of_cols_comics, echo=FALSE}
-question_text(
-  "What is the number of columns in the Comics dataset? Please input an integer",
-  answer("11", correct = TRUE),
-  incorrect = "Please try again",
-  try_again_button = "Modify your answer",
-  allow_retry = TRUE
-)
-```
-
-
-
-### 
-
-Let's view the first few rows of the dataset
-
-```{r comics-head, exercise=TRUE}
-head(comics)
-```
-
-The first case in the dataset is Peter Parker, alias: Spiderman, where his alias and character name are included in the first variable `name`. The second column, `id`, shows that Peter Parker's personal identity is kept secret, and the third column tell us that his `align`ment is good; that he's a superhero, not a super villain.
-
-
-## Bar charts
-
-In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis, and adding a `geom_bar()` layer to the plot.
-
-```{r formula2, exercise=TRUE}
-ggplot(comics, aes(x = align)) +
-  geom_bar() 
-```
-
-A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a second categorical variable into the `fill` argument of the `aes()` function. This looks something like this:
-
-```{r formula3, exercise=TRUE}
-ggplot(comics, aes(x = gender, fill = align)) +
-  geom_bar() 
-```
-
-Add the argument `position = "dodge"` to the `geom_bar()` and observe the change to the bar chart.
-
-```{r formula4, exercise=TRUE, eval=FALSE}
-ggplot(comics, aes(x = gender, fill = align)) +
-  geom_bar(_______) 
-```
-
-```{r mc-barchart, echo=FALSE}
-question("Which of the following interpretations of the bar charts above is NOT valid?",
-  answer("Among characters with `Neutral` alignment, males are the most common.", message = "Nope, not quite!"),
-  answer("Across all genders, `Bad` is the most common alignment.", correct = TRUE),
-  answer("There are more male characters than female characters in this dataset.",  message = "Try again!"), 
-  allow_retry = TRUE
-)
-```
-
-
-### Task: Frequency count by gender
-
-Plot a bar chart to show the frequency count by gender in the Comic dataset.
-
-
-```{r barchart-comics, exercise=TRUE}
-
-
-
-```
-
-## Faceting
-
-Another useful way to visualize the distribution of a single variable is to condition on a particular value of another variable. We might be interested, for example, in the distribution of id for all neutral characters. We could either filter the dataset and build a barchart using only cases where `align`ment was "Neutral", or we could use a technique called faceting. Faceting breaks the data into subsets based on the levels of a categorical variable and then constructs a plot for each level.
-
-To implement faceting in ggplot2, all we need to do is add another layer to our plot. To add a faceting layer we use the `facet_wrap()` function. Inside the `facet_wrap()` function we add a tilde (`~`) and then the name of the variable we want to facet by (e.g. `~align`). This can be read as creating the above plot "broken down by align". The result is three simple bar charts side-by-side, the first one corresponding to the distribution of `gender` within all cases that have a "Bad" alignment, and so on, for "Good" and "Neutral" alignments.
-
-```{r md4, fig.height=3, fig.width=8}
-ggplot(comics, aes(x = align, fill=align)) +
-  geom_bar() +
-  facet_wrap(~gender)
-```
-
-### Task
-
-The text labels in the x-axis in the plot above is overlapping with each others. Add an extra layer to the above plot such that the x-Axis labels are rotated by 45 degrees with right-justified for horizontal justification.
-
-    +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-```{r faceting-ex-solution}
-ggplot(comics, aes(x = align, fill=align)) +
-  geom_bar() +
-  facet_wrap(~gender)+
+```{r ex3-result, echo=FALSE, out.width = "100%"}
+ggplot(data = mpg) + 
+  geom_boxplot(mapping = aes(x = class, y = hwy, fill=class)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-```{r faceting-ex, exercise=TRUE}
+Recreate the chart above. 
+- The text labels in the x-axis in the plot may be overlapping with each others. We should add an extra layer to the plot such that the x-Axis labels are rotated by 45 degrees with right-justified for horizontal justification. (Refer to exercise 2)
 
-```
+```{r ex3, exercise = TRUE, eval=FALSE, out.width = "100%", exercise.reveal_solution=FALSE}
 
-## Exercises
-
-### Exercise 1
-
-Make a scatterplot of `cty` vs `hwy`.
-
-- cyl: number of cylinders
-- hwy: highway miles per gallon
-
-```{r scatterplot, exercise = TRUE}
-
-```
-
-```{r scatterplot-check}
-"Excellent work!"
-```
-
-
-### Exercise 2
-
-Make a histogram of the `hwy` variable from `mpg`. Make the bins 2 units wide.
-
-Hint: 
-
-- Do not supply a y variable.
-- Use the help page for `geom_histogram` or consult the ggplot2 cheatsheet if needed.
-
-```{r}
 
 ```
 
 
 
-### Exercise 3
+```{r ex3-solution}
+ggplot(data = mpg) + 
+  geom_boxplot(mapping = aes(x = class, y = hwy, fill=class))
 
-Make a bar chart `class` colored by `class`. Use the help page for `geom_bar` to choose a "color" aesthetic for class.
-
-```{r}
 
 ```
-
 
